@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dbdb — データベースのデータベース</title>
+<meta name="description" content="あらゆる公開データ×AIによる品質改善。検索できるデータベースを束ねるハブ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0f13;
+    --panel:#16181f;
+    --ink:#e8e9ec;
+    --muted:#8b8f9a;
+    --line:#262932;
+    --accent:#4fd1c5;
+    --accent2:#f6c454;
+    --mono:'JetBrains Mono',monospace;
+    --sans:'Zen Kaku Gothic New',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(79,209,197,.06), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(246,196,84,.05), transparent 40%);
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+
+  header{padding:80px 0 48px;border-bottom:1px solid var(--line);}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:18px;
+  }
+  h1{
+    font-size:clamp(2.6rem,7vw,4.4rem);
+    font-weight:900;
+    letter-spacing:-.02em;
+    line-height:1.02;
+  }
+  h1 .dim{color:var(--muted);font-weight:400;}
+  .lead{
+    margin-top:22px;
+    max-width:560px;
+    color:var(--muted);
+    font-size:1.02rem;
+  }
+  .count{
+    font-family:var(--mono);
+    font-size:.78rem;
+    color:var(--muted);
+    margin-top:28px;
+  }
+  .count b{color:var(--accent2);}
+
+  main{padding:56px 0 40px;}
+  .grid{display:grid;gap:18px;}
+  @media(min-width:680px){.grid{grid-template-columns:1fr 1fr;}}
+
+  .card{
+    display:block;
+    text-decoration:none;
+    color:inherit;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:28px 26px;
+    position:relative;
+    overflow:hidden;
+    transition:border-color .25s, transform .25s;
+  }
+  .card::after{
+    content:"→";
+    position:absolute;
+    top:24px;right:24px;
+    font-family:var(--mono);
+    color:var(--muted);
+    transition:transform .25s, color .25s;
+  }
+  .card:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .card:hover::after{transform:translate(4px,-2px);color:var(--accent);}
+  .card .tag{
+    font-family:var(--mono);
+    font-size:.68rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:block;
+    margin-bottom:14px;
+  }
+  .card h2{font-size:1.5rem;font-weight:700;letter-spacing:-.01em;}
+  .card .sub{color:var(--muted);font-size:.92rem;margin-top:8px;}
+  .card .meta{
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--muted);
+    margin-top:20px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+  }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:32px 0 60px;
+    color:var(--muted);
+    font-family:var(--mono);
+    font-size:.74rem;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  /* 出現アニメ */
+  .reveal{opacity:0;transform:translateY(14px);animation:rise .6s forwards;}
+  @keyframes rise{to{opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow reveal" style="animation-delay:.05s">Database of Databases</div>
+      <h1 class="reveal" style="animation-delay:.12s">dbdb<span class="dim">.</span></h1>
+      <p class="lead reveal" style="animation-delay:.2s">
+        あらゆる公開データを、検索できるデータベースに。
+        AIで品質を整え、束ねていくハブ。
+      </p>
+      <p class="count reveal" style="animation-delay:.28s">
+        現在 <b id="svc-count">0</b> サービス稼働中
+      </p>
+    </header>
+
+    <main>
+      <div class="grid" id="services"></div>
+    </main>
+
+    <footer>
+      <span>dbdb — database of databases</span>
+      <span id="year"></span>
+    </footer>
+  </div>
+
+<script>
+  // ── サービス一覧（新サービスはここに1件足すだけ） ───────────────
+  const SERVICES = [
+    {
+      tag: "Food",
+      name: "冷蔵庫レスキュー",
+      sub: "余りがちな食材から、作れる一品を逆引きするレシピDB。",
+      meta: "100+ recipes",
+      url: "https://xdatabase13.github.io/ryouri/"
+    },
+    {
+      tag: "Cinema",
+      name: "名作映画データベース",
+      sub: "時代と国を横断して、観るべき名作を引けるDB。",
+      meta: "30+ titles",
+      url: "https://xdatabase13.github.io/movie/"
+    }
+  ];
+  // ────────────────────────────────────────────────────────────
+
+  const grid = document.getElementById('services');
+  SERVICES.forEach((s, i) => {
+    const a = document.createElement('a');
+    a.className = 'card reveal';
+    a.href = s.url;
+    a.style.animationDelay = (0.34 + i * 0.08) + 's';
+    a.innerHTML = `
+      <span class="tag">${s.tag}</span>
+      <h2>${s.name}</h2>
+      <p class="sub">${s.sub}</p>
+      <p class="meta">${s.meta}</p>`;
+    grid.appendChild(a);
+  });
+  document.getElementById('svc-count').textContent = SERVICES.length;
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
