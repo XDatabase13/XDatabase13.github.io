@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>dbdb — データベースのデータベース</title>
-<meta name="description" content="あらゆる公開データ×AIによる品質改善。検索できるデータベースを束ねるハブ。">
+<title>ニッチ投資ラボ — 投資家が知りたいニッチな情報を、毎朝更新</title>
+<meta name="description" content="投資家が知りたいニッチな情報を毎朝更新。理論株価・NAV分析・健康管理など、投資家の視点で選んだデータをまとめるハブ。">
+<meta name="google-site-verification" content="I2iPjYCNIAccsTmjaOFZey02YwSffiBtFpO1Zxjr39s" />
+<meta name="google-site-verification" content="xMT4M7Cet-3rfVpR7EdOJ8EA1W26pKCeOGtOfDSB_l4" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3360695384486983"
+     crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -45,10 +49,10 @@
     margin-bottom:18px;
   }
   h1{
-    font-size:clamp(2.6rem,7vw,4.4rem);
+    font-size:clamp(2.2rem,6vw,3.8rem);
     font-weight:900;
     letter-spacing:-.02em;
-    line-height:1.02;
+    line-height:1.08;
   }
   h1 .dim{color:var(--muted);font-weight:400;}
   .lead{
@@ -118,11 +122,23 @@
     font-family:var(--mono);
     font-size:.74rem;
     display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .footer-disclaimer{
+    color:var(--muted);
+    font-size:.68rem;
+    line-height:1.6;
+    opacity:.7;
+  }
+  .footer-bottom{
+    display:flex;
     justify-content:space-between;
     flex-wrap:wrap;
     gap:8px;
+    margin-top:8px;
   }
-  /* 出現アニメ */
+
   .reveal{opacity:0;transform:translateY(14px);animation:rise .6s forwards;}
   @keyframes rise{to{opacity:1;transform:none;}}
 </style>
@@ -130,11 +146,11 @@
 <body>
   <div class="wrap">
     <header>
-      <div class="eyebrow reveal" style="animation-delay:.05s">Database of Databases</div>
-      <h1 class="reveal" style="animation-delay:.12s">dbdb<span class="dim">.</span></h1>
+      <div class="eyebrow reveal" style="animation-delay:.05s">Niche Investment Lab</div>
+      <h1 class="reveal" style="animation-delay:.12s">ニッチ投資ラボ<span class="dim">.</span></h1>
       <p class="lead reveal" style="animation-delay:.2s">
-        あらゆる公開データを、検索できるデータベースに。
-        AIで品質を整え、束ねていくハブ。
+        投資家が知りたいニッチな情報を、毎朝更新。<br>
+        データで見る相場と、投資家の身体管理。
       </p>
       <p class="count reveal" style="animation-delay:.28s">
         現在 <b id="svc-count">0</b> サービス稼働中
@@ -146,34 +162,32 @@
     </main>
 
     <footer>
-      <span>dbdb — database of databases</span>
-      <span id="year"></span>
+      <p class="footer-disclaimer">
+        当サイトの情報は投資助言ではありません。掲載データは情報提供のみを目的としており、投資判断はご自身の責任でお願いします。
+      </p>
+      <div class="footer-bottom">
+        <span>ニッチ投資ラボ — xdbdb.com</span>
+        <span id="year"></span>
+      </div>
     </footer>
   </div>
 
 <script>
-  // ── サービス一覧（新サービスはここに1件足すだけ） ───────────────
+  // ── コンテンツ一覧（新サービスはここに1件足すだけ） ───────────────
   const SERVICES = [
     {
-      tag: "Food",
-      name: "冷蔵庫レスキュー",
-      sub: "余りがちな食材から、作れる一品を逆引きするレシピDB。",
-      meta: "100+ recipes",
-      url: "https://xdatabase13.github.io/ryouri/"
+      tag: "Investment",
+      name: "SBG 理論株価モニター",
+      sub: "ソフトバンクGのNAVに基づく理論株価とディスカウント率を毎朝更新。保有資産の時価からNAVを算出。",
+      meta: "auto-update · every morning",
+      url: "/sbg-nav/"
     },
     {
-      tag: "Cinema",
-      name: "名作映画データベース",
-      sub: "時代と国を横断して、観るべき名作を引けるDB。",
-      meta: "30+ titles",
-      url: "https://xdatabase13.github.io/movie/"
-    },
-    {
-      tag: "Manga",
-      name: "名作漫画データベース",
-      sub: "時代もジャンルも超えて、読むべき名作を引けるDB。",
-      meta: "30+ titles",
-      url: "https://xdatabase13.github.io/manga/"
+      tag: "Health",
+      name: "筋トレメニュー検索",
+      sub: "投資家のメンタル・健康管理。部位別に探せる203種の筋トレデータベース。",
+      meta: "203+ exercises",
+      url: "/kintore/"
     }
   ];
   // ────────────────────────────────────────────────────────────
