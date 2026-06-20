@@ -509,6 +509,16 @@ def bake_index_html(hub_data: dict, index_path: Path) -> None:
         count=1,
     )
 
+    # ヘッダー更新日時プレースホルダーを置換
+    gen_at = (hub_data.get("_meta") or {}).get("generated_at", "")
+    if gen_at:
+        try:
+            dt = datetime.fromisoformat(gen_at)
+            time_str = dt.strftime('%m/%d %H:%M JST')
+            content = content.replace('<!--BKD_UPDATE_TIME-->', '最終更新 ' + time_str)
+        except Exception:
+            pass
+
     index_path.write_text(content, encoding="utf-8")
     print(f"[bake] index.html 焼き込み完了")
 
