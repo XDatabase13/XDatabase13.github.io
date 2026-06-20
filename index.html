@@ -92,6 +92,7 @@
     gap: 10px;
     transition: border-color .25s, transform .2s;
   }
+  .dcard { cursor: pointer; }
   .dcard:hover { border-color: var(--accent); transform: translateY(-2px); }
 
   .dcard-head {
@@ -389,7 +390,7 @@
 
     <div class="cards-grid reveal" id="cards-grid" style="animation-delay:.3s">
       <!--CARDS_START-->
-      <div class="dcard">
+      <div class="dcard" onclick="location.href='https://xdbdb.com/sbg-nav/'">
       <div class="dcard-head">
         <span class="tag">Investment</span>
         <span class="status-badge s-ok"><span class="status-dot"></span>正常更新</span>
@@ -415,7 +416,7 @@
       <a href="https://xdbdb.com/sbg-nav/" class="dcard-cta">構成銘柄の情報を詳しく見る →</a>
       <p class="dcard-time">2026/06/20 05:30 JST 更新</p>
     </div>
-      <div class="dcard">
+      <div class="dcard" onclick="location.href='https://xdbdb.com/crypto-nav/'">
       <div class="dcard-head">
         <span class="tag">Investment</span>
         <span class="status-badge s-ok"><span class="status-dot"></span>正常更新</span>
@@ -445,7 +446,7 @@
       <a href="https://xdbdb.com/crypto-nav/" class="dcard-cta">比較・計算法を詳しく確認 →</a>
       <p class="dcard-time">2026/06/20 10:13 JST 更新</p>
     </div>
-      <div class="dcard">
+      <div class="dcard" onclick="location.href='https://xdbdb.com/kioxia-sandisk/'">
       <div class="dcard-head">
         <span class="tag">Investment</span>
         <span class="status-badge s-ok"><span class="status-dot"></span>正常更新</span>
@@ -630,7 +631,7 @@ function buildSbg(d) {
     ? (discount >= 0 ? '半透明NAV理論株価に対し割安' : '半透明NAV理論株価に対し割高')
     : '';
 
-  return `<div class="dcard">
+  return `<div class="dcard" onclick="location.href='https://xdbdb.com/sbg-nav/'">
     <div class="dcard-head">
       <span class="tag">Investment</span>
       <span class="status-badge ${sCls(status)}"><span class="status-dot"></span>${sLbl(status)}</span>
@@ -681,7 +682,7 @@ function buildCrypto(d) {
   if (metaMnav != null) parts.push(`メタプラは${metaMnav >= 1 ? 'プレミアム圏' : 'ディスカウント圏'}`);
   const comment = parts.join('、');
 
-  return `<div class="dcard">
+  return `<div class="dcard" onclick="location.href='https://xdbdb.com/crypto-nav/'">
     <div class="dcard-head">
       <span class="tag">Investment</span>
       <span class="status-badge ${sCls(status)}"><span class="status-dot"></span>${sLbl(status)}</span>
@@ -743,7 +744,7 @@ function buildKioxia(d) {
     else                  comment = '両社のPERは同水準';
   }
 
-  return `<div class="dcard">
+  return `<div class="dcard" onclick="location.href='https://xdbdb.com/kioxia-sandisk/'">
     <div class="dcard-head">
       <span class="tag">Investment</span>
       <span class="status-badge ${sCls(status)}"><span class="status-dot"></span>${sLbl(status)}</span>
