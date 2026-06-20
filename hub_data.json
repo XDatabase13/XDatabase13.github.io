@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 3サイトカード情報。",
-    "generated_at": "2026-06-20T21:55:20+09:00",
+    "generated_at": "2026-06-21T05:40:45+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -79,8 +79,8 @@
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 63532.3398,
-      "change_pct": -0.0134,
+      "close": 63803.0508,
+      "change_pct": 0.4127,
       "date": "2026-06-20",
       "status": "ok"
     }
@@ -88,8 +88,8 @@
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-06-20T05:30:44+09:00",
-      "nav_per_share": 13516,
+      "generated_at": "2026-06-21T05:30:41+09:00",
+      "nav_per_share": 13515,
       "discount_pct": 47.4,
       "close": 7111.0,
       "price_change_pct": -1.085,
@@ -97,20 +97,20 @@
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-06-20T10:13:55+09:00",
+      "generated_at": "2026-06-21T05:30:40+09:00",
       "mstr": {
-        "mnav_premium": 1.195855,
+        "mnav_premium": 1.18229,
         "price_change_pct": -3.4574
       },
       "metaplanet": {
-        "mnav_premium": 0.828854,
+        "mnav_premium": 0.822413,
         "price_change_pct": 1.2931
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-06-20T05:30:52+09:00",
+      "generated_at": "2026-06-21T05:30:53+09:00",
       "kioxia": {
         "per": 17.04,
         "price_change_pct": 12.0743
