@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 3サイトカード情報。",
-    "generated_at": "2026-06-20T11:45:22+09:00",
+    "generated_at": "2026-06-20T15:27:14+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -14,7 +14,7 @@
       "label": "日経平均",
       "ticker": "^N225",
       "close": 71250.0625,
-      "change_pct": 0.2767,
+      "change_pct": 1.9281,
       "status": "ok"
     },
     "topix_etf": {
@@ -36,43 +36,43 @@
     "dow": {
       "label": "ダウ",
       "ticker": "^DJI",
-      "close": 51564.6992,
-      "change_pct": 0.1401,
+      "close": 51492.5508,
+      "change_pct": -0.9752,
       "status": "ok"
     },
     "sp500": {
       "label": "S&P500",
       "ticker": "^GSPC",
-      "close": 7500.5801,
-      "change_pct": 1.0846,
+      "close": 7420.1001,
+      "change_pct": -1.2148,
       "status": "ok"
     },
     "nasdaq": {
       "label": "NASDAQ総合",
       "ticker": "^IXIC",
-      "close": 26517.9297,
-      "change_pct": 1.9071,
+      "close": 26021.6602,
+      "change_pct": -1.3447,
       "status": "ok"
     },
     "sox": {
       "label": "SOX",
       "ticker": "^SOX",
-      "close": 14341.7803,
-      "change_pct": 6.4162,
+      "close": 13477.0703,
+      "change_pct": 1.3754,
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 161.28,
-      "change_pct": 0.4234,
+      "close": 161.275,
+      "change_pct": -0.0087,
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 63348.1289,
-      "change_pct": 0.7181,
+      "close": 63615.0898,
+      "change_pct": 0.1169,
       "status": "ok"
     }
   },
