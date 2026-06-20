@@ -17,7 +17,7 @@ import re
 import sys
 import time
 import urllib.request
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, date as _date
 from pathlib import Path
 
 import yfinance as yf
@@ -35,6 +35,7 @@ INDEX_PATH    = SCRIPT_DIR / "index.html"
 JST            = timezone(timedelta(hours=9))
 MAX_RETRIES    = 5
 RETRY_INTERVAL = 10  # 秒
+STALE_DAYS     = 5   # 取得日付が今日からこの日数を超えるとデータが古いとみなす
 
 # 市況9指標の定義(表示順を保つため OrderedDict 相当に記述)
 MARKET_SPECS = [
@@ -84,11 +85,10 @@ def save_json(path: Path, data: dict) -> None:
 
 
 # ── yfinance 取得（リトライ付き） ───────────────────────────────────────────────
-def fetch_close(ticker_str: str) -> tuple[float | None, float | None]:
+def fetch_close(ticker_str: str) -> tuple[float | None, float | None, str | None]:
     """
-    直近終値と前日比%を返す。
-    Returns: (close: float|None, change_pct: float|None)
-    MAX_RETRIES 全滅時は (None, None)。
+    直近終値・前日比%・取得日付を返す。
+    Returns: (close, change_pct, date_str)  全滅時は (None, None, None)。
     """
     for attempt in range(MAX_RETRIES):
         try:
@@ -99,21 +99,22 @@ def fetch_close(ticker_str: str) -> tuple[float | None, float | None]:
             if closes.empty:
                 raise ValueError("all NaN closes")
 
-            last_val = round(float(closes.iloc[-1]), 4)
+            last_val   = round(float(closes.iloc[-1]), 4)
+            date_str   = closes.index[-1].strftime("%Y-%m-%d")
             change_pct = None
             if len(closes) >= 2:
                 prev_val = float(closes.iloc[-2])
                 if prev_val and prev_val != 0:
                     change_pct = round((last_val - prev_val) / abs(prev_val) * 100, 4)
 
-            return last_val, change_pct
+            return last_val, change_pct, date_str
 
         except Exception as e:
             print(f"  [{ticker_str}] 試行{attempt + 1}/{MAX_RETRIES} 失敗: {e}")
             if attempt < MAX_RETRIES - 1:
                 time.sleep(RETRY_INTERVAL)
 
-    return None, None
+    return None, None, None
 
 
 # ── 外部 JSON 取得 ──────────────────────────────────────────────────────────────
@@ -324,7 +325,7 @@ def _build_sbg_card_html(sbg: dict) -> str:
                else "半透明NAV理論株価に対し割高" if disc is not None else "")
     c_html  = f'<p class="dcard-comment">{comment}</p>' if comment else ""
 
-    return f"""<div class="dcard">
+    return f"""<div class="dcard" onclick="location.href='https://xdbdb.com/sbg-nav/'">
       <div class="dcard-head">
         <span class="tag">Investment</span>
         <span class="status-badge {_status_cls(st)}"><span class="status-dot"></span>{_status_lbl(st)}</span>
@@ -371,7 +372,7 @@ def _build_crypto_card_html(crypto: dict) -> str:
     if mp  is not None: parts.append(f'メタプラは{"プレミアム圏" if float(mp) >= 1 else "ディスカウント圏"}')
     c_html = f'<p class="dcard-comment">{"、".join(parts)}</p>' if parts else ""
 
-    return f"""<div class="dcard">
+    return f"""<div class="dcard" onclick="location.href='https://xdbdb.com/crypto-nav/'">
       <div class="dcard-head">
         <span class="tag">Investment</span>
         <span class="status-badge {_status_cls(st)}"><span class="status-dot"></span>{_status_lbl(st)}</span>
@@ -424,7 +425,7 @@ def _build_kioxia_card_html(kioxia: dict) -> str:
         else:                       comment = "両社のPERは同水準"
     c_html = f'<p class="dcard-comment">{comment}</p>' if comment else ""
 
-    return f"""<div class="dcard">
+    return f"""<div class="dcard" onclick="location.href='https://xdbdb.com/kioxia-sandisk/'">
       <div class="dcard-head">
         <span class="tag">Investment</span>
         <span class="status-badge {_status_cls(st)}"><span class="status-dot"></span>{_status_lbl(st)}</span>
@@ -536,21 +537,57 @@ def build_hub() -> None:
     market_out: dict[str, dict] = {}
 
     for key, spec in MARKET_SPECS:
-        ticker = spec["ticker"]
-        close, change_pct = fetch_close(ticker)
+        ticker     = spec["ticker"]
+        prev_entry = prev_market.get(key, {})
+        prev_date  = prev_entry.get("date")
+
+        close, change_pct, data_date = fetch_close(ticker)
 
         if close is not None:
             status = "ok"
-            print(f"  {ticker:12s}  {close:>14.4f}  {(change_pct or 0):+.2f}%")
+            age    = (_date.today() - _date.fromisoformat(data_date)).days if data_date else None
+
+            # ① 前回より古い日付が返ってきた場合は前回値を保持（日付逆行チェック）
+            if prev_date and data_date and data_date < prev_date:
+                alerts.append(
+                    f"[警告] {spec['label']}({ticker}): yfinanceが古い日付({data_date})"
+                    f" を返した → 前回値({prev_date})を保持"
+                )
+                print(f"  {ticker:12s}  {prev_entry['close']:>14.4f}"
+                      f"  [日付逆行 {data_date} < {prev_date} → stale]")
+                close      = prev_entry["close"]
+                change_pct = prev_entry.get("change_pct")
+                data_date  = prev_date
+                status     = "stale"
+
+            # ② STALE_DAYS 超の古いデータも前回値を保持
+            elif age is not None and age > STALE_DAYS:
+                if prev_entry.get("close") is not None:
+                    alerts.append(
+                        f"[警告] {spec['label']}({ticker}): データが{age}日前({data_date})"
+                        f" > STALE_DAYS({STALE_DAYS}) → 前回値保持"
+                    )
+                    print(f"  {ticker:12s}  {prev_entry['close']:>14.4f}  [{age}日前 → stale]")
+                    close      = prev_entry["close"]
+                    change_pct = prev_entry.get("change_pct")
+                    data_date  = prev_entry.get("date")
+                    status     = "stale"
+                else:
+                    alerts.append(f"[警告] {spec['label']}({ticker}): データが{age}日前({data_date})、前回値なし")
+                    print(f"  {ticker:12s}  {close:>14.4f}  [{age}日前 → 警告・前回値なし]")
+
+            else:
+                print(f"  {ticker:12s}  {close:>14.4f}  {(change_pct or 0):+.2f}%  [{data_date}]")
+
         else:
-            # stale フォールバック: 前回値保持
-            prev_entry = prev_market.get(key, {})
+            # 取得失敗 → 前回値フォールバック
             close      = prev_entry.get("close")
             change_pct = prev_entry.get("change_pct")
+            data_date  = prev_entry.get("date")
             status     = "stale" if close is not None else "failed"
             if status == "stale":
                 alerts.append(f"[警告] {spec['label']}({ticker}): 取得失敗。前回値 {close} を保持します。")
-                print(f"  {ticker:12s}  {close:>14.4f}  [stale ← 前回値]")
+                print(f"  {ticker:12s}  {close:>14.4f}  [取得失敗 → stale]")
             else:
                 alerts.append(f"[エラー] {spec['label']}({ticker}): 取得失敗かつ前回値なし。欠損表示になります。")
                 print(f"  {ticker:12s}  {'None':>14s}  [failed]")
@@ -560,6 +597,7 @@ def build_hub() -> None:
             "ticker":     ticker,
             "close":      close,
             "change_pct": change_pct,
+            "date":       data_date,
             "status":     status,
         }
         if "note" in spec:
