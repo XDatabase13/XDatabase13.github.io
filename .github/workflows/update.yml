@@ -37,7 +37,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add hub_data.json
+          git add hub_data.json index.html
           if git diff --staged --quiet; then
             echo "hub_data.json に変更なし。コミットをスキップします。"
           else

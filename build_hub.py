@@ -13,6 +13,7 @@ build_hub.py — 数理投資情報部 ハブ集約バッチ
 """
 
 import json
+import re
 import sys
 import time
 import urllib.request
@@ -29,6 +30,7 @@ except AttributeError:
 # ── 定数 ───────────────────────────────────────────────────────────────────────
 SCRIPT_DIR    = Path(__file__).parent
 HUB_DATA_PATH = SCRIPT_DIR / "hub_data.json"
+INDEX_PATH    = SCRIPT_DIR / "index.html"
 
 JST            = timezone(timedelta(hours=9))
 MAX_RETRIES    = 5
@@ -203,6 +205,314 @@ SITE_EXTRACTORS = {
 }
 
 
+# ── 静的HTML焼き込み(Phase 2c SEO) ────────────────────────────────────────────
+
+def _replace_between(text: str, start: str, end: str, inner: str) -> str:
+    """start と end マーカーの間を inner で置換(マーカー自体は残す)。"""
+    pattern = re.escape(start) + r".*?" + re.escape(end)
+    replacement = start + inner + end
+    result = re.sub(pattern, lambda _: replacement, text, count=1, flags=re.DOTALL)
+    if result == text:
+        print(f"[bake 警告] マーカーが見つかりません: {start}")
+    return result
+
+
+def _fmt_pct_html(pct) -> str:
+    """前日比%を ▲/▼ span に変換。None なら ''。"""
+    if pct is None:
+        return ""
+    v = float(pct)
+    a = abs(v)
+    if v > 0:
+        return f'<span class="chg pos">▲{a:.2f}%</span>'
+    if v < 0:
+        return f'<span class="chg neg">▼{a:.2f}%</span>'
+    return '<span class="chg neutral">±0.00%</span>'
+
+
+def _fmt_mkt_val(val) -> str | None:
+    """市況値を整形。1000以上→整数, 未満→小数2桁。None なら None。"""
+    if val is None:
+        return None
+    v = float(val)
+    return f"{round(v):,}" if v >= 1000 else f"{v:.2f}"
+
+
+def _fmt_time_jst(iso_str: str) -> str:
+    """ISO日時 → JST の YYYY/MM/DD HH:MM JST 形式。"""
+    if not iso_str:
+        return ""
+    try:
+        dt = datetime.fromisoformat(iso_str).astimezone(JST)
+        return dt.strftime("%Y/%m/%d %H:%M JST")
+    except Exception:
+        return ""
+
+
+def _status_cls(s: str | None) -> str:
+    return {"complete": "s-ok", "partial": "s-warn", "failed": "s-fail"}.get(s or "", "")
+
+
+def _status_lbl(s: str | None) -> str:
+    return {"complete": "正常更新", "partial": "一部前回値", "failed": "取得失敗"}.get(s or "", "確認中")
+
+
+def _build_market_section_html(hub_data: dict) -> str:
+    """市況帯セクション全体の静的HTML を生成。"""
+    market = hub_data.get("market", {})
+    gen_at = (hub_data.get("_meta") or {}).get("generated_at", "")
+
+    JP = ["nikkei225", "topix_etf", "growth250"]
+    US = ["dow", "sp500", "nasdaq", "sox"]
+    FX = ["usdjpy", "btc"]
+
+    def mk_item(key: str) -> str:
+        e = market.get(key, {})
+        label = e.get("label", key)
+        val_str = _fmt_mkt_val(e.get("close"))
+        if e.get("status") == "failed" or val_str is None:
+            return f'<div class="mkt-item"><span class="mkt-name">{label}</span><span class="mkt-fail">—</span></div>'
+        pct_html = _fmt_pct_html(e.get("change_pct"))
+        return (f'<div class="mkt-item"><span class="mkt-name">{label}</span>'
+                f'<span class="mkt-val">{val_str}</span>{pct_html}</div>')
+
+    def mk_group(lbl: str, keys: list) -> str:
+        items = "".join(mk_item(k) for k in keys)
+        return (f'<div class="mkt-group"><span class="mkt-grp-lbl">{lbl}</span>'
+                f'<div class="mkt-items">{items}</div></div>')
+
+    time_str = ""
+    if gen_at:
+        try:
+            dt = datetime.fromisoformat(gen_at).astimezone(JST)
+            time_str = dt.strftime("%m/%d %H:%M JST時点")
+        except Exception:
+            pass
+
+    groups = "\n        ".join([
+        mk_group("🇯🇵 日本株", JP),
+        mk_group("🇺🇸 米国株", US),
+        mk_group("💱 為替/仮想通貨", FX),
+    ])
+
+    return f"""
+    <section class="mkt-band" id="mkt-band">
+      <div class="mkt-hdr">
+        <span class="mkt-label">市況</span>
+        <span class="mkt-time" id="mkt-time">{time_str}</span>
+      </div>
+      <div class="mkt-groups" id="mkt-groups">
+        {groups}
+      </div>
+    </section>
+    """
+
+
+def _build_sbg_card_html(sbg: dict) -> str:
+    nav   = sbg.get("nav_per_share")
+    close = sbg.get("close")
+    disc  = sbg.get("discount_pct")
+    p_chg = sbg.get("price_change_pct")
+    st    = sbg.get("status", "")
+    gen   = sbg.get("generated_at", "")
+
+    nav_s   = f"¥{round(float(nav)):,}"   if nav   is not None else "—"
+    close_s = f"¥{round(float(close)):,}" if close is not None else "—"
+    disc_s  = f"{float(disc):.1f}%"       if disc  is not None else "—"
+    p_html  = _fmt_pct_html(p_chg)
+    comment = ("半透明NAV理論株価に対し割安" if disc is not None and float(disc) >= 0
+               else "半透明NAV理論株価に対し割高" if disc is not None else "")
+    c_html  = f'<p class="dcard-comment">{comment}</p>' if comment else ""
+
+    return f"""<div class="dcard">
+      <div class="dcard-head">
+        <span class="tag">Investment</span>
+        <span class="status-badge {_status_cls(st)}"><span class="status-dot"></span>{_status_lbl(st)}</span>
+      </div>
+      <h2 class="dcard-title">SBG 理論株価モニター</h2>
+      <p class="dcard-sub">ソフトバンクG · NAV分析</p>
+      <p class="dcard-desc">ソフトバンクグループの保有上場株時価を合算した「半透明NAV」から算出した理論株価と、実株価とのディスカウント率を毎日更新。</p>
+      <div class="metrics">
+        <div class="metric">
+          <span class="mlabel">理論株価(半透明NAV)</span>
+          <span class="mval">{nav_s}</span>
+        </div>
+        <div class="metric metric-main">
+          <span class="mlabel">実株価</span>
+          <span class="mval">{close_s} {p_html}</span>
+        </div>
+        <div class="metric metric-main">
+          <span class="mlabel">ディスカウント率</span>
+          <span class="mval mval-hi">{disc_s}</span>
+        </div>
+      </div>
+      {c_html}
+      <a href="https://xdbdb.com/sbg-nav/" class="dcard-cta">構成銘柄の情報を詳しく見る →</a>
+      <p class="dcard-time">{_fmt_time_jst(gen)} 更新</p>
+    </div>"""
+
+
+def _build_crypto_card_html(crypto: dict) -> str:
+    mstr_d = crypto.get("mstr") or {}
+    meta_d = crypto.get("metaplanet") or {}
+    st     = crypto.get("status", "")
+    gen    = crypto.get("generated_at", "")
+
+    mm   = mstr_d.get("mnav_premium")
+    mp   = meta_d.get("mnav_premium")
+    mc   = mstr_d.get("price_change_pct")
+    mpc  = meta_d.get("price_change_pct")
+
+    mm_s  = f"{float(mm):.2f}x"  if mm is not None else "—"
+    mp_s  = f"{float(mp):.2f}x"  if mp is not None else "—"
+
+    parts = []
+    if mm  is not None: parts.append(f'MSTRは{"プレミアム圏" if float(mm)  >= 1 else "ディスカウント圏"}')
+    if mp  is not None: parts.append(f'メタプラは{"プレミアム圏" if float(mp) >= 1 else "ディスカウント圏"}')
+    c_html = f'<p class="dcard-comment">{"、".join(parts)}</p>' if parts else ""
+
+    return f"""<div class="dcard">
+      <div class="dcard-head">
+        <span class="tag">Investment</span>
+        <span class="status-badge {_status_cls(st)}"><span class="status-dot"></span>{_status_lbl(st)}</span>
+      </div>
+      <h2 class="dcard-title">暗号資産トレジャリー mNAV</h2>
+      <p class="dcard-sub">MSTR · メタプラネット</p>
+      <p class="dcard-desc">MicroStrategy(MSTR)とメタプラネットのBitcoin保有量に基づくmNAV(時価総額÷純資産価値)を毎日更新。1倍超でプレミアム、1倍未満でディスカウント。</p>
+      <div class="metrics">
+        <div class="metric metric-main">
+          <span class="mlabel">MSTR mNAV</span>
+          <span class="mval mval-hi">{mm_s}</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">MSTR 株価前日比</span>
+          <span class="mval">{_fmt_pct_html(mc)}</span>
+        </div>
+        <div class="metric metric-main">
+          <span class="mlabel">メタプラ mNAV</span>
+          <span class="mval mval-hi">{mp_s}</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">メタプラ 株価前日比</span>
+          <span class="mval">{_fmt_pct_html(mpc)}</span>
+        </div>
+      </div>
+      {c_html}
+      <a href="https://xdbdb.com/crypto-nav/" class="dcard-cta">比較・計算法を詳しく確認 →</a>
+      <p class="dcard-time">{_fmt_time_jst(gen)} 更新</p>
+    </div>"""
+
+
+def _build_kioxia_card_html(kioxia: dict) -> str:
+    k_d = kioxia.get("kioxia") or {}
+    s_d = kioxia.get("sndk") or {}
+    st  = kioxia.get("status", "")
+    gen = kioxia.get("generated_at", "")
+
+    kp  = k_d.get("per")
+    sp  = s_d.get("per")
+    kc  = k_d.get("price_change_pct")
+    sc  = s_d.get("price_change_pct")
+
+    kp_s = f"{float(kp):.1f}倍" if kp is not None else "—"
+    sp_s = f"{float(sp):.1f}倍" if sp is not None else "—"
+
+    comment = ""
+    if kp is not None and sp is not None:
+        if   float(kp) < float(sp): comment = "キオクシアが割安（PERが低い）"
+        elif float(sp) < float(kp): comment = "サンディスクが割安（PERが低い）"
+        else:                       comment = "両社のPERは同水準"
+    c_html = f'<p class="dcard-comment">{comment}</p>' if comment else ""
+
+    return f"""<div class="dcard">
+      <div class="dcard-head">
+        <span class="tag">Investment</span>
+        <span class="status-badge {_status_cls(st)}"><span class="status-dot"></span>{_status_lbl(st)}</span>
+      </div>
+      <h2 class="dcard-title">キオクシア vs サンディスク</h2>
+      <p class="dcard-sub">NAND予想PER比較</p>
+      <p class="dcard-desc">キオクシア(285A.T)とウエスタンデジタル傘下サンディスク(SNDK)の予想PER(株価収益率)を毎日更新。NAND型フラッシュメモリ大手2社の割安性を定量比較。</p>
+      <div class="metrics">
+        <div class="metric metric-main">
+          <span class="mlabel">キオクシア 予想PER</span>
+          <span class="mval mval-hi">{kp_s}</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">キオクシア 株価前日比</span>
+          <span class="mval">{_fmt_pct_html(kc)}</span>
+        </div>
+        <div class="metric metric-main">
+          <span class="mlabel">サンディスク 予想PER</span>
+          <span class="mval mval-hi">{sp_s}</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">サンディスク 株価前日比</span>
+          <span class="mval">{_fmt_pct_html(sc)}</span>
+        </div>
+      </div>
+      {c_html}
+      <a href="https://xdbdb.com/kioxia-sandisk/" class="dcard-cta">PER推移を詳しく見る →</a>
+      <p class="dcard-time">{_fmt_time_jst(gen)} 更新</p>
+    </div>"""
+
+
+def _build_meta_description(hub_data: dict) -> str:
+    cards = hub_data.get("cards", {})
+    sbg   = cards.get("sbg", {})
+    cryp  = cards.get("crypto", {})
+    kiox  = cards.get("kioxia", {})
+
+    disc  = sbg.get("discount_pct")
+    mm    = (cryp.get("mstr") or {}).get("mnav_premium")
+    mp    = (cryp.get("metaplanet") or {}).get("mnav_premium")
+    kp    = (kiox.get("kioxia") or {}).get("per")
+
+    parts = []
+    if disc is not None: parts.append(f"SBGディスカウント率{float(disc):.1f}%")
+    if mm   is not None: parts.append(f"MSTR mNAV {float(mm):.2f}x")
+    if mp   is not None: parts.append(f"メタプラ mNAV {float(mp):.2f}x")
+    if kp   is not None: parts.append(f"キオクシア予想PER {float(kp):.1f}倍")
+
+    if parts:
+        return " / ".join(parts) + "。理論株価・mNAV・予想PERを毎日更新する投資家向けハブ。"
+    return "SBG理論株価・暗号資産mNAV・半導体PERを毎朝自動更新。数理・ファンダメンタルズ指標をまとめた投資家向けハブサイト。"
+
+
+def bake_index_html(hub_data: dict, index_path: Path) -> None:
+    """hub_data の値を index.html のプレースホルダーに焼き込む。"""
+    if not index_path.exists():
+        print(f"[bake 警告] {index_path} が見つかりません。スキップ。")
+        return
+
+    content = index_path.read_text(encoding="utf-8")
+
+    # 市況帯セクション全体を置換
+    market_html = _build_market_section_html(hub_data)
+    content = _replace_between(content, "<!--MARKET_SECTION_START-->", "<!--MARKET_SECTION_END-->", market_html)
+
+    # カード3枚を置換
+    cards = hub_data.get("cards", {})
+    cards_inner = "\n      ".join([
+        _build_sbg_card_html(cards.get("sbg", {})),
+        _build_crypto_card_html(cards.get("crypto", {})),
+        _build_kioxia_card_html(cards.get("kioxia", {})),
+    ])
+    content = _replace_between(content, "<!--CARDS_START-->", "<!--CARDS_END-->",
+                                "\n      " + cards_inner + "\n      ")
+
+    # meta description を最新値入りで更新
+    new_desc = _build_meta_description(hub_data)
+    content = re.sub(
+        r'<meta name="description" content="[^"]*">',
+        f'<meta name="description" content="{new_desc}">',
+        content,
+        count=1,
+    )
+
+    index_path.write_text(content, encoding="utf-8")
+    print(f"[bake] index.html 焼き込み完了")
+
+
 # ── メイン ─────────────────────────────────────────────────────────────────────
 def build_hub() -> None:
     generated_at = now_jst()
@@ -296,6 +606,7 @@ def build_hub() -> None:
     }
 
     save_json(HUB_DATA_PATH, output)
+    bake_index_html(output, INDEX_PATH)
     lbl = "OK" if overall_status == "complete" else "WARN"
     print(f"\n[{lbl}] hub_data.json 書き出し完了  overall_status={overall_status}")
     if alerts:

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>数理投資情報部 — 投資家が知りたい数理・ファンダメンタルズ指標を、毎朝更新</title>
-<meta name="description" content="SBG理論株価・暗号資産mNAV・半導体PERを毎朝自動更新。数理・ファンダメンタルズ指標をまとめた投資家向けハブサイト。">
+<meta name="description" content="SBGディスカウント率47.4% / MSTR mNAV 1.20x / メタプラ mNAV 0.83x / キオクシア予想PER 17.0倍。理論株価・mNAV・予想PERを毎日更新する投資家向けハブ。">
 <link rel="canonical" href="https://xdbdb.com/">
 <meta name="google-site-verification" content="I2iPjYCNIAccsTmjaOFZey02YwSffiBtFpO1Zxjr39s" />
 <meta name="google-site-verification" content="xMT4M7Cet-3rfVpR7EdOJ8EA1W26pKCeOGtOfDSB_l4" />
@@ -311,6 +311,16 @@
   .mkt-name   { font-family: var(--mono); font-size: .67rem; color: var(--muted); }
   .mkt-val    { font-family: var(--mono); font-size: .73rem; color: var(--ink); }
   .mkt-fail   { font-family: var(--mono); font-size: .67rem; color: var(--muted); opacity: .4; }
+
+  /* ── Card description (SEO static text) ──────────────── */
+  .dcard-desc {
+    font-size: .79rem;
+    color: var(--muted);
+    line-height: 1.55;
+    border-top: 1px solid var(--line);
+    padding-top: 6px;
+    margin-top: -2px;
+  }
 </style>
 </head>
 <body>
@@ -326,16 +336,109 @@
   </header>
 
   <main>
-    <section class="mkt-band" id="mkt-band" style="display:none">
+    <!--MARKET_SECTION_START-->
+    <section class="mkt-band" id="mkt-band">
       <div class="mkt-hdr">
         <span class="mkt-label">市況</span>
-        <span class="mkt-time" id="mkt-time"></span>
+        <span class="mkt-time" id="mkt-time">06/20 11:32 JST時点</span>
       </div>
-      <div class="mkt-groups" id="mkt-groups"></div>
+      <div class="mkt-groups" id="mkt-groups">
+        <div class="mkt-group"><span class="mkt-grp-lbl">🇯🇵 日本株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">日経平均</span><span class="mkt-val">71,250</span><span class="chg pos">▲0.28%</span></div><div class="mkt-item"><span class="mkt-name">TOPIX連動</span><span class="mkt-val">429.70</span><span class="chg neg">▼0.60%</span></div><div class="mkt-item"><span class="mkt-name">グロース250(連動)</span><span class="mkt-val">550.20</span><span class="chg neg">▼2.77%</span></div></div></div>
+        <div class="mkt-group"><span class="mkt-grp-lbl">🇺🇸 米国株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">ダウ</span><span class="mkt-val">51,565</span><span class="chg pos">▲0.14%</span></div><div class="mkt-item"><span class="mkt-name">S&P500</span><span class="mkt-val">7,501</span><span class="chg pos">▲1.08%</span></div><div class="mkt-item"><span class="mkt-name">NASDAQ総合</span><span class="mkt-val">26,518</span><span class="chg pos">▲1.91%</span></div><div class="mkt-item"><span class="mkt-name">SOX</span><span class="mkt-val">14,342</span><span class="chg pos">▲6.42%</span></div></div></div>
+        <div class="mkt-group"><span class="mkt-grp-lbl">💱 為替/仮想通貨</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">USD/JPY</span><span class="mkt-val">161.28</span><span class="chg pos">▲0.42%</span></div><div class="mkt-item"><span class="mkt-name">BTC</span><span class="mkt-val">63,425</span><span class="chg pos">▲0.84%</span></div></div></div>
+      </div>
     </section>
+    <!--MARKET_SECTION_END-->
 
     <div class="cards-grid reveal" id="cards-grid" style="animation-delay:.3s">
-      <!-- JS renders cards here -->
+      <!--CARDS_START-->
+      <div class="dcard">
+      <div class="dcard-head">
+        <span class="tag">Investment</span>
+        <span class="status-badge s-ok"><span class="status-dot"></span>正常更新</span>
+      </div>
+      <h2 class="dcard-title">SBG 理論株価モニター</h2>
+      <p class="dcard-sub">ソフトバンクG · NAV分析</p>
+      <p class="dcard-desc">ソフトバンクグループの保有上場株時価を合算した「半透明NAV」から算出した理論株価と、実株価とのディスカウント率を毎日更新。</p>
+      <div class="metrics">
+        <div class="metric">
+          <span class="mlabel">理論株価(半透明NAV)</span>
+          <span class="mval">¥13,516</span>
+        </div>
+        <div class="metric metric-main">
+          <span class="mlabel">実株価</span>
+          <span class="mval">¥7,111 <span class="chg neg">▼1.08%</span></span>
+        </div>
+        <div class="metric metric-main">
+          <span class="mlabel">ディスカウント率</span>
+          <span class="mval mval-hi">47.4%</span>
+        </div>
+      </div>
+      <p class="dcard-comment">半透明NAV理論株価に対し割安</p>
+      <a href="https://xdbdb.com/sbg-nav/" class="dcard-cta">構成銘柄の情報を詳しく見る →</a>
+      <p class="dcard-time">2026/06/20 05:30 JST 更新</p>
+    </div>
+      <div class="dcard">
+      <div class="dcard-head">
+        <span class="tag">Investment</span>
+        <span class="status-badge s-ok"><span class="status-dot"></span>正常更新</span>
+      </div>
+      <h2 class="dcard-title">暗号資産トレジャリー mNAV</h2>
+      <p class="dcard-sub">MSTR · メタプラネット</p>
+      <p class="dcard-desc">MicroStrategy(MSTR)とメタプラネットのBitcoin保有量に基づくmNAV(時価総額÷純資産価値)を毎日更新。1倍超でプレミアム、1倍未満でディスカウント。</p>
+      <div class="metrics">
+        <div class="metric metric-main">
+          <span class="mlabel">MSTR mNAV</span>
+          <span class="mval mval-hi">1.20x</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">MSTR 株価前日比</span>
+          <span class="mval"><span class="chg neg">▼3.46%</span></span>
+        </div>
+        <div class="metric metric-main">
+          <span class="mlabel">メタプラ mNAV</span>
+          <span class="mval mval-hi">0.83x</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">メタプラ 株価前日比</span>
+          <span class="mval"><span class="chg pos">▲1.29%</span></span>
+        </div>
+      </div>
+      <p class="dcard-comment">MSTRはプレミアム圏、メタプラはディスカウント圏</p>
+      <a href="https://xdbdb.com/crypto-nav/" class="dcard-cta">比較・計算法を詳しく確認 →</a>
+      <p class="dcard-time">2026/06/20 10:13 JST 更新</p>
+    </div>
+      <div class="dcard">
+      <div class="dcard-head">
+        <span class="tag">Investment</span>
+        <span class="status-badge s-ok"><span class="status-dot"></span>正常更新</span>
+      </div>
+      <h2 class="dcard-title">キオクシア vs サンディスク</h2>
+      <p class="dcard-sub">NAND予想PER比較</p>
+      <p class="dcard-desc">キオクシア(285A.T)とウエスタンデジタル傘下サンディスク(SNDK)の予想PER(株価収益率)を毎日更新。NAND型フラッシュメモリ大手2社の割安性を定量比較。</p>
+      <div class="metrics">
+        <div class="metric metric-main">
+          <span class="mlabel">キオクシア 予想PER</span>
+          <span class="mval mval-hi">17.0倍</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">キオクシア 株価前日比</span>
+          <span class="mval"><span class="chg pos">▲12.07%</span></span>
+        </div>
+        <div class="metric metric-main">
+          <span class="mlabel">サンディスク 予想PER</span>
+          <span class="mval mval-hi">17.3倍</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">サンディスク 株価前日比</span>
+          <span class="mval"><span class="chg pos">▲11.54%</span></span>
+        </div>
+      </div>
+      <p class="dcard-comment">キオクシアが割安（PERが低い）</p>
+      <a href="https://xdbdb.com/kioxia-sandisk/" class="dcard-cta">PER推移を詳しく見る →</a>
+      <p class="dcard-time">2026/06/20 05:30 JST 更新</p>
+    </div>
+      <!--CARDS_END-->
     </div>
 
     <section class="health-section reveal" style="animation-delay:.45s">
@@ -497,6 +600,7 @@ function buildSbg(d) {
     </div>
     <h2 class="dcard-title">SBG 理論株価モニター</h2>
     <p class="dcard-sub">ソフトバンクG · NAV分析</p>
+    <p class="dcard-desc">ソフトバンクグループの保有上場株時価を合算した「半透明NAV」から算出した理論株価と、実株価とのディスカウント率を毎日更新。</p>
     <div class="metrics">
       <div class="metric">
         <span class="mlabel">理論株価(半透明NAV)</span>
@@ -547,6 +651,7 @@ function buildCrypto(d) {
     </div>
     <h2 class="dcard-title">暗号資産トレジャリー mNAV</h2>
     <p class="dcard-sub">MSTR · メタプラネット</p>
+    <p class="dcard-desc">MicroStrategy(MSTR)とメタプラネットのBitcoin保有量に基づくmNAV(時価総額÷純資産価値)を毎日更新。1倍超でプレミアム、1倍未満でディスカウント。</p>
     <div class="metrics">
       <div class="metric metric-main">
         <span class="mlabel">MSTR mNAV</span>
@@ -603,6 +708,7 @@ function buildKioxia(d) {
     </div>
     <h2 class="dcard-title">キオクシア vs サンディスク</h2>
     <p class="dcard-sub">NAND予想PER比較</p>
+    <p class="dcard-desc">キオクシア(285A.T)とウエスタンデジタル傘下サンディスク(SNDK)の予想PER(株価収益率)を毎日更新。NAND型フラッシュメモリ大手2社の割安性を定量比較。</p>
     <div class="metrics">
       <div class="metric metric-main">
         <span class="mlabel">キオクシア 予想PER</span>
@@ -678,13 +784,17 @@ function renderMarketBand(data) {
   ].join('');
 
   const band = document.getElementById('mkt-band');
-  band.style.opacity = '0';
-  band.style.transform = 'translateY(10px)';
-  band.style.removeProperty('display');
-  band.style.transition = 'opacity .55s, transform .55s';
-  void band.offsetWidth;
-  band.style.opacity = '1';
-  band.style.transform = '';
+  if (getComputedStyle(band).display === 'none') {
+    // 静的焼き込みなし → フェードインで表示
+    band.style.opacity = '0';
+    band.style.transform = 'translateY(10px)';
+    band.style.removeProperty('display');
+    band.style.transition = 'opacity .55s, transform .55s';
+    void band.offsetWidth;
+    band.style.opacity = '1';
+    band.style.transform = '';
+  }
+  // 静的焼き込みあり → 既に表示済み。値だけ更新されて見た目は変わらない。
 }
 
 async function initMarket() {
@@ -708,7 +818,10 @@ async function init() {
   initMarket(); // 市況帯: hub_data.json が存在しなければバンドは非表示のまま
 
   const grid = document.getElementById('cards-grid');
-  grid.innerHTML = CARD_SPECS.map(s => loadingCard(s.title)).join('');
+  // 静的焼き込みカードがあればシマーは出さない(既に読める状態)
+  if (!grid.querySelector('.dcard')) {
+    grid.innerHTML = CARD_SPECS.map(s => loadingCard(s.title)).join('');
+  }
 
   const results = await Promise.allSettled(
     CARD_SPECS.map(s => fetchJson(URLS[s.key]))
