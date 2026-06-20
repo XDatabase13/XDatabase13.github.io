@@ -268,6 +268,49 @@
   /* ── Reveal ───────────────────────────────────────────── */
   .reveal { opacity: 0; transform: translateY(14px); animation: rise .6s forwards; }
   @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ── Market band ──────────────────────────────────────── */
+  .mkt-band {
+    padding: 18px 0 16px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .mkt-hdr {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .mkt-label {
+    font-family: var(--mono);
+    font-size: .64rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .mkt-time {
+    font-family: var(--mono);
+    font-size: .64rem;
+    color: var(--muted);
+    opacity: .7;
+  }
+  .mkt-groups { display: flex; flex-direction: column; gap: 8px; }
+  .mkt-group  { display: flex; align-items: flex-start; gap: 12px; }
+  .mkt-grp-lbl {
+    font-family: var(--mono);
+    font-size: .60rem;
+    color: var(--muted);
+    white-space: nowrap;
+    width: 80px;
+    flex-shrink: 0;
+    padding-top: 3px;
+    letter-spacing: .02em;
+  }
+  .mkt-items  { display: flex; flex-wrap: wrap; gap: 3px 18px; }
+  .mkt-item   { display: flex; align-items: baseline; gap: 5px; white-space: nowrap; }
+  .mkt-name   { font-family: var(--mono); font-size: .67rem; color: var(--muted); }
+  .mkt-val    { font-family: var(--mono); font-size: .73rem; color: var(--ink); }
+  .mkt-fail   { font-family: var(--mono); font-size: .67rem; color: var(--muted); opacity: .4; }
 </style>
 </head>
 <body>
@@ -283,6 +326,14 @@
   </header>
 
   <main>
+    <section class="mkt-band" id="mkt-band" style="display:none">
+      <div class="mkt-hdr">
+        <span class="mkt-label">市況</span>
+        <span class="mkt-time" id="mkt-time"></span>
+      </div>
+      <div class="mkt-groups" id="mkt-groups"></div>
+    </section>
+
     <div class="cards-grid reveal" id="cards-grid" style="animation-delay:.3s">
       <!-- JS renders cards here -->
     </div>
@@ -576,6 +627,75 @@ function buildKioxia(d) {
   </div>`;
 }
 
+// ── Market band ────────────────────────────────────────────────────────────────
+const HUB_URL = '/hub_data.json';
+
+function fmtMktVal(val) {
+  if (val == null || isNaN(Number(val))) return null;
+  const v = Number(val);
+  const dec = v >= 1000 ? 0 : 2;
+  return v.toLocaleString('ja-JP', {
+    minimumFractionDigits: dec,
+    maximumFractionDigits: dec,
+  });
+}
+
+function mkMktItem(entry) {
+  if (!entry) return '';
+  const { label, close, change_pct, status } = entry;
+  const valStr = fmtMktVal(close);
+  if (status === 'failed' || valStr == null) {
+    return `<div class="mkt-item"><span class="mkt-name">${label}</span><span class="mkt-fail">—</span></div>`;
+  }
+  return `<div class="mkt-item"><span class="mkt-name">${label}</span><span class="mkt-val">${valStr}</span>${fmtPct(change_pct)}</div>`;
+}
+
+function renderMarketBand(data) {
+  const market = data?.market ?? {};
+  const genAt  = data?._meta?.generated_at;
+
+  const JP = ['nikkei225', 'topix_etf', 'growth250'];
+  const US = ['dow', 'sp500', 'nasdaq', 'sox'];
+  const FX = ['usdjpy', 'btc'];
+
+  const mkGroup = (lbl, keys) =>
+    `<div class="mkt-group"><span class="mkt-grp-lbl">${lbl}</span><div class="mkt-items">${keys.map(k => mkMktItem(market[k])).join('')}</div></div>`;
+
+  if (genAt) {
+    try {
+      const ts = new Date(genAt).toLocaleString('ja-JP', {
+        timeZone: 'Asia/Tokyo', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit',
+      });
+      document.getElementById('mkt-time').textContent = ts + ' JST時点';
+    } catch(e) { /* ignore */ }
+  }
+
+  document.getElementById('mkt-groups').innerHTML = [
+    mkGroup('🇯🇵 日本株', JP),
+    mkGroup('🇺🇸 米国株', US),
+    mkGroup('💱 為替/仮想通貨', FX),
+  ].join('');
+
+  const band = document.getElementById('mkt-band');
+  band.style.opacity = '0';
+  band.style.transform = 'translateY(10px)';
+  band.style.removeProperty('display');
+  band.style.transition = 'opacity .55s, transform .55s';
+  void band.offsetWidth;
+  band.style.opacity = '1';
+  band.style.transform = '';
+}
+
+async function initMarket() {
+  try {
+    const data = await fetchJson(HUB_URL);
+    renderMarketBand(data);
+  } catch(e) {
+    console.warn('[hub] hub_data.json 取得スキップ:', e.message);
+  }
+}
+
 // ── Bootstrap ──────────────────────────────────────────────────────────────────
 const CARD_SPECS = [
   { key: 'sbg',    title: 'SBG 理論株価モニター',     build: buildSbg    },
@@ -585,6 +705,7 @@ const CARD_SPECS = [
 
 async function init() {
   document.getElementById('year').textContent = new Date().getFullYear();
+  initMarket(); // 市況帯: hub_data.json が存在しなければバンドは非表示のまま
 
   const grid = document.getElementById('cards-grid');
   grid.innerHTML = CARD_SPECS.map(s => loadingCard(s.title)).join('');

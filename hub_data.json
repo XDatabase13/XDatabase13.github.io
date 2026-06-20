@@ -1,0 +1,120 @@
+{
+  "_meta": {
+    "schema_version": "1.0",
+    "description": "数理投資情報部 ハブ集約データ。市況9指標 + 3サイトカード情報。",
+    "generated_at": "2026-06-20T10:41:33+09:00",
+    "overall_status": "complete",
+    "_status_vocabulary": {
+      "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
+      "item_status": "ok=正常取得 / stale=取得失敗し前回値保持 / failed=前回値なし"
+    }
+  },
+  "market": {
+    "nikkei225": {
+      "label": "日経平均",
+      "ticker": "^N225",
+      "close": 71250.0625,
+      "change_pct": 0.2767,
+      "status": "ok"
+    },
+    "topix_etf": {
+      "label": "TOPIX連動",
+      "ticker": "1306.T",
+      "close": 429.7,
+      "change_pct": -0.6014,
+      "status": "ok",
+      "note": "ETF(1306.T)の値"
+    },
+    "growth250": {
+      "label": "グロース250(連動)",
+      "ticker": "2516.T",
+      "close": 550.2,
+      "change_pct": -2.7743,
+      "status": "ok",
+      "note": "ETF(2516.T)の値"
+    },
+    "dow": {
+      "label": "ダウ",
+      "ticker": "^DJI",
+      "close": 51564.6992,
+      "change_pct": 0.1401,
+      "status": "ok"
+    },
+    "sp500": {
+      "label": "S&P500",
+      "ticker": "^GSPC",
+      "close": 7500.5801,
+      "change_pct": 1.0846,
+      "status": "ok"
+    },
+    "nasdaq": {
+      "label": "NASDAQ総合",
+      "ticker": "^IXIC",
+      "close": 26517.9297,
+      "change_pct": 1.9071,
+      "status": "ok"
+    },
+    "sox": {
+      "label": "SOX",
+      "ticker": "^SOX",
+      "close": 14341.7803,
+      "change_pct": 6.4162,
+      "status": "ok"
+    },
+    "usdjpy": {
+      "label": "USD/JPY",
+      "ticker": "USDJPY=X",
+      "close": 161.28,
+      "change_pct": 0.4234,
+      "status": "ok"
+    },
+    "btc": {
+      "label": "BTC",
+      "ticker": "BTC-USD",
+      "close": 63497.0117,
+      "change_pct": 0.9548,
+      "status": "ok"
+    }
+  },
+  "cards": {
+    "sbg": {
+      "status": "complete",
+      "generated_at": "2026-06-20T05:30:44+09:00",
+      "nav_per_share": 13516,
+      "discount_pct": 47.4,
+      "close": 7111.0,
+      "price_change_pct": -1.085,
+      "_fetch_status": "ok"
+    },
+    "crypto": {
+      "status": "complete",
+      "generated_at": "2026-06-20T10:13:55+09:00",
+      "mstr": {
+        "mnav_premium": 1.195855,
+        "price_change_pct": -3.4574
+      },
+      "metaplanet": {
+        "mnav_premium": 0.828854,
+        "price_change_pct": 1.2931
+      },
+      "_fetch_status": "ok"
+    },
+    "kioxia": {
+      "status": "complete",
+      "generated_at": "2026-06-20T05:30:52+09:00",
+      "kioxia": {
+        "per": 17.04,
+        "price_change_pct": 12.0743
+      },
+      "sndk": {
+        "per": 17.34,
+        "price_change_pct": 11.5351
+      },
+      "_fetch_status": "ok"
+    }
+  },
+  "alerts": {
+    "_comment": "overall_status が partial のとき UI に表示できる。",
+    "messages": []
+  }
+}
