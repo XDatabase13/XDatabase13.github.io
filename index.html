@@ -312,6 +312,39 @@
   .mkt-val    { font-family: var(--mono); font-size: .73rem; color: var(--ink); }
   .mkt-fail   { font-family: var(--mono); font-size: .67rem; color: var(--muted); opacity: .4; }
 
+  /* ── Update status (header) ──────────────────────────── */
+  .update-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .update-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: .73rem;
+    color: var(--green);
+    background: rgba(72,187,120,.10);
+    border: 1px solid rgba(72,187,120,.28);
+    border-radius: 20px;
+    padding: 3px 12px 3px 9px;
+    letter-spacing: .04em;
+  }
+  .update-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+  }
+  .update-time {
+    font-family: var(--mono);
+    font-size: .88rem;
+    color: var(--muted);
+  }
+
   /* ── Card description (SEO static text) ──────────────── */
   .dcard-desc {
     font-size: .79rem;
@@ -333,6 +366,10 @@
       投資家が知りたい数理・ファンダメンタルズ指標を、毎朝更新。<br>
       理論株価 · mNAV · PER — 毎朝05:30自動更新。
     </p>
+    <div class="update-status reveal" style="animation-delay:.27s">
+      <span class="update-badge"><span class="update-dot"></span>毎朝05:30自動更新</span>
+      <span class="update-time" id="hub-update-time">最終更新 06/20 15:42 JST</span>
+    </div>
   </header>
 
   <main>
@@ -340,12 +377,12 @@
     <section class="mkt-band" id="mkt-band">
       <div class="mkt-hdr">
         <span class="mkt-label">市況</span>
-        <span class="mkt-time" id="mkt-time">06/20 15:37 JST時点</span>
+        <span class="mkt-time" id="mkt-time">06/20 15:42 JST時点</span>
       </div>
       <div class="mkt-groups" id="mkt-groups">
-        <div class="mkt-group"><span class="mkt-grp-lbl">🇯🇵 日本株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">日経平均</span><span class="mkt-val">71,250</span><span class="chg pos">▲1.93%</span></div><div class="mkt-item"><span class="mkt-name">TOPIX連動</span><span class="mkt-val">429.70</span><span class="chg neg">▼0.60%</span></div><div class="mkt-item"><span class="mkt-name">グロース250(連動)</span><span class="mkt-val">550.20</span><span class="chg neg">▼2.77%</span></div></div></div>
-        <div class="mkt-group"><span class="mkt-grp-lbl">🇺🇸 米国株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">ダウ</span><span class="mkt-val">51,493</span><span class="chg neg">▼0.98%</span></div><div class="mkt-item"><span class="mkt-name">S&P500</span><span class="mkt-val">7,420</span><span class="chg neg">▼1.21%</span></div><div class="mkt-item"><span class="mkt-name">NASDAQ総合</span><span class="mkt-val">26,022</span><span class="chg neg">▼1.34%</span></div><div class="mkt-item"><span class="mkt-name">SOX</span><span class="mkt-val">13,477</span><span class="chg pos">▲1.38%</span></div></div></div>
-        <div class="mkt-group"><span class="mkt-grp-lbl">💱 為替/仮想通貨</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">USD/JPY</span><span class="mkt-val">161.28</span><span class="chg neg">▼0.01%</span></div><div class="mkt-item"><span class="mkt-name">BTC</span><span class="mkt-val">63,649</span><span class="chg pos">▲0.17%</span></div></div></div>
+        <div class="mkt-group"><span class="mkt-grp-lbl">🇯🇵 日本株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">日経平均</span><span class="mkt-val">71,250</span><span class="chg pos">▲0.28%</span></div><div class="mkt-item"><span class="mkt-name">TOPIX連動</span><span class="mkt-val">429.70</span><span class="chg neg">▼0.60%</span></div><div class="mkt-item"><span class="mkt-name">グロース250(連動)</span><span class="mkt-val">550.20</span><span class="chg neg">▼2.77%</span></div></div></div>
+        <div class="mkt-group"><span class="mkt-grp-lbl">🇺🇸 米国株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">ダウ</span><span class="mkt-val">51,565</span><span class="chg pos">▲0.14%</span></div><div class="mkt-item"><span class="mkt-name">S&P500</span><span class="mkt-val">7,501</span><span class="chg pos">▲1.08%</span></div><div class="mkt-item"><span class="mkt-name">NASDAQ総合</span><span class="mkt-val">26,518</span><span class="chg pos">▲1.91%</span></div><div class="mkt-item"><span class="mkt-name">SOX</span><span class="mkt-val">14,342</span><span class="chg pos">▲6.42%</span></div></div></div>
+        <div class="mkt-group"><span class="mkt-grp-lbl">💱 為替/仮想通貨</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">USD/JPY</span><span class="mkt-val">161.28</span><span class="chg neg">▼0.01%</span></div><div class="mkt-item"><span class="mkt-name">BTC</span><span class="mkt-val">63,651</span><span class="chg pos">▲0.17%</span></div></div></div>
       </div>
     </section>
     <!--MARKET_SECTION_END-->
@@ -690,9 +727,14 @@ function buildKioxia(d) {
   const kChg = d?.market_data?.kioxia_price_jpy?.change_pct;
   const sChg = d?.market_data?.sndk_price_usd?.change_pct;
 
-  // kioxia timeseriesは59件あり差分計算可能
+  // kioxia は日本株なので timeseries diff で正確に算出
   const kDiff = tsDiff(ts, e => e?.kioxia?.per);
-  const sDiff = tsDiff(ts, e => e?.sndk?.per);
+  // SNDK は米国休場日に timeseries diff が ±0 になるため、
+  // yfinance の price_change_pct (最終取引日の実変化率) から PER 変化を算出
+  // PER = 株価 / EPS (EPS固定) なので PER変化率 = 株価変化率
+  const sDiff = (sPer != null && sChg != null)
+    ? Math.round(sPer * sChg / 100 * 100) / 100
+    : null;
 
   let comment = '';
   if (kPer != null && sPer != null) {
@@ -774,6 +816,8 @@ function renderMarketBand(data) {
         hour: '2-digit', minute: '2-digit',
       });
       document.getElementById('mkt-time').textContent = ts + ' JST時点';
+      const upEl = document.getElementById('hub-update-time');
+      if (upEl) upEl.textContent = '最終更新 ' + ts + ' JST';
     } catch(e) { /* ignore */ }
   }
 
