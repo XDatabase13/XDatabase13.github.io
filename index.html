@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>数理投資情報部 — 投資家が知りたい数理・ファンダメンタルズ指標を、毎朝更新</title>
-<meta name="description" content="投資家が知りたい数理・ファンダメンタルズ指標を毎朝更新。理論株価・NAV分析・健康管理など、数理的アプローチで選んだデータをまとめるハブ。">
+<meta name="description" content="SBG理論株価・暗号資産mNAV・半導体PERを毎朝自動更新。数理・ファンダメンタルズ指標をまとめた投資家向けハブサイト。">
 <link rel="canonical" href="https://xdbdb.com/">
 <meta name="google-site-verification" content="I2iPjYCNIAccsTmjaOFZey02YwSffiBtFpO1Zxjr39s" />
 <meta name="google-site-verification" content="xMT4M7Cet-3rfVpR7EdOJ8EA1W26pKCeOGtOfDSB_l4" />
@@ -14,214 +14,600 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0e0f13;
-    --panel:#16181f;
-    --ink:#e8e9ec;
-    --muted:#8b8f9a;
-    --line:#262932;
-    --accent:#4fd1c5;
+  :root {
+    --bg:     #0e0f13;
+    --panel:  #16181f;
+    --ink:    #e8e9ec;
+    --muted:  #8b8f9a;
+    --line:   #262932;
+    --accent: #4fd1c5;
     --accent2:#f6c454;
-    --mono:'JetBrains Mono',monospace;
-    --sans:'Zen Kaku Gothic New',sans-serif;
+    --green:  #48bb78;
+    --red:    #fc8181;
+    --mono:   'JetBrains Mono', monospace;
+    --sans:   'Zen Kaku Gothic New', sans-serif;
   }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--sans);
-    line-height:1.7;
-    -webkit-font-smoothing:antialiased;
-    min-height:100vh;
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
     background-image:
       radial-gradient(circle at 15% 10%, rgba(79,209,197,.06), transparent 40%),
       radial-gradient(circle at 85% 90%, rgba(246,196,84,.05), transparent 40%);
   }
-  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
 
-  header{padding:80px 0 48px;border-bottom:1px solid var(--line);}
-  .eyebrow{
-    font-family:var(--mono);
-    font-size:.72rem;
-    letter-spacing:.28em;
-    text-transform:uppercase;
-    color:var(--accent);
-    margin-bottom:18px;
+  /* ── Header ──────────────────────────────────────────── */
+  header { padding: 64px 0 36px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
   }
-  h1{
-    font-size:clamp(2.2rem,6vw,3.8rem);
-    font-weight:900;
-    letter-spacing:-.02em;
-    line-height:1.08;
+  h1 {
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    font-weight: 900;
+    letter-spacing: -.02em;
+    line-height: 1.1;
   }
-  h1 .dim{color:var(--muted);font-weight:400;}
-  .lead{
-    margin-top:22px;
-    max-width:560px;
-    color:var(--muted);
-    font-size:1.02rem;
-  }
-  .count{
-    font-family:var(--mono);
-    font-size:.78rem;
-    color:var(--muted);
-    margin-top:28px;
-  }
-  .count b{color:var(--accent2);}
-
-  main{padding:56px 0 40px;}
-  .grid{display:grid;gap:18px;}
-  @media(min-width:680px){.grid{grid-template-columns:1fr 1fr;}}
-
-  .card{
-    display:block;
-    text-decoration:none;
-    color:inherit;
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:28px 26px;
-    position:relative;
-    overflow:hidden;
-    transition:border-color .25s, transform .25s;
-  }
-  .card::after{
-    content:"→";
-    position:absolute;
-    top:24px;right:24px;
-    font-family:var(--mono);
-    color:var(--muted);
-    transition:transform .25s, color .25s;
-  }
-  .card:hover{border-color:var(--accent);transform:translateY(-3px);}
-  .card:hover::after{transform:translate(4px,-2px);color:var(--accent);}
-  .card .tag{
-    font-family:var(--mono);
-    font-size:.68rem;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    color:var(--accent);
-    display:block;
-    margin-bottom:14px;
-  }
-  .card h2{font-size:1.5rem;font-weight:700;letter-spacing:-.01em;}
-  .card .sub{color:var(--muted);font-size:.92rem;margin-top:8px;}
-  .card .meta{
-    font-family:var(--mono);
-    font-size:.72rem;
-    color:var(--muted);
-    margin-top:20px;
-    padding-top:14px;
-    border-top:1px solid var(--line);
+  h1 .dim { color: var(--muted); font-weight: 400; }
+  .lead {
+    margin-top: 16px;
+    max-width: 520px;
+    color: var(--muted);
+    font-size: 1rem;
   }
 
-  footer{
-    border-top:1px solid var(--line);
-    padding:32px 0 60px;
-    color:var(--muted);
-    font-family:var(--mono);
-    font-size:.74rem;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
+  /* ── Main ─────────────────────────────────────────────── */
+  main { padding: 40px 0 36px; }
+
+  /* ── Investment card grid ─────────────────────────────── */
+  .cards-grid {
+    display: grid;
+    gap: 16px;
   }
-  .footer-disclaimer{
-    color:var(--muted);
-    font-size:.68rem;
-    line-height:1.6;
-    opacity:.7;
+  @media (min-width: 680px) {
+    .cards-grid { grid-template-columns: 1fr 1fr; }
   }
-  .footer-bottom{
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:8px;
+  @media (min-width: 1000px) {
+    .cards-grid { grid-template-columns: 1fr 1fr 1fr; }
   }
 
-  .reveal{opacity:0;transform:translateY(14px);animation:rise .6s forwards;}
-  @keyframes rise{to{opacity:1;transform:none;}}
+  /* ── Data card ────────────────────────────────────────── */
+  .dcard {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color .25s, transform .2s;
+  }
+  .dcard:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .dcard-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: .64rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .status-badge {
+    font-family: var(--mono);
+    font-size: .64rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--muted);
+  }
+  .s-ok   .status-dot { background: var(--green); }
+  .s-warn .status-dot { background: var(--accent2); }
+  .s-fail .status-dot { background: var(--red); }
+  .s-ok   { color: var(--green); }
+  .s-warn { color: var(--accent2); }
+  .s-fail { color: var(--red); }
+
+  .dcard-title { font-size: 1.15rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.3; }
+  .dcard-sub   { color: var(--muted); font-size: .82rem; margin-top: -4px; }
+
+  /* ── Metrics ──────────────────────────────────────────── */
+  .metrics { display: flex; flex-direction: column; }
+  .metric {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .metric:last-child { border-bottom: none; }
+  .metric-main .mlabel { color: var(--ink); }
+  .mlabel { font-size: .78rem; color: var(--muted); flex-shrink: 0; }
+  .mval {
+    font-family: var(--mono);
+    font-size: .86rem;
+    text-align: right;
+    min-width: 0;
+  }
+  .mval-hi {
+    color: var(--accent2);
+    font-size: .94rem;
+    font-weight: 700;
+  }
+
+  /* ── Change chips ─────────────────────────────────────── */
+  .chg         { font-family: var(--mono); font-size: .72rem; margin-left: 3px; }
+  .chg.pos     { color: var(--green); }
+  .chg.neg     { color: var(--red); }
+  .chg.neutral { color: var(--muted); }
+
+  /* ── Comment & CTA ────────────────────────────────────── */
+  .dcard-comment {
+    font-size: .84rem;
+    background: rgba(79,209,197,.06);
+    border-left: 3px solid var(--accent);
+    padding: 6px 10px;
+    border-radius: 0 6px 6px 0;
+  }
+  .dcard-cta {
+    display: block;
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--accent);
+    text-decoration: none;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+    transition: opacity .2s;
+  }
+  .dcard-cta:hover { opacity: .65; }
+  .dcard-time {
+    font-family: var(--mono);
+    font-size: .62rem;
+    color: var(--muted);
+    opacity: .7;
+  }
+
+  /* ── Loading shimmer ──────────────────────────────────── */
+  .loading-rows { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+  .loading-row {
+    height: 13px; border-radius: 4px;
+    background: linear-gradient(90deg, var(--line) 25%, #1e2028 50%, var(--line) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+  }
+  .loading-row:nth-child(2) { width: 75%; animation-delay: .12s; }
+  .loading-row:nth-child(3) { width: 55%; animation-delay: .24s; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+
+  /* ── Health section ───────────────────────────────────── */
+  .health-section { margin-top: 36px; }
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--muted);
+    letter-spacing: .1em;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .health-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 22px;
+    transition: border-color .25s, transform .2s;
+  }
+  .health-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .health-icon { font-size: 1.5rem; flex-shrink: 0; line-height: 1; }
+  .health-body { flex: 1; }
+  .health-body h2 { font-size: 1.05rem; font-weight: 700; }
+  .health-body p  { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+  .health-arrow {
+    font-family: var(--mono);
+    color: var(--muted);
+    transition: transform .2s, color .2s;
+  }
+  .health-card:hover .health-arrow { transform: translateX(4px); color: var(--accent2); }
+
+  /* ── Footer ───────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 28px 0 60px;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: .72rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .footer-disclaimer { font-size: .66rem; line-height: 1.6; opacity: .7; }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  /* ── Reveal ───────────────────────────────────────────── */
+  .reveal { opacity: 0; transform: translateY(14px); animation: rise .6s forwards; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="eyebrow reveal" style="animation-delay:.05s">Mathematical Investment Hub</div>
-      <h1 class="reveal" style="animation-delay:.12s">数理投資情報部<span class="dim">.</span></h1>
-      <p class="lead reveal" style="animation-delay:.2s">
-        投資家が知りたい数理・ファンダメンタルズ指標を、毎朝更新。<br>
-        データで見る相場と、投資家の身体管理。
-      </p>
-      <p class="count reveal" style="animation-delay:.28s">
-        現在 <b id="svc-count">0</b> サービス稼働中
-      </p>
-    </header>
+<div class="wrap">
 
-    <main>
-      <div class="grid" id="services"></div>
-    </main>
+  <header>
+    <div class="eyebrow reveal" style="animation-delay:.05s">Mathematical Investment Hub</div>
+    <h1 class="reveal" style="animation-delay:.12s">数理投資情報部<span class="dim">.</span></h1>
+    <p class="lead reveal" style="animation-delay:.2s">
+      投資家が知りたい数理・ファンダメンタルズ指標を、毎朝更新。<br>
+      理論株価 · mNAV · PER — 毎朝05:30自動更新。
+    </p>
+  </header>
 
-    <footer>
-      <p class="footer-disclaimer">
-        当サイトの情報は投資助言ではありません。掲載データは情報提供のみを目的としており、投資判断はご自身の責任でお願いします。
-      </p>
-      <div class="footer-bottom">
-        <span>数理投資情報部 — xdbdb.com</span>
-        <span id="year"></span>
-      </div>
-    </footer>
-  </div>
+  <main>
+    <div class="cards-grid reveal" id="cards-grid" style="animation-delay:.3s">
+      <!-- JS renders cards here -->
+    </div>
 
+    <section class="health-section reveal" style="animation-delay:.45s">
+      <div class="section-divider">体と心のメンテナンス</div>
+      <a href="/kintore/" class="health-card">
+        <span class="health-icon">💪</span>
+        <div class="health-body">
+          <h2>筋トレメニュー検索</h2>
+          <p>部位別に探せる203種のトレーニングデータベース。投資家の身体管理に。</p>
+        </div>
+        <span class="health-arrow">→</span>
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <p class="footer-disclaimer">
+      当サイトの情報は投資助言ではありません。掲載データは情報提供のみを目的としており、投資判断はご自身の責任でお願いします。
+    </p>
+    <div class="footer-bottom">
+      <span>数理投資情報部 — xdbdb.com</span>
+      <span id="year"></span>
+    </div>
+  </footer>
+
+</div>
 <script>
-  // ── コンテンツ一覧（新サービスはここに1件足すだけ） ───────────────
-  const SERVICES = [
-    {
-      tag: "Investment",
-      name: "SBG 理論株価モニター",
-      sub: "ソフトバンクGのNAVに基づく理論株価とディスカウント率を毎朝更新。保有資産の時価からNAVを算出。",
-      meta: "auto-update · every morning",
-      url: "/sbg-nav/"
-    },
-    {
-      tag: "Investment",
-      name: "暗号通貨トレジャリー企業 mNAVモニター",
-      sub: "BTC保有企業（MSTR・メタプラネット）のmNAVプレミアムを毎朝自動計算。日米比較と計算の全透明性。",
-      meta: "auto-update · every morning",
-      url: "/crypto-nav/"
-    },
-    {
-      tag: "Investment",
-      name: "キオクシア×サンディスク PER",
-      sub: "NANDフラッシュ大手2社のPERを毎朝自動算出。株価と予想EPSから割安度を比較。",
-      meta: "auto-update · every morning",
-      url: "/kioxia-sandisk/"
-    },
-    {
-      tag: "Health",
-      name: "筋トレメニュー検索",
-      sub: "投資家のメンタル・健康管理。部位別に探せる203種の筋トレデータベース。",
-      meta: "203+ exercises",
-      url: "/kintore/"
-    }
-  ];
-  // ────────────────────────────────────────────────────────────
+// ── Data URLs ──────────────────────────────────────────────────────────────────
+const URLS = {
+  sbg:    'https://raw.githubusercontent.com/XDatabase13/sbg-nav/master/data.json',
+  crypto: 'https://raw.githubusercontent.com/XDatabase13/crypto-nav/master/data.json',
+  kioxia: 'https://raw.githubusercontent.com/XDatabase13/kioxia-sandisk/master/data.json',
+};
 
-  const grid = document.getElementById('services');
-  SERVICES.forEach((s, i) => {
-    const a = document.createElement('a');
-    a.className = 'card reveal';
-    a.href = s.url;
-    a.style.animationDelay = (0.34 + i * 0.08) + 's';
-    a.innerHTML = `
-      <span class="tag">${s.tag}</span>
-      <h2>${s.name}</h2>
-      <p class="sub">${s.sub}</p>
-      <p class="meta">${s.meta}</p>`;
-    grid.appendChild(a);
-  });
-  document.getElementById('svc-count').textContent = SERVICES.length;
+// ── Utilities ──────────────────────────────────────────────────────────────────
+async function fetchJson(url) {
+  const res = await fetch(url, { cache: 'no-cache' });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+// Format a number with optional prefix/suffix and decimal places. Returns '—' for null/NaN.
+function fmt(val, prefix, suffix, decimals) {
+  if (val == null || isNaN(Number(val))) return '—';
+  prefix  = prefix  ?? '';
+  suffix  = suffix  ?? '';
+  decimals = decimals ?? 0;
+  return prefix + Number(val).toLocaleString('ja-JP', {
+    minimumFractionDigits:  decimals,
+    maximumFractionDigits:  decimals,
+  }) + suffix;
+}
+
+// Format a percentage change as ▲/▼ chip. Returns '' for null.
+function fmtPct(pct) {
+  if (pct == null || isNaN(Number(pct))) return '';
+  const v = Number(pct), a = Math.abs(v).toFixed(2);
+  if (v > 0) return `<span class="chg pos">▲${a}%</span>`;
+  if (v < 0) return `<span class="chg neg">▼${a}%</span>`;
+  return `<span class="chg neutral">±0.00%</span>`;
+}
+
+// Format an absolute diff value with a custom suffix. Returns '' for null.
+function fmtDiff(diff, suffix, decimals) {
+  if (diff == null || isNaN(Number(diff))) return '';
+  suffix   = suffix   ?? 'pt';
+  decimals = decimals ?? 2;
+  const v = Number(diff), a = Math.abs(v).toFixed(decimals);
+  if (v > 0) return `<span class="chg pos">▲${a}${suffix}</span>`;
+  if (v < 0) return `<span class="chg neg">▼${a}${suffix}</span>`;
+  return `<span class="chg neutral">±0${suffix}</span>`;
+}
+
+// Format ISO datetime as ja-JP locale string in JST.
+function fmtTime(iso) {
+  if (!iso) return '';
+  try {
+    return new Date(iso).toLocaleString('ja-JP', {
+      timeZone: 'Asia/Tokyo',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit',
+    }) + ' JST';
+  } catch { return ''; }
+}
+
+// Map overall_status to CSS class.
+function sCls(s) {
+  return s === 'complete' ? 's-ok' : s === 'partial' ? 's-warn' : s === 'failed' ? 's-fail' : '';
+}
+function sLbl(s) {
+  return s === 'complete' ? '正常更新' : s === 'partial' ? '一部前回値' : s === 'failed' ? '取得失敗' : '確認中';
+}
+
+// Compute diff between the last two timeseries entries using keyFn.
+// Returns null if fewer than 2 entries, or if either value is null.
+function tsDiff(ts, keyFn) {
+  if (!Array.isArray(ts) || ts.length < 2) return null;
+  const a = keyFn(ts[ts.length - 2]);
+  const b = keyFn(ts[ts.length - 1]);
+  if (a == null || b == null || isNaN(a) || isNaN(b)) return null;
+  return Math.round((b - a) * 10000) / 10000;
+}
+
+// Find company in array by id field (never hardcodes array index).
+function byId(arr, id) {
+  return Array.isArray(arr) ? (arr.find(c => c.id === id) ?? null) : null;
+}
+
+// ── Placeholder cards ──────────────────────────────────────────────────────────
+function loadingCard(title) {
+  return `<div class="dcard">
+    <div class="dcard-head">
+      <span class="tag">Investment</span>
+      <span class="status-badge"><span class="status-dot"></span>取得中</span>
+    </div>
+    <p class="dcard-title">${title}</p>
+    <div class="loading-rows">
+      <div class="loading-row"></div>
+      <div class="loading-row"></div>
+      <div class="loading-row"></div>
+    </div>
+  </div>`;
+}
+
+function errorCard(title) {
+  return `<div class="dcard">
+    <div class="dcard-head">
+      <span class="tag">Investment</span>
+      <span class="status-badge s-fail"><span class="status-dot"></span>取得失敗</span>
+    </div>
+    <p class="dcard-title">${title}</p>
+    <p class="dcard-comment" style="border-color:var(--red);background:rgba(252,129,129,.07)">
+      データを取得できませんでした。しばらく後に再読み込みしてください。
+    </p>
+  </div>`;
+}
+
+// ── Card: SBG 理論株価モニター ────────────────────────────────────────────────
+function buildSbg(d) {
+  const navPerShare = d?.nav?.semi?.nav_per_share_jpy;
+  const close       = d?.market?.sbg?.close;
+  const prevClose   = d?.market?.sbg?.prev_close;
+  // semi.discount_pct はSBGの主要指標。timeseriesはofficial NAV基準なので差分は非表示。
+  const discount    = d?.nav?.semi?.discount_pct ?? d?.nav?.semi_discount_pct;
+  const status      = d?.status;
+  const genAt       = d?.generated_at;
+
+  const priceDiff = (close != null && prevClose != null && prevClose !== 0)
+    ? (close - prevClose) / Math.abs(prevClose) * 100 : null;
+
+  const comment = discount != null
+    ? (discount >= 0 ? '半透明NAV理論株価に対し割安' : '半透明NAV理論株価に対し割高')
+    : '';
+
+  return `<div class="dcard">
+    <div class="dcard-head">
+      <span class="tag">Investment</span>
+      <span class="status-badge ${sCls(status)}"><span class="status-dot"></span>${sLbl(status)}</span>
+    </div>
+    <h2 class="dcard-title">SBG 理論株価モニター</h2>
+    <p class="dcard-sub">ソフトバンクG · NAV分析</p>
+    <div class="metrics">
+      <div class="metric">
+        <span class="mlabel">理論株価(半透明NAV)</span>
+        <span class="mval">${fmt(navPerShare, '¥')}</span>
+      </div>
+      <div class="metric metric-main">
+        <span class="mlabel">実株価</span>
+        <span class="mval">${fmt(close, '¥')} ${fmtPct(priceDiff)}</span>
+      </div>
+      <div class="metric metric-main">
+        <span class="mlabel">ディスカウント率</span>
+        <span class="mval mval-hi">${fmt(discount, '', '%', 1)}</span>
+      </div>
+    </div>
+    ${comment ? `<p class="dcard-comment">${comment}</p>` : ''}
+    <a href="https://xdbdb.com/sbg-nav/" class="dcard-cta">構成銘柄の情報を詳しく見る →</a>
+    <p class="dcard-time">${fmtTime(genAt)} 更新</p>
+  </div>`;
+}
+
+// ── Card: 暗号資産トレジャリー mNAV ──────────────────────────────────────────
+function buildCrypto(d) {
+  const companies = d?.companies ?? [];
+  const mstr      = byId(companies, 'mstr');
+  const meta      = byId(companies, 'metaplanet');
+  const status    = d?._meta?.overall_status;
+  const genAt     = d?._meta?.generated_at;
+  const ts        = d?.timeseries ?? [];
+
+  const mstrMnav = mstr?.calc?.mnav_premium?.value;
+  const metaMnav = meta?.calc?.mnav_premium?.value;
+  const mstrChg  = d?.market_data?.mstr_price_usd?.change_pct;
+  const metaChg  = d?.market_data?.metaplanet_price_jpy?.change_pct;
+
+  // ts < 2件なら null → fmtDiff が '' を返すので自動で非表示
+  const mstrDiff = tsDiff(ts, e => e?.mstr?.mnav_premium);
+  const metaDiff = tsDiff(ts, e => e?.metaplanet?.mnav_premium);
+
+  const parts = [];
+  if (mstrMnav != null) parts.push(`MSTRは${mstrMnav >= 1 ? 'プレミアム圏' : 'ディスカウント圏'}`);
+  if (metaMnav != null) parts.push(`メタプラは${metaMnav >= 1 ? 'プレミアム圏' : 'ディスカウント圏'}`);
+  const comment = parts.join('、');
+
+  return `<div class="dcard">
+    <div class="dcard-head">
+      <span class="tag">Investment</span>
+      <span class="status-badge ${sCls(status)}"><span class="status-dot"></span>${sLbl(status)}</span>
+    </div>
+    <h2 class="dcard-title">暗号資産トレジャリー mNAV</h2>
+    <p class="dcard-sub">MSTR · メタプラネット</p>
+    <div class="metrics">
+      <div class="metric metric-main">
+        <span class="mlabel">MSTR mNAV</span>
+        <span class="mval mval-hi">${fmt(mstrMnav, '', 'x', 2)} ${fmtDiff(mstrDiff)}</span>
+      </div>
+      <div class="metric">
+        <span class="mlabel">MSTR 株価前日比</span>
+        <span class="mval">${fmtPct(mstrChg)}</span>
+      </div>
+      <div class="metric metric-main">
+        <span class="mlabel">メタプラ mNAV</span>
+        <span class="mval mval-hi">${fmt(metaMnav, '', 'x', 2)} ${fmtDiff(metaDiff)}</span>
+      </div>
+      <div class="metric">
+        <span class="mlabel">メタプラ 株価前日比</span>
+        <span class="mval">${fmtPct(metaChg)}</span>
+      </div>
+    </div>
+    ${comment ? `<p class="dcard-comment">${comment}</p>` : ''}
+    <a href="https://xdbdb.com/crypto-nav/" class="dcard-cta">比較・計算法を詳しく確認 →</a>
+    <p class="dcard-time">${fmtTime(genAt)} 更新</p>
+  </div>`;
+}
+
+// ── Card: キオクシア vs サンディスク ──────────────────────────────────────────
+function buildKioxia(d) {
+  const companies = d?.companies ?? [];
+  const kioxia    = byId(companies, 'kioxia');
+  const sndk      = byId(companies, 'sndk');
+  const status    = d?._meta?.overall_status;
+  const genAt     = d?._meta?.generated_at;
+  const ts        = d?.timeseries ?? [];
+
+  const kPer = kioxia?.calc?.per?.value;
+  const sPer = sndk?.calc?.per?.value;
+  const kChg = d?.market_data?.kioxia_price_jpy?.change_pct;
+  const sChg = d?.market_data?.sndk_price_usd?.change_pct;
+
+  // kioxia timeseriesは59件あり差分計算可能
+  const kDiff = tsDiff(ts, e => e?.kioxia?.per);
+  const sDiff = tsDiff(ts, e => e?.sndk?.per);
+
+  let comment = '';
+  if (kPer != null && sPer != null) {
+    if (kPer < sPer)      comment = 'キオクシアが割安（PERが低い）';
+    else if (sPer < kPer) comment = 'サンディスクが割安（PERが低い）';
+    else                  comment = '両社のPERは同水準';
+  }
+
+  return `<div class="dcard">
+    <div class="dcard-head">
+      <span class="tag">Investment</span>
+      <span class="status-badge ${sCls(status)}"><span class="status-dot"></span>${sLbl(status)}</span>
+    </div>
+    <h2 class="dcard-title">キオクシア vs サンディスク</h2>
+    <p class="dcard-sub">NAND予想PER比較</p>
+    <div class="metrics">
+      <div class="metric metric-main">
+        <span class="mlabel">キオクシア 予想PER</span>
+        <span class="mval mval-hi">${fmt(kPer, '', '倍', 1)} ${fmtDiff(kDiff, '倍')}</span>
+      </div>
+      <div class="metric">
+        <span class="mlabel">キオクシア 株価前日比</span>
+        <span class="mval">${fmtPct(kChg)}</span>
+      </div>
+      <div class="metric metric-main">
+        <span class="mlabel">サンディスク 予想PER</span>
+        <span class="mval mval-hi">${fmt(sPer, '', '倍', 1)} ${fmtDiff(sDiff, '倍')}</span>
+      </div>
+      <div class="metric">
+        <span class="mlabel">サンディスク 株価前日比</span>
+        <span class="mval">${fmtPct(sChg)}</span>
+      </div>
+    </div>
+    ${comment ? `<p class="dcard-comment">${comment}</p>` : ''}
+    <a href="https://xdbdb.com/kioxia-sandisk/" class="dcard-cta">PER推移を詳しく見る →</a>
+    <p class="dcard-time">${fmtTime(genAt)} 更新</p>
+  </div>`;
+}
+
+// ── Bootstrap ──────────────────────────────────────────────────────────────────
+const CARD_SPECS = [
+  { key: 'sbg',    title: 'SBG 理論株価モニター',     build: buildSbg    },
+  { key: 'crypto', title: '暗号資産トレジャリー mNAV', build: buildCrypto },
+  { key: 'kioxia', title: 'キオクシア vs サンディスク', build: buildKioxia },
+];
+
+async function init() {
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  const grid = document.getElementById('cards-grid');
+  grid.innerHTML = CARD_SPECS.map(s => loadingCard(s.title)).join('');
+
+  const results = await Promise.allSettled(
+    CARD_SPECS.map(s => fetchJson(URLS[s.key]))
+  );
+
+  grid.innerHTML = results.map((r, i) => {
+    const spec = CARD_SPECS[i];
+    if (r.status === 'fulfilled') {
+      try   { return spec.build(r.value); }
+      catch (e) {
+        console.error(`[hub] render error for ${spec.key}:`, e);
+        return errorCard(spec.title);
+      }
+    }
+    console.error(`[hub] fetch error for ${spec.key}:`, r.reason);
+    return errorCard(spec.title);
+  }).join('');
+}
+
+init();
 </script>
 </body>
 </html>
