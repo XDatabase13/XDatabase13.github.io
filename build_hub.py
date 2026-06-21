@@ -54,7 +54,8 @@ MARKET_SPECS = [
 SITE_URLS = {
     "sbg":    "https://raw.githubusercontent.com/XDatabase13/sbg-nav/master/data.json",
     "crypto": "https://raw.githubusercontent.com/XDatabase13/crypto-nav/master/data.json",
-    "kioxia": "https://raw.githubusercontent.com/XDatabase13/kioxia-sandisk/master/data.json",
+    "kioxia":    "https://raw.githubusercontent.com/XDatabase13/kioxia-sandisk/master/data.json",
+    "momentum":  "https://raw.githubusercontent.com/XDatabase13/momentum-corr/master/data.json",
 }
 
 
@@ -199,10 +200,28 @@ def extract_kioxia(d: dict) -> dict:
     }
 
 
+def extract_momentum(d: dict) -> dict:
+    """momentum-corr data.json からカード表示に必要な最小フィールドを抽出。"""
+    meta    = d.get("_meta") or {}
+    periods = d.get("periods") or {}
+
+    def _mean(p):
+        return ((periods.get(str(p)) or {}).get("stats") or {}).get("mean_corr")
+
+    return {
+        "status":       meta.get("overall_status"),
+        "generated_at": meta.get("generated_at"),
+        "mean_corr_10": _mean(10),
+        "mean_corr_30": _mean(30),
+        "mean_corr_50": _mean(50),
+    }
+
+
 SITE_EXTRACTORS = {
-    "sbg":    extract_sbg,
-    "crypto": extract_crypto,
-    "kioxia": extract_kioxia,
+    "sbg":      extract_sbg,
+    "crypto":   extract_crypto,
+    "kioxia":   extract_kioxia,
+    "momentum": extract_momentum,
 }
 
 
@@ -457,26 +476,77 @@ def _build_kioxia_card_html(kioxia: dict) -> str:
     </div>"""
 
 
+def _build_momentum_card_html(mom: dict) -> str:
+    st  = mom.get("status", "")
+    gen = mom.get("generated_at", "")
+    m10 = mom.get("mean_corr_10")
+    m30 = mom.get("mean_corr_30")
+    m50 = mom.get("mean_corr_50")
+
+    m50_s = f"{float(m50):.2f}" if m50 is not None else "—"
+    m30_s = f"{float(m30):.2f}" if m30 is not None else "—"
+    m10_s = f"{float(m10):.2f}" if m10 is not None else "—"
+
+    comment = ""
+    if m10 is not None and m50 is not None:
+        if   float(m10) > float(m50) + 0.05: comment = "短期（10日）の群れが中長期を上回り、急速に結束している"
+        elif float(m10) < float(m50) - 0.05: comment = "短期（10日）の群れが中長期を下回り、結束が緩み始めている"
+        elif float(m50) >= 0.5:              comment = "群れの結束が強い（平均相関0.5超）"
+        elif float(m50) <= 0.3:              comment = "群れの結束が弱い（平均相関0.3以下）"
+        else:                                comment = "群れは中程度の結束"
+    c_html = f'<p class="dcard-comment">{comment}</p>' if comment else ""
+
+    return f"""<div class="dcard" onclick="location.href='https://xdbdb.com/momentum-corr/'">
+      <div class="dcard-head">
+        <span class="tag">Investment</span>
+        <span class="status-badge {_status_cls(st)}"><span class="status-dot"></span>{_status_lbl(st)}</span>
+      </div>
+      <h2 class="dcard-title">モメンタム銘柄 相関係数</h2>
+      <p class="dcard-sub">AI半導体テーマ18銘柄 · 群れの強さ</p>
+      <p class="dcard-desc">AI半導体テーマ銘柄18社の日次リターン相関係数を毎朝更新。銘柄が一斉に動く「群れ」の強さを平均相関で可視化。相場の結束・崩壊の予兆を読む。</p>
+      <div class="metrics">
+        <div class="metric metric-main">
+          <span class="mlabel">平均相関（50日）</span>
+          <span class="mval mval-hi">{m50_s}</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">平均相関（30日）</span>
+          <span class="mval">{m30_s}</span>
+        </div>
+        <div class="metric metric-main">
+          <span class="mlabel">平均相関（10日）</span>
+          <span class="mval mval-hi">{m10_s}</span>
+        </div>
+      </div>
+      {c_html}
+      <a href="https://xdbdb.com/momentum-corr/" class="dcard-cta">相関ヒートマップを詳しく見る →</a>
+      <p class="dcard-time">{_fmt_time_jst(gen)} 更新</p>
+    </div>"""
+
+
 def _build_meta_description(hub_data: dict) -> str:
     cards = hub_data.get("cards", {})
     sbg   = cards.get("sbg", {})
     cryp  = cards.get("crypto", {})
     kiox  = cards.get("kioxia", {})
+    mom   = cards.get("momentum", {})
 
     disc  = sbg.get("discount_pct")
     mm    = (cryp.get("mstr") or {}).get("mnav_premium")
     mp    = (cryp.get("metaplanet") or {}).get("mnav_premium")
     kp    = (kiox.get("kioxia") or {}).get("per")
+    m50   = mom.get("mean_corr_50")
 
     parts = []
     if disc is not None: parts.append(f"SBGディスカウント率{float(disc):.1f}%")
     if mm   is not None: parts.append(f"MSTR mNAV {float(mm):.2f}x")
     if mp   is not None: parts.append(f"メタプラ mNAV {float(mp):.2f}x")
     if kp   is not None: parts.append(f"キオクシア予想PER {float(kp):.1f}倍")
+    if m50  is not None: parts.append(f"AI半導体平均相関 {float(m50):.2f}")
 
     if parts:
-        return " / ".join(parts) + "。理論株価・mNAV・予想PERを毎日更新する投資家向けハブ。"
-    return "SBG理論株価・暗号資産mNAV・半導体PERを毎朝自動更新。数理・ファンダメンタルズ指標をまとめた投資家向けハブサイト。"
+        return " / ".join(parts) + "。理論株価・mNAV・予想PER・相関係数を毎日更新する投資家向けハブ。"
+    return "SBG理論株価・暗号資産mNAV・半導体PER・銘柄相関係数を毎朝自動更新。数理・ファンダメンタルズ指標をまとめた投資家向けハブサイト。"
 
 
 def bake_index_html(hub_data: dict, index_path: Path) -> None:
@@ -491,12 +561,13 @@ def bake_index_html(hub_data: dict, index_path: Path) -> None:
     market_html = _build_market_section_html(hub_data)
     content = _replace_between(content, "<!--MARKET_SECTION_START-->", "<!--MARKET_SECTION_END-->", market_html)
 
-    # カード3枚を置換
+    # カード4枚を置換
     cards = hub_data.get("cards", {})
     cards_inner = "\n      ".join([
         _build_sbg_card_html(cards.get("sbg", {})),
         _build_crypto_card_html(cards.get("crypto", {})),
         _build_kioxia_card_html(cards.get("kioxia", {})),
+        _build_momentum_card_html(cards.get("momentum", {})),
     ])
     content = _replace_between(content, "<!--CARDS_START-->", "<!--CARDS_END-->",
                                 "\n      " + cards_inner + "\n      ")
@@ -604,8 +675,8 @@ def build_hub() -> None:
             entry["note"] = spec["note"]
         market_out[key] = entry
 
-    # ── 3サイト集約 ─────────────────────────────────────────────────────────
-    print(f"\n▼ 3サイト集約")
+    # ── 4サイト集約 ─────────────────────────────────────────────────────────
+    print(f"\n▼ 4サイト集約")
     cards_out: dict[str, dict] = {}
 
     for site_key, url in SITE_URLS.items():
