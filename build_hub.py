@@ -203,17 +203,17 @@ def extract_kioxia(d: dict) -> dict:
 def extract_momentum(d: dict) -> dict:
     """momentum-corr data.json からカード表示に必要な最小フィールドを抽出。"""
     meta    = d.get("_meta") or {}
-    periods = d.get("periods") or {}
-
-    def _mean(p):
-        return ((periods.get(str(p)) or {}).get("stats") or {}).get("mean_corr")
+    p10     = ((d.get("periods") or {}).get("10") or {})
+    stats10 = p10.get("stats") or {}
+    high    = p10.get("pair_ranking_high") or []
+    low     = p10.get("pair_ranking_low") or []
 
     return {
-        "status":       meta.get("overall_status"),
-        "generated_at": meta.get("generated_at"),
-        "mean_corr_10": _mean(10),
-        "mean_corr_30": _mean(30),
-        "mean_corr_50": _mean(50),
+        "status":        meta.get("overall_status"),
+        "generated_at":  meta.get("generated_at"),
+        "mean_corr_10":  stats10.get("mean_corr"),
+        "top_high_pair": high[0] if high else None,
+        "top_low_pair":  low[0] if low else None,
     }
 
 
@@ -476,24 +476,42 @@ def _build_kioxia_card_html(kioxia: dict) -> str:
     </div>"""
 
 
+_MOMENTUM_SHORT = {
+    "285A": "キオクシア", "6976": "太陽誘電", "9984": "SBG",
+    "6981": "村田",       "8035": "東エレク",  "6920": "レーザテク",
+    "4062": "イビデン",   "5801": "古河電工",  "5706": "三井金属",
+    "6525": "KOKUSAI",   "6723": "ルネサス",   "4004": "レゾナック",
+    "6762": "TDK",        "6752": "パナソニック","3436": "SUMCO",
+    "7735": "SCREEN",     "6098": "リクルート", "5803": "フジクラ",
+}
+
+
 def _build_momentum_card_html(mom: dict) -> str:
     st  = mom.get("status", "")
     gen = mom.get("generated_at", "")
     m10 = mom.get("mean_corr_10")
-    m30 = mom.get("mean_corr_30")
-    m50 = mom.get("mean_corr_50")
+    hi  = mom.get("top_high_pair")
+    lo  = mom.get("top_low_pair")
 
-    m50_s = f"{float(m50):.2f}" if m50 is not None else "—"
-    m30_s = f"{float(m30):.2f}" if m30 is not None else "—"
     m10_s = f"{float(m10):.2f}" if m10 is not None else "—"
 
+    def _sh(code: str) -> str:
+        return _MOMENTUM_SHORT.get(code, code)
+
+    def _pair_str(pair) -> str:
+        if not pair:
+            return "—"
+        a, b  = _sh(pair.get("a", "")), _sh(pair.get("b", ""))
+        rho   = pair.get("rho")
+        rho_s = f"{float(rho):+.2f}" if rho is not None else "—"
+        return f"{a} × {b}　{rho_s}"
+
     comment = ""
-    if m10 is not None and m50 is not None:
-        if   float(m10) > float(m50) + 0.05: comment = "短期（10日）の群れが中長期を上回り、急速に結束している"
-        elif float(m10) < float(m50) - 0.05: comment = "短期（10日）の群れが中長期を下回り、結束が緩み始めている"
-        elif float(m50) >= 0.5:              comment = "群れの結束が強い（平均相関0.5超）"
-        elif float(m50) <= 0.3:              comment = "群れの結束が弱い（平均相関0.3以下）"
-        else:                                comment = "群れは中程度の結束"
+    if m10 is not None:
+        v = float(m10)
+        if   v >= 0.6: comment = "群れの結束が強い"
+        elif v >= 0.4: comment = "群れはほどほどに連動"
+        else:          comment = "群れはばらけ気味"
     c_html = f'<p class="dcard-comment">{comment}</p>' if comment else ""
 
     return f"""<div class="dcard" onclick="location.href='https://xdbdb.com/momentum-corr/'">
@@ -506,16 +524,16 @@ def _build_momentum_card_html(mom: dict) -> str:
       <p class="dcard-desc">AI半導体テーマ銘柄18社の日次リターン相関係数を毎朝更新。銘柄が一斉に動く「群れ」の強さを平均相関で可視化。相場の結束・崩壊の予兆を読む。</p>
       <div class="metrics">
         <div class="metric metric-main">
-          <span class="mlabel">平均相関（50日）</span>
-          <span class="mval mval-hi">{m50_s}</span>
-        </div>
-        <div class="metric">
-          <span class="mlabel">平均相関（30日）</span>
-          <span class="mval">{m30_s}</span>
-        </div>
-        <div class="metric metric-main">
           <span class="mlabel">平均相関（10日）</span>
           <span class="mval mval-hi">{m10_s}</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">最も相関</span>
+          <span class="mval">{_pair_str(hi)}</span>
+        </div>
+        <div class="metric">
+          <span class="mlabel">最も逆相関</span>
+          <span class="mval">{_pair_str(lo)}</span>
         </div>
       </div>
       {c_html}
@@ -535,14 +553,14 @@ def _build_meta_description(hub_data: dict) -> str:
     mm    = (cryp.get("mstr") or {}).get("mnav_premium")
     mp    = (cryp.get("metaplanet") or {}).get("mnav_premium")
     kp    = (kiox.get("kioxia") or {}).get("per")
-    m50   = mom.get("mean_corr_50")
+    m10   = mom.get("mean_corr_10")
 
     parts = []
     if disc is not None: parts.append(f"SBGディスカウント率{float(disc):.1f}%")
     if mm   is not None: parts.append(f"MSTR mNAV {float(mm):.2f}x")
     if mp   is not None: parts.append(f"メタプラ mNAV {float(mp):.2f}x")
     if kp   is not None: parts.append(f"キオクシア予想PER {float(kp):.1f}倍")
-    if m50  is not None: parts.append(f"AI半導体平均相関 {float(m50):.2f}")
+    if m10  is not None: parts.append(f"AI半導体平均相関（10日）{float(m10):.2f}")
 
     if parts:
         return " / ".join(parts) + "。理論株価・mNAV・予想PER・相関係数を毎日更新する投資家向けハブ。"

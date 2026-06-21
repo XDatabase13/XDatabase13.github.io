@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 3サイトカード情報。",
-    "generated_at": "2026-06-21T11:20:36+09:00",
+    "generated_at": "2026-06-21T11:37:09+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -79,8 +79,8 @@
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 64152.0117,
-      "change_pct": 0.9619,
+      "close": 64183.9883,
+      "change_pct": 1.0122,
       "date": "2026-06-21",
       "status": "ok"
     }
@@ -125,8 +125,16 @@
       "status": "complete",
       "generated_at": "2026-06-21T10:46:42+09:00",
       "mean_corr_10": 0.4985,
-      "mean_corr_30": 0.3805,
-      "mean_corr_50": 0.4025,
+      "top_high_pair": {
+        "a": "5801",
+        "b": "5803",
+        "rho": 0.928
+      },
+      "top_low_pair": {
+        "a": "6098",
+        "b": "5803",
+        "rho": -0.4973
+      },
       "_fetch_status": "ok"
     }
   },
