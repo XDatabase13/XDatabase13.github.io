@@ -123,12 +123,14 @@
     flex-shrink: 0;
     background: var(--muted);
   }
-  .s-ok   .status-dot { background: var(--green); }
-  .s-warn .status-dot { background: var(--accent2); }
-  .s-fail .status-dot { background: var(--red); }
-  .s-ok   { color: var(--green); }
-  .s-warn { color: var(--accent2); }
-  .s-fail { color: var(--red); }
+  .s-ok    .status-dot { background: var(--green); }
+  .s-warn  .status-dot { background: var(--accent2); }
+  .s-fail  .status-dot { background: var(--red); }
+  .s-stale .status-dot { background: #f59e0b; }
+  .s-ok    { color: var(--green); }
+  .s-warn  { color: var(--accent2); }
+  .s-fail  { color: var(--red); }
+  .s-stale { color: #f59e0b; }
 
   .dcard-title { font-size: 1.15rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.3; }
   .dcard-sub   { color: var(--muted); font-size: .82rem; margin-top: -4px; }
@@ -378,12 +380,12 @@
     <section class="mkt-band" id="mkt-band">
       <div class="mkt-hdr">
         <span class="mkt-label">市況</span>
-        <span class="mkt-time" id="mkt-time">06/21 11:37 JST時点</span>
+        <span class="mkt-time" id="mkt-time">06/21 11:59 JST時点</span>
       </div>
       <div class="mkt-groups" id="mkt-groups">
         <div class="mkt-group"><span class="mkt-grp-lbl">🇯🇵 日本株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">日経平均</span><span class="mkt-val">71,250</span><span class="chg pos">▲0.28%</span></div><div class="mkt-item"><span class="mkt-name">TOPIX連動</span><span class="mkt-val">429.70</span><span class="chg neg">▼0.60%</span></div><div class="mkt-item"><span class="mkt-name">グロース250(連動)</span><span class="mkt-val">550.20</span><span class="chg neg">▼2.77%</span></div></div></div>
         <div class="mkt-group"><span class="mkt-grp-lbl">🇺🇸 米国株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">ダウ</span><span class="mkt-val">51,565</span><span class="chg pos">▲0.14%</span></div><div class="mkt-item"><span class="mkt-name">S&P500</span><span class="mkt-val">7,501</span><span class="chg pos">▲1.08%</span></div><div class="mkt-item"><span class="mkt-name">NASDAQ総合</span><span class="mkt-val">26,518</span><span class="chg pos">▲1.91%</span></div><div class="mkt-item"><span class="mkt-name">SOX</span><span class="mkt-val">14,342</span><span class="chg pos">▲6.42%</span></div></div></div>
-        <div class="mkt-group"><span class="mkt-grp-lbl">💱 為替/仮想通貨</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">USD/JPY</span><span class="mkt-val">161.28</span><span class="chg neg">▼0.01%</span></div><div class="mkt-item"><span class="mkt-name">BTC</span><span class="mkt-val">64,184</span><span class="chg pos">▲1.01%</span></div></div></div>
+        <div class="mkt-group"><span class="mkt-grp-lbl">💱 為替/仮想通貨</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">USD/JPY</span><span class="mkt-val">161.28</span><span class="chg neg">▼0.01%</span></div><div class="mkt-item"><span class="mkt-name">BTC</span><span class="mkt-val">64,151</span><span class="chg pos">▲0.96%</span></div></div></div>
       </div>
     </section>
     <!--MARKET_SECTION_END-->
@@ -589,12 +591,24 @@ function fmtTime(iso) {
   } catch { return ''; }
 }
 
-// Map overall_status to CSS class.
+// Map overall_status to CSS class / label.
 function sCls(s) {
-  return s === 'complete' ? 's-ok' : s === 'partial' ? 's-warn' : s === 'failed' ? 's-fail' : '';
+  return s === 'complete' ? 's-ok' : s === 'partial' ? 's-warn' : s === 'failed' ? 's-fail' : s === 'stale' ? 's-stale' : '';
 }
 function sLbl(s) {
-  return s === 'complete' ? '正常更新' : s === 'partial' ? '一部前回値' : s === 'failed' ? '取得失敗' : '確認中';
+  return s === 'complete' ? '正常更新' : s === 'partial' ? '一部前回値' : s === 'failed' ? '取得失敗' : s === 'stale' ? '更新停滞' : '確認中';
+}
+
+// Freshness check: returns true if generatedAt is older than staleDays calendar days.
+const STALE_DAYS = 5;
+function isStale(generatedAt) {
+  if (!generatedAt) return true;
+  try { return (Date.now() - new Date(generatedAt).getTime()) / 86400000 > STALE_DAYS; }
+  catch (e) { return true; }
+}
+// Resolve effective badge status: date-stale overrides overall_status.
+function effectiveStatus(overallStatus, generatedAt) {
+  return isStale(generatedAt) ? 'stale' : overallStatus;
 }
 
 // Compute diff between the last two timeseries entries using keyFn.
@@ -648,8 +662,8 @@ function buildSbg(d) {
   const prevClose   = d?.market?.sbg?.prev_close;
   // semi.discount_pct はSBGの主要指標。timeseriesはofficial NAV基準なので差分は非表示。
   const discount    = d?.nav?.semi?.discount_pct ?? d?.nav?.semi_discount_pct;
-  const status      = d?.status;
   const genAt       = d?.generated_at;
+  const status      = effectiveStatus(d?.status, genAt);
 
   const priceDiff = (close != null && prevClose != null && prevClose !== 0)
     ? (close - prevClose) / Math.abs(prevClose) * 100 : null;
@@ -691,8 +705,8 @@ function buildCrypto(d) {
   const companies = d?.companies ?? [];
   const mstr      = byId(companies, 'mstr');
   const meta      = byId(companies, 'metaplanet');
-  const status    = d?._meta?.overall_status;
   const genAt     = d?._meta?.generated_at;
+  const status    = effectiveStatus(d?._meta?.overall_status, genAt);
   const ts        = d?.timeseries ?? [];
 
   const mstrMnav = mstr?.calc?.mnav_premium?.value;
@@ -746,8 +760,8 @@ function buildKioxia(d) {
   const companies = d?.companies ?? [];
   const kioxia    = byId(companies, 'kioxia');
   const sndk      = byId(companies, 'sndk');
-  const status    = d?._meta?.overall_status;
   const genAt     = d?._meta?.generated_at;
+  const status    = effectiveStatus(d?._meta?.overall_status, genAt);
   const ts        = d?.timeseries ?? [];
 
   const kPer = kioxia?.calc?.per?.value;
@@ -807,8 +821,8 @@ function buildKioxia(d) {
 function buildMomentum(d) {
   const meta   = d?._meta ?? {};
   const p10    = d?.periods?.['10'] ?? {};
-  const status = meta.overall_status;
   const genAt  = meta.generated_at;
+  const status = effectiveStatus(meta.overall_status, genAt);
 
   const m10    = p10?.stats?.mean_corr;
   const hiPair = (p10?.pair_ranking_high ?? [])[0] ?? null;

@@ -70,6 +70,18 @@ def to_iso_jst(dt: datetime) -> str:
     return dt.astimezone(JST).strftime("%Y-%m-%dT%H:%M:%S+09:00")
 
 
+def is_stale(generated_at_iso: str | None, stale_days: int = STALE_DAYS) -> bool:
+    """generated_at（ISO8601）が現在JST から stale_days 暦日を超えていれば True。
+    None またはパース不能のときは安全側（True = stale）を返す。"""
+    if not generated_at_iso:
+        return True
+    try:
+        dt = datetime.fromisoformat(generated_at_iso).astimezone(JST)
+        return (now_jst() - dt).days > stale_days
+    except Exception:
+        return True
+
+
 def load_json(path: Path) -> dict:
     if path.exists():
         try:
@@ -270,11 +282,21 @@ def _fmt_time_jst(iso_str: str) -> str:
 
 
 def _status_cls(s: str | None) -> str:
-    return {"complete": "s-ok", "partial": "s-warn", "failed": "s-fail"}.get(s or "", "")
+    return {"complete": "s-ok", "partial": "s-warn", "failed": "s-fail", "stale": "s-stale"}.get(s or "", "")
 
 
 def _status_lbl(s: str | None) -> str:
-    return {"complete": "正常更新", "partial": "一部前回値", "failed": "取得失敗"}.get(s or "", "確認中")
+    return {"complete": "正常更新", "partial": "一部前回値", "failed": "取得失敗", "stale": "更新停滞"}.get(s or "", "確認中")
+
+
+def _card_effective_status(card: dict) -> str:
+    """カードの表示ステータスを最終決定する。
+    優先順位: HTTP失敗/パースエラー(failed) > 鮮度切れ(stale) > overall_status。"""
+    if card.get("_fetch_status") == "failed":
+        return "failed"
+    if is_stale(card.get("generated_at")):
+        return "stale"
+    return card.get("status") or "failed"
 
 
 def _build_market_section_html(hub_data: dict) -> str:
@@ -333,7 +355,7 @@ def _build_sbg_card_html(sbg: dict) -> str:
     close = sbg.get("close")
     disc  = sbg.get("discount_pct")
     p_chg = sbg.get("price_change_pct")
-    st    = sbg.get("status", "")
+    st    = _card_effective_status(sbg)
     gen   = sbg.get("generated_at", "")
 
     nav_s   = f"¥{round(float(nav)):,}"   if nav   is not None else "—"
@@ -375,7 +397,7 @@ def _build_sbg_card_html(sbg: dict) -> str:
 def _build_crypto_card_html(crypto: dict) -> str:
     mstr_d = crypto.get("mstr") or {}
     meta_d = crypto.get("metaplanet") or {}
-    st     = crypto.get("status", "")
+    st     = _card_effective_status(crypto)
     gen    = crypto.get("generated_at", "")
 
     mm   = mstr_d.get("mnav_premium")
@@ -426,7 +448,7 @@ def _build_crypto_card_html(crypto: dict) -> str:
 def _build_kioxia_card_html(kioxia: dict) -> str:
     k_d = kioxia.get("kioxia") or {}
     s_d = kioxia.get("sndk") or {}
-    st  = kioxia.get("status", "")
+    st  = _card_effective_status(kioxia)
     gen = kioxia.get("generated_at", "")
 
     kp  = k_d.get("per")
@@ -487,7 +509,7 @@ _MOMENTUM_SHORT = {
 
 
 def _build_momentum_card_html(mom: dict) -> str:
-    st  = mom.get("status", "")
+    st  = _card_effective_status(mom)
     gen = mom.get("generated_at", "")
     m10 = mom.get("mean_corr_10")
     hi  = mom.get("top_high_pair")
@@ -707,14 +729,13 @@ def build_hub() -> None:
                 print(f"  [{site_key}] OK")
             except Exception as e:
                 cards_out[site_key] = dict(prev_cards.get(site_key, {}))
-                cards_out[site_key]["_fetch_status"] = "stale"
+                cards_out[site_key]["_fetch_status"] = "failed"
                 alerts.append(f"[警告] {site_key}: 集約時エラー({e})。前回値を保持します。")
-                print(f"  [{site_key}] parse error → stale")
+                print(f"  [{site_key}] parse error → failed")
         else:
             prev = prev_cards.get(site_key, {})
             cards_out[site_key] = dict(prev) if prev else {"_fetch_status": "failed"}
-            if prev:
-                cards_out[site_key]["_fetch_status"] = "stale"
+            cards_out[site_key]["_fetch_status"] = "failed"
             alerts.append(f"[警告] {site_key}: data.json 取得失敗。前回値を保持します。")
 
     # ── overall_status ───────────────────────────────────────────────────────
