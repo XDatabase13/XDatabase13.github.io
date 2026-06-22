@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 3サイトカード情報。",
-    "generated_at": "2026-06-23T05:40:44+09:00",
+    "generated_at": "2026-06-23T08:54:00+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -12,11 +12,12 @@
   "market": {
     "nikkei225": {
       "label": "日経平均",
-      "ticker": "^N225",
-      "close": 71250.0625,
-      "change_pct": 0.2767,
-      "date": "2026-06-19",
-      "status": "ok"
+      "ticker": "1321.T",
+      "close": 75970.0,
+      "change_pct": 1.7955,
+      "date": "2026-06-22",
+      "status": "ok",
+      "note": "ETF(1321.T)の値"
     },
     "topix_etf": {
       "label": "TOPIX連動",
@@ -71,16 +72,16 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 161.598,
-      "change_pct": 0.1916,
-      "date": "2026-06-22",
+      "close": 161.555,
+      "change_pct": 0.0756,
+      "date": "2026-06-23",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 64416.8516,
-      "change_pct": 1.8649,
+      "close": 63955.3906,
+      "change_pct": 1.1352,
       "date": "2026-06-22",
       "status": "ok"
     }

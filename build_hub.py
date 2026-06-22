@@ -39,7 +39,7 @@ STALE_DAYS     = 5   # 取得日付が今日からこの日数を超えるとデ
 
 # 市況9指標の定義(表示順を保つため OrderedDict 相当に記述)
 MARKET_SPECS = [
-    ("nikkei225", {"label": "日経平均",          "ticker": "^N225"}),
+    ("nikkei225", {"label": "日経平均",          "ticker": "1321.T",  "note": "ETF(1321.T)の値"}),
     ("topix_etf", {"label": "TOPIX連動",          "ticker": "1306.T",  "note": "ETF(1306.T)の値"}),
     ("growth250", {"label": "グロース250(連動)",   "ticker": "2516.T",  "note": "ETF(2516.T)の値"}),
     ("dow",       {"label": "ダウ",               "ticker": "^DJI"}),
@@ -242,11 +242,11 @@ SITE_EXTRACTORS = {
 def _replace_between(text: str, start: str, end: str, inner: str) -> str:
     """start と end マーカーの間を inner で置換(マーカー自体は残す)。"""
     pattern = re.escape(start) + r".*?" + re.escape(end)
-    replacement = start + inner + end
-    result = re.sub(pattern, lambda _: replacement, text, count=1, flags=re.DOTALL)
-    if result == text:
+    if not re.search(pattern, text, flags=re.DOTALL):
         print(f"[bake 警告] マーカーが見つかりません: {start}")
-    return result
+        return text
+    replacement = start + inner + end
+    return re.sub(pattern, lambda _: replacement, text, count=1, flags=re.DOTALL)
 
 
 def _fmt_pct_html(pct) -> str:
