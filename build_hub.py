@@ -312,11 +312,14 @@ def _build_market_section_html(hub_data: dict) -> str:
         e = market.get(key, {})
         label = e.get("label", key)
         val_str = _fmt_mkt_val(e.get("close"))
+        raw_note = e.get("note", "")
+        ticker = raw_note.replace("ETF(", "").replace(")の値", "").strip() if raw_note else ""
+        note_html = f'<span class="mkt-note">({ticker})</span>' if ticker else ""
         if e.get("status") == "failed" or val_str is None:
-            return f'<div class="mkt-item"><span class="mkt-name">{label}</span><span class="mkt-fail">—</span></div>'
+            return f'<div class="mkt-item"><span class="mkt-name">{label}</span>{note_html}<span class="mkt-fail">—</span></div>'
         pct_html = _fmt_pct_html(e.get("change_pct"))
         return (f'<div class="mkt-item"><span class="mkt-name">{label}</span>'
-                f'<span class="mkt-val">{val_str}</span>{pct_html}</div>')
+                f'{note_html}<span class="mkt-val">{val_str}</span>{pct_html}</div>')
 
     def mk_group(lbl: str, keys: list) -> str:
         items = "".join(mk_item(k) for k in keys)
