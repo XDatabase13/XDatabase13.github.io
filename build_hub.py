@@ -3,10 +3,10 @@
 build_hub.py — 数理投資情報部 ハブ集約バッチ
 
 (1) yfinance で市況9指標を取得(終値・前日比%)
-(2) 3サイトの data.json を raw.githubusercontent.com 経由で集約
+(2) 5サイトの data.json を raw.githubusercontent.com 経由で集約
 (3) hub_data.json を出力する
 
-他サイト(sbg-nav/crypto-nav/kioxia-sandisk)と同じ作法:
+他サイト(sbg-nav/crypto-nav/kioxia-sandisk/momentum-corr/ai-manifold)と同じ作法:
   - 項目ごとに最大5回リトライ(10秒間隔)
   - 全滅時は前回値 stale フォールバック
   - workflow_dispatch 専用(内蔵 schedule は使わない)
@@ -56,6 +56,7 @@ SITE_URLS = {
     "crypto": "https://raw.githubusercontent.com/XDatabase13/crypto-nav/master/data.json",
     "kioxia":    "https://raw.githubusercontent.com/XDatabase13/kioxia-sandisk/master/data.json",
     "momentum":  "https://raw.githubusercontent.com/XDatabase13/momentum-corr/master/data.json",
+    "aiManifold": "https://raw.githubusercontent.com/XDatabase13/ai-manifold/master/data.json",
 }
 
 
@@ -229,11 +230,51 @@ def extract_momentum(d: dict) -> dict:
     }
 
 
+def extract_ai_manifold(d: dict) -> dict:
+    """ai-manifold data.json からカード表示に必要な最小フィールドを抽出。
+    54銘柄を集計し 上昇数/下落数・最高上昇/最大下落銘柄を返す
+    (index.html のクライアントJS buildAiManifold と同じロジック)。"""
+    meta   = d.get("_meta") or {}
+    stocks = d.get("stocks") or {}
+
+    up = down = total = 0
+    top_code, top_chg = None, None
+    bot_code, bot_chg = None, None
+
+    for code, s in stocks.items():
+        s = s or {}
+        if s.get("status") == "failed":
+            continue
+        total += 1
+        chg = s.get("change_pct")
+        if chg is None:
+            continue
+        if chg > 0:
+            up += 1
+        elif chg < 0:
+            down += 1
+        if top_chg is None or chg > top_chg:
+            top_chg, top_code = chg, code
+        if bot_chg is None or chg < bot_chg:
+            bot_chg, bot_code = chg, code
+
+    return {
+        "status":       meta.get("overall_status"),
+        "generated_at": meta.get("generated_at"),
+        "total":        total,
+        "up":           up,
+        "down":         down,
+        "top":          {"code": top_code, "change_pct": top_chg} if top_code else None,
+        "bot":          {"code": bot_code, "change_pct": bot_chg} if bot_code else None,
+    }
+
+
 SITE_EXTRACTORS = {
-    "sbg":      extract_sbg,
-    "crypto":   extract_crypto,
-    "kioxia":   extract_kioxia,
-    "momentum": extract_momentum,
+    "sbg":        extract_sbg,
+    "crypto":     extract_crypto,
+    "kioxia":     extract_kioxia,
+    "momentum":   extract_momentum,
+    "aiManifold": extract_ai_manifold,
 }
 
 
@@ -567,18 +608,96 @@ def _build_momentum_card_html(mom: dict) -> str:
     </div>"""
 
 
+# ミニマップSVG(島の座標は ai-manifold/index.html の ISLANDS と一致 / viewBox 0 0 1600 1000)
+_AI_MANIFOLD_MINIMAP = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="150 100 1110 730"
+        style="width:100%;display:block;border-radius:8px;background:#0b0e18;margin:6px 0 4px">
+        <line x1="300" y1="560" x2="560" y2="470" stroke="#1c2840" stroke-width="3"/>
+        <line x1="340" y1="300" x2="560" y2="470" stroke="#1c2840" stroke-width="3"/>
+        <line x1="300" y1="560" x2="560" y2="720" stroke="#1c2840" stroke-width="3"/>
+        <line x1="560" y1="470" x2="1060" y2="210" stroke="#1c2840" stroke-width="3"/>
+        <line x1="560" y1="720" x2="1060" y2="210" stroke="#1c2840" stroke-width="3"/>
+        <line x1="1060" y1="620" x2="1060" y2="210" stroke="#1c2840" stroke-width="3"/>
+        <line x1="820" y1="760" x2="1060" y2="210" stroke="#1c2840" stroke-width="3"/>
+        <line x1="560" y1="720" x2="1180" y2="420" stroke="#1c2840" stroke-width="3"/>
+        <line x1="1060" y1="620" x2="1180" y2="420" stroke="#1c2840" stroke-width="3"/>
+        <line x1="1060" y1="210" x2="800" y2="300" stroke="#1c2840" stroke-width="3"/>
+        <circle cx="340" cy="300" r="62" fill="rgba(112,96,216,.18)" stroke="#7060d8" stroke-width="1.5"/>
+        <circle cx="300" cy="560" r="58" fill="rgba(168,95,200,.18)" stroke="#a85fc8" stroke-width="1.5"/>
+        <circle cx="560" cy="470" r="56" fill="rgba(80,112,232,.18)" stroke="#5070e8" stroke-width="1.5"/>
+        <circle cx="560" cy="720" r="60" fill="rgba(200,95,160,.18)" stroke="#c85fa0" stroke-width="1.5"/>
+        <circle cx="820" cy="760" r="48" fill="rgba(200,120,80,.18)" stroke="#c87850" stroke-width="1.5"/>
+        <circle cx="1060" cy="620" r="52" fill="rgba(200,160,78,.18)" stroke="#c8a04e" stroke-width="1.5"/>
+        <circle cx="1180" cy="420" r="55" fill="rgba(95,184,127,.18)" stroke="#5fb87f" stroke-width="1.5"/>
+        <circle cx="1060" cy="210" r="52" fill="rgba(95,200,190,.18)" stroke="#5fc8be" stroke-width="1.5"/>
+        <circle cx="800" cy="300" r="70" fill="rgba(111,168,255,.22)" stroke="#6fa8ff" stroke-width="2"/>
+        <text x="340" y="300" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="42" font-family="sans-serif" font-weight="600">装置</text>
+        <text x="300" y="560" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="42" font-family="sans-serif" font-weight="600">材料</text>
+        <text x="560" y="470" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="42" font-family="sans-serif" font-weight="600">半導</text>
+        <text x="560" y="720" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="42" font-family="sans-serif" font-weight="600">部品</text>
+        <text x="820" y="760" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="42" font-family="sans-serif" font-weight="600">電線</text>
+        <text x="1060" y="620" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="42" font-family="sans-serif" font-weight="600">パワ</text>
+        <text x="1180" y="420" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="42" font-family="sans-serif" font-weight="600">FA</text>
+        <text x="1060" y="210" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="42" font-family="sans-serif" font-weight="600">DC</text>
+        <text x="800" y="300" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="50" font-family="sans-serif" font-weight="700">AI</text>
+      </svg>"""
+
+
+def _build_ai_manifold_card_html(ai: dict) -> str:
+    st    = _card_effective_status(ai)
+    gen   = ai.get("generated_at", "")
+    total = ai.get("total") or 0
+    up    = ai.get("up") or 0
+    down  = ai.get("down") or 0
+    top   = ai.get("top")
+    bot   = ai.get("bot")
+
+    up_h   = f'<span class="chg pos">▲ {up}銘柄</span>'  if up   > 0 else "—"
+    down_h = f'<span class="chg neg">▼ {down}銘柄</span>' if down > 0 else "—"
+
+    def _mover_html(pair, cls: str, mark: str) -> str:
+        if not pair or pair.get("change_pct") is None or not pair.get("code"):
+            return "—"
+        return f'{pair["code"]} <span class="chg {cls}">{mark}{abs(float(pair["change_pct"])):.2f}%</span>'
+
+    top_h      = _mover_html(top, "pos", "▲")
+    bot_h      = _mover_html(bot, "neg", "▼")
+    total_disp = total if total else 54
+
+    return f"""<div class="dcard" onclick="location.href='https://xdbdb.com/ai-manifold/'">
+      <div class="dcard-head">
+        <span class="tag">AI / 業界地図</span>
+        <span class="status-badge {_status_cls(st)}"><span class="status-dot"></span>{_status_lbl(st)}</span>
+      </div>
+      <h2 class="dcard-title">AI関連銘柄の多様体</h2>
+      <p class="dcard-sub">業界地図 · {total_disp}銘柄 9セクター</p>
+      <p class="dcard-desc">AI関連の日本株54銘柄をサプライチェーン上の9つのセクターに分類し、島間の取引関係とともに業界構造を地図化。毎朝更新。</p>
+      {_AI_MANIFOLD_MINIMAP}
+      <div class="metrics">
+        <div class="metric"><span class="mlabel">本日上昇</span><span class="mval">{up_h}</span></div>
+        <div class="metric"><span class="mlabel">本日下落</span><span class="mval">{down_h}</span></div>
+        <div class="metric"><span class="mlabel">最高上昇</span><span class="mval mval-hi">{top_h}</span></div>
+        <div class="metric"><span class="mlabel">最大下落</span><span class="mval">{bot_h}</span></div>
+      </div>
+      <a href="https://xdbdb.com/ai-manifold/" class="dcard-cta">業界地図を詳しく見る →</a>
+      <p class="dcard-time">{_fmt_time_jst(gen)} 更新</p>
+    </div>"""
+
+
 def _build_meta_description(hub_data: dict) -> str:
     cards = hub_data.get("cards", {})
     sbg   = cards.get("sbg", {})
     cryp  = cards.get("crypto", {})
     kiox  = cards.get("kioxia", {})
     mom   = cards.get("momentum", {})
+    aim   = cards.get("aiManifold", {})
 
     disc  = sbg.get("discount_pct")
     mm    = (cryp.get("mstr") or {}).get("mnav_premium")
     mp    = (cryp.get("metaplanet") or {}).get("mnav_premium")
     kp    = (kiox.get("kioxia") or {}).get("per")
     m10   = mom.get("mean_corr_10")
+    a_tot = aim.get("total")
+    a_up  = aim.get("up")
 
     parts = []
     if disc is not None: parts.append(f"SBGディスカウント率{float(disc):.1f}%")
@@ -586,6 +705,7 @@ def _build_meta_description(hub_data: dict) -> str:
     if mp   is not None: parts.append(f"メタプラ mNAV {float(mp):.2f}x")
     if kp   is not None: parts.append(f"キオクシア予想PER {float(kp):.1f}倍")
     if m10  is not None: parts.append(f"AI半導体平均相関（10日）{float(m10):.2f}")
+    if a_tot:            parts.append(f"AI関連{int(a_tot)}銘柄の業界地図（本日上昇{int(a_up or 0)}）")
 
     if parts:
         return " / ".join(parts) + "。理論株価・mNAV・予想PER・相関係数を毎日更新する投資家向けハブ。"
@@ -611,6 +731,7 @@ def bake_index_html(hub_data: dict, index_path: Path) -> None:
         _build_crypto_card_html(cards.get("crypto", {})),
         _build_kioxia_card_html(cards.get("kioxia", {})),
         _build_momentum_card_html(cards.get("momentum", {})),
+        _build_ai_manifold_card_html(cards.get("aiManifold", {})),
     ])
     content = _replace_between(content, "<!--CARDS_START-->", "<!--CARDS_END-->",
                                 "\n      " + cards_inner + "\n      ")
@@ -718,8 +839,8 @@ def build_hub() -> None:
             entry["note"] = spec["note"]
         market_out[key] = entry
 
-    # ── 4サイト集約 ─────────────────────────────────────────────────────────
-    print(f"\n▼ 4サイト集約")
+    # ── 5サイト集約 ─────────────────────────────────────────────────────────
+    print(f"\n▼ 5サイト集約")
     cards_out: dict[str, dict] = {}
 
     for site_key, url in SITE_URLS.items():
@@ -750,7 +871,7 @@ def build_hub() -> None:
     output = {
         "_meta": {
             "schema_version": "1.0",
-            "description":    "数理投資情報部 ハブ集約データ。市況9指標 + 3サイトカード情報。",
+            "description":    "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
             "generated_at":   to_iso_jst(generated_at),
             "overall_status": overall_status,
             "_status_vocabulary": {

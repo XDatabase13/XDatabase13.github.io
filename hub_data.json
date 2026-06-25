@@ -1,8 +1,8 @@
 {
   "_meta": {
     "schema_version": "1.0",
-    "description": "数理投資情報部 ハブ集約データ。市況9指標 + 3サイトカード情報。",
-    "generated_at": "2026-06-25T05:40:48+09:00",
+    "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
+    "generated_at": "2026-06-25T21:17:23+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -13,27 +13,27 @@
     "nikkei225": {
       "label": "日経平均",
       "ticker": "1321.T",
-      "close": 72460.0,
-      "change_pct": -0.9433,
-      "date": "2026-06-24",
+      "close": 75730.0,
+      "change_pct": 4.5128,
+      "date": "2026-06-25",
       "status": "ok",
       "note": "ETF(1321.T)の値"
     },
     "topix_etf": {
       "label": "TOPIX連動",
       "ticker": "1306.T",
-      "close": 419.9,
-      "change_pct": -0.6859,
-      "date": "2026-06-24",
+      "close": 425.9,
+      "change_pct": 1.4289,
+      "date": "2026-06-25",
       "status": "ok",
       "note": "ETF(1306.T)の値"
     },
     "growth250": {
       "label": "グロース250(連動)",
       "ticker": "2516.T",
-      "close": 551.7,
-      "change_pct": 0.0363,
-      "date": "2026-06-24",
+      "close": 554.6,
+      "change_pct": 0.5256,
+      "date": "2026-06-25",
       "status": "ok",
       "note": "ETF(2516.T)の値"
     },
@@ -56,7 +56,7 @@
     "nasdaq": {
       "label": "NASDAQ総合",
       "ticker": "^IXIC",
-      "close": 25476.6348,
+      "close": 25476.6406,
       "change_pct": -0.4315,
       "date": "2026-06-24",
       "status": "ok"
@@ -64,7 +64,7 @@
     "sox": {
       "label": "SOX",
       "ticker": "^SOX",
-      "close": 13458.1943,
+      "close": 13458.2002,
       "change_pct": -0.1803,
       "date": "2026-06-24",
       "status": "ok"
@@ -72,17 +72,17 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 161.822,
-      "change_pct": 0.156,
-      "date": "2026-06-24",
+      "close": 161.868,
+      "change_pct": 0.1665,
+      "date": "2026-06-25",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 60779.0391,
-      "change_pct": -3.0143,
-      "date": "2026-06-24",
+      "close": 61081.1484,
+      "change_pct": 0.141,
+      "date": "2026-06-25",
       "status": "ok"
     }
   },
@@ -135,6 +135,22 @@
         "a": "285A",
         "b": "6098",
         "rho": -0.4129
+      },
+      "_fetch_status": "ok"
+    },
+    "aiManifold": {
+      "status": "complete",
+      "generated_at": "2026-06-25T08:20:53+09:00",
+      "total": 54,
+      "up": 21,
+      "down": 33,
+      "top": {
+        "code": "6701",
+        "change_pct": 4.2085
+      },
+      "bot": {
+        "code": "6890",
+        "change_pct": -7.4599
       },
       "_fetch_status": "ok"
     }
