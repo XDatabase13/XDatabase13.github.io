@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-06-27T05:40:46+09:00",
+    "generated_at": "2026-06-28T05:40:45+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -56,7 +56,7 @@
     "nasdaq": {
       "label": "NASDAQ総合",
       "ticker": "^IXIC",
-      "close": 25297.6172,
+      "close": 25297.6191,
       "change_pct": -0.2405,
       "date": "2026-06-26",
       "status": "ok"
@@ -64,7 +64,7 @@
     "sox": {
       "label": "SOX",
       "ticker": "^SOX",
-      "close": 13203.5693,
+      "close": 13203.5703,
       "change_pct": -5.2888,
       "date": "2026-06-26",
       "status": "ok"
@@ -72,25 +72,25 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 161.766,
-      "change_pct": 0.0019,
-      "date": "2026-06-26",
+      "close": 161.685,
+      "change_pct": -0.0742,
+      "date": "2026-06-27",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 59549.6289,
-      "change_pct": -0.2881,
-      "date": "2026-06-26",
+      "close": 60181.1211,
+      "change_pct": 0.2744,
+      "date": "2026-06-27",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-06-27T05:30:38+09:00",
-      "nav_per_share": 11165,
+      "generated_at": "2026-06-28T05:30:36+09:00",
+      "nav_per_share": 11163,
       "discount_pct": 44.2,
       "close": 6226.0,
       "price_change_pct": -12.5316,
@@ -98,20 +98,20 @@
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-06-27T05:30:34+09:00",
+      "generated_at": "2026-06-28T05:30:35+09:00",
       "mstr": {
-        "mnav_premium": 0.958389,
+        "mnav_premium": 0.944327,
         "price_change_pct": -3.5392
       },
       "metaplanet": {
-        "mnav_premium": 0.742235,
+        "mnav_premium": 0.735136,
         "price_change_pct": -10.4545
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-06-27T05:30:54+09:00",
+      "generated_at": "2026-06-28T05:30:58+09:00",
       "kioxia": {
         "per": 14.47,
         "price_change_pct": -11.2374
@@ -124,23 +124,23 @@
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-06-27T05:30:51+09:00",
-      "mean_corr_10": 0.5323,
+      "generated_at": "2026-06-28T05:30:53+09:00",
+      "mean_corr_10": 0.4846,
       "top_high_pair": {
         "a": "9984",
         "b": "6981",
         "rho": 0.9332
       },
       "top_low_pair": {
-        "a": "6098",
-        "b": "5803",
-        "rho": -0.2287
+        "a": "5801",
+        "b": "6098",
+        "rho": -0.8204
       },
       "_fetch_status": "ok"
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-06-27T05:30:49+09:00",
+      "generated_at": "2026-06-28T05:30:54+09:00",
       "total": 54,
       "up": 6,
       "down": 47,
@@ -149,8 +149,8 @@
         "change_pct": 1.0114
       },
       "bot": {
-        "code": "5801",
-        "change_pct": -90.9295
+        "code": "3905",
+        "change_pct": -13.9918
       },
       "_fetch_status": "ok"
     }
