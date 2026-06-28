@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-06-28T19:17:14+09:00",
+    "generated_at": "2026-06-28T22:21:15+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -21,23 +21,20 @@
       "source": "index"
     },
     "topix_etf": {
-      "label": "TOPIX",
+      "label": "TOPIX（1306）",
       "ticker": "1306.T",
       "close": 420.4,
       "change_pct": -1.2914,
       "date": "2026-06-26",
-      "status": "ok",
-      "note": "ETF(1306.T)の値",
-      "source": "etf"
+      "status": "ok"
     },
     "growth250": {
-      "label": "グロース250(連動)",
+      "label": "グロース250（2516）",
       "ticker": "2516.T",
       "close": 539.5,
       "change_pct": -2.7227,
       "date": "2026-06-26",
-      "status": "ok",
-      "note": "ETF(2516.T)の値"
+      "status": "ok"
     },
     "dow": {
       "label": "ダウ",
@@ -82,8 +79,8 @@
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 60178.0,
-      "change_pct": 0.3969,
+      "close": 60028.1289,
+      "change_pct": 0.1469,
       "date": "2026-06-28",
       "status": "ok"
     }
@@ -159,8 +156,6 @@
   },
   "alerts": {
     "_comment": "overall_status が partial のとき UI に表示できる。",
-    "messages": [
-      "[警告] TOPIX: 指数(^TOPX)取得失敗のためETF(1306.T)で代替表示。"
-    ]
+    "messages": []
   }
 }

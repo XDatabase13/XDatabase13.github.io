@@ -45,17 +45,12 @@ JP_INDEX_FALLBACK = [
         "etf_ticker":   "1321.T",
         "etf_note":     "ETF(1321.T)の値",
     }),
-    ("topix_etf", {
-        "label":        "TOPIX",
-        "index_ticker": "^TOPX",
-        "etf_ticker":   "1306.T",
-        "etf_note":     "ETF(1306.T)の値",
-    }),
 ]
 
-# 固定ティッカーで単純取得する指標（グロース250 + 海外6指標）
+# 固定ティッカーで単純取得する指標（TOPIX + グロース250 + 海外6指標）
 MARKET_SPECS = [
-    ("growth250", {"label": "グロース250(連動)", "ticker": "2516.T", "note": "ETF(2516.T)の値"}),
+    ("topix_etf", {"label": "TOPIX（1306）",      "ticker": "1306.T"}),
+    ("growth250", {"label": "グロース250（2516）", "ticker": "2516.T"}),
     ("dow",       {"label": "ダウ",              "ticker": "^DJI"}),
     ("sp500",     {"label": "S&P500",            "ticker": "^GSPC"}),
     ("nasdaq",    {"label": "NASDAQ総合",        "ticker": "^IXIC"}),
@@ -485,16 +480,11 @@ def _build_market_section_html(hub_data: dict) -> str:
 
     # 注意喚起バナー（日経・TOPIXのフォールバック発動時のみ表示）
     alert_msgs = []
-    nk_src  = market.get("nikkei225", {}).get("source")
-    top_src = market.get("topix_etf",  {}).get("source")
+    nk_src = market.get("nikkei225", {}).get("source")
     if nk_src == "etf":
         alert_msgs.append("日経平均株価の取得に失敗したため、日経平均連動ETF（1321）の値で代替表示しています")
     elif nk_src == "stale":
         alert_msgs.append("日経平均の最新値を取得できませんでした。前回取得値を表示しています")
-    if top_src == "etf":
-        alert_msgs.append("TOPIXの取得に失敗したため、TOPIX連動ETF（1306）の値で代替表示しています")
-    elif top_src == "stale":
-        alert_msgs.append("TOPIXの最新値を取得できませんでした。前回取得値を表示しています")
     if alert_msgs:
         alert_inner = "<br>".join(alert_msgs)
         alert_html  = f'<div id="mkt-alert" class="mkt-alert">{alert_inner}</div>'
