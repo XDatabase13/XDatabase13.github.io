@@ -37,17 +37,31 @@ MAX_RETRIES    = 5
 RETRY_INTERVAL = 10  # 秒
 STALE_DAYS     = 5   # 取得日付が今日からこの日数を超えるとデータが古いとみなす
 
-# 市況9指標の定義(表示順を保つため OrderedDict 相当に記述)
+# 指数優先 → ETF代替フォールバックを行う日本株2指標
+JP_INDEX_FALLBACK = [
+    ("nikkei225", {
+        "label":        "日経平均",
+        "index_ticker": "^N225",
+        "etf_ticker":   "1321.T",
+        "etf_note":     "ETF(1321.T)の値",
+    }),
+    ("topix_etf", {
+        "label":        "TOPIX",
+        "index_ticker": "^TOPX",
+        "etf_ticker":   "1306.T",
+        "etf_note":     "ETF(1306.T)の値",
+    }),
+]
+
+# 固定ティッカーで単純取得する指標（グロース250 + 海外6指標）
 MARKET_SPECS = [
-    ("nikkei225", {"label": "日経平均",          "ticker": "1321.T",  "note": "ETF(1321.T)の値"}),
-    ("topix_etf", {"label": "TOPIX連動",          "ticker": "1306.T",  "note": "ETF(1306.T)の値"}),
-    ("growth250", {"label": "グロース250(連動)",   "ticker": "2516.T",  "note": "ETF(2516.T)の値"}),
-    ("dow",       {"label": "ダウ",               "ticker": "^DJI"}),
-    ("sp500",     {"label": "S&P500",             "ticker": "^GSPC"}),
-    ("nasdaq",    {"label": "NASDAQ総合",         "ticker": "^IXIC"}),
-    ("sox",       {"label": "SOX",               "ticker": "^SOX"}),
-    ("usdjpy",    {"label": "USD/JPY",            "ticker": "USDJPY=X"}),
-    ("btc",       {"label": "BTC",               "ticker": "BTC-USD"}),
+    ("growth250", {"label": "グロース250(連動)", "ticker": "2516.T", "note": "ETF(2516.T)の値"}),
+    ("dow",       {"label": "ダウ",              "ticker": "^DJI"}),
+    ("sp500",     {"label": "S&P500",            "ticker": "^GSPC"}),
+    ("nasdaq",    {"label": "NASDAQ総合",        "ticker": "^IXIC"}),
+    ("sox",       {"label": "SOX",              "ticker": "^SOX"}),
+    ("usdjpy",    {"label": "USD/JPY",           "ticker": "USDJPY=X"}),
+    ("btc",       {"label": "BTC",              "ticker": "BTC-USD"}),
 ]
 
 # 3サイト集約 URL
@@ -129,6 +143,93 @@ def fetch_close(ticker_str: str) -> tuple[float | None, float | None, str | None
                 time.sleep(RETRY_INTERVAL)
 
     return None, None, None
+
+
+# ── 日本株2指標：指数優先 → ETFフォールバック ────────────────────────────────────
+def fetch_jp_index_with_fallback(
+    key: str,
+    spec: dict,
+    prev_entry: dict,
+    alerts: list,
+) -> dict:
+    """日本株指数を 指数→ETF の2段階フォールバックで取得する。
+    戻り値エントリに "source": "index" | "etf" | "stale" を付与する。
+    """
+    label        = spec["label"]
+    index_ticker = spec["index_ticker"]
+    etf_ticker   = spec["etf_ticker"]
+    etf_note     = spec["etf_note"]
+    prev_date    = prev_entry.get("date")
+
+    def _try(ticker: str) -> tuple:
+        """(close, change_pct, date_str, reason) を返す。
+        reason: 'ok' | 'regression' | 'stale' | 'failed'"""
+        close, change_pct, data_date = fetch_close(ticker)
+        if close is None:
+            return None, None, None, "failed"
+        age = (_date.today() - _date.fromisoformat(data_date)).days if data_date else None
+        if prev_date and data_date and data_date < prev_date:
+            alerts.append(
+                f"[警告] {label}({ticker}): yfinanceが古い日付({data_date}) を返した"
+                f" → 日付逆行のためフォールバック"
+            )
+            print(f"  {ticker:12s}  {close:>14.4f}  [日付逆行 {data_date} < {prev_date}]")
+            return None, None, None, "regression"
+        if age is not None and age > STALE_DAYS:
+            alerts.append(
+                f"[警告] {label}({ticker}): データが{age}日前 > STALE_DAYS({STALE_DAYS}) → フォールバック"
+            )
+            print(f"  {ticker:12s}  {close:>14.4f}  [{age}日前 → フォールバック]")
+            return None, None, None, "stale"
+        return close, change_pct, data_date, "ok"
+
+    # ── Step 1: 指数取得 ──────────────────────────────────────
+    c, pct, d, reason = _try(index_ticker)
+    if reason == "ok":
+        print(f"  {index_ticker:12s}  {c:>14.4f}  {(pct or 0):+.2f}%  [{d}]  source=index")
+        return {
+            "label": label, "ticker": index_ticker,
+            "close": c, "change_pct": pct, "date": d,
+            "status": "ok", "note": "", "source": "index",
+        }
+    print(f"  {index_ticker:12s}  {reason} → ETF({etf_ticker})へフォールバック")
+
+    # ── Step 2: ETF取得 ───────────────────────────────────────
+    c, pct, d, reason = _try(etf_ticker)
+    if reason == "ok":
+        alerts.append(
+            f"[警告] {label}: 指数({index_ticker})取得失敗のためETF({etf_ticker})で代替表示。"
+        )
+        print(f"  {etf_ticker:12s}  {c:>14.4f}  {(pct or 0):+.2f}%  [{d}]  source=etf")
+        return {
+            "label": label, "ticker": etf_ticker,
+            "close": c, "change_pct": pct, "date": d,
+            "status": "ok", "note": etf_note, "source": "etf",
+        }
+    print(f"  {etf_ticker:12s}  {reason} → stale")
+
+    # ── 両方失敗 → 前回値（stale） ────────────────────────────
+    prev_close = prev_entry.get("close")
+    if prev_close is not None:
+        alerts.append(
+            f"[警告] {label}: 指数・ETF両方とも取得失敗。前回値({prev_close})を保持します。"
+        )
+        print(f"  {'stale':12s}  {prev_close:>14.4f}  [stale]")
+        return {
+            "label": label, "ticker": prev_entry.get("ticker", etf_ticker),
+            "close": prev_close, "change_pct": prev_entry.get("change_pct"),
+            "date": prev_entry.get("date"), "status": "stale",
+            "note": prev_entry.get("note", ""), "source": "stale",
+        }
+    alerts.append(
+        f"[エラー] {label}: 指数・ETF両方とも取得失敗かつ前回値なし。欠損表示になります。"
+    )
+    print(f"  {'failed':12s}  None  [failed]")
+    return {
+        "label": label, "ticker": etf_ticker,
+        "close": None, "change_pct": None, "date": None,
+        "status": "failed", "note": "", "source": "stale",
+    }
 
 
 # ── 外部 JSON 取得 ──────────────────────────────────────────────────────────────
@@ -351,15 +452,22 @@ def _build_market_section_html(hub_data: dict) -> str:
 
     def mk_item(key: str) -> str:
         e = market.get(key, {})
-        label = e.get("label", key)
+        label  = e.get("label", key)
+        source = e.get("source")
+        if source == "etf":
+            display_label = label + "（ETF連動値）"
+        elif source == "stale":
+            display_label = label + "（前回値）"
+        else:
+            display_label = label
         val_str = _fmt_mkt_val(e.get("close"))
         raw_note = e.get("note", "")
         ticker = raw_note.replace("ETF(", "").replace(")の値", "").strip() if raw_note else ""
         note_html = f'<span class="mkt-note">({ticker})</span>' if ticker else ""
         if e.get("status") == "failed" or val_str is None:
-            return f'<div class="mkt-item"><span class="mkt-name">{label}</span>{note_html}<span class="mkt-fail">—</span></div>'
+            return f'<div class="mkt-item"><span class="mkt-name">{display_label}</span>{note_html}<span class="mkt-fail">—</span></div>'
         pct_html = _fmt_pct_html(e.get("change_pct"))
-        return (f'<div class="mkt-item"><span class="mkt-name">{label}</span>'
+        return (f'<div class="mkt-item"><span class="mkt-name">{display_label}</span>'
                 f'{note_html}<span class="mkt-val">{val_str}</span>{pct_html}</div>')
 
     def mk_group(lbl: str, keys: list) -> str:
@@ -375,6 +483,24 @@ def _build_market_section_html(hub_data: dict) -> str:
         except Exception:
             pass
 
+    # 注意喚起バナー（日経・TOPIXのフォールバック発動時のみ表示）
+    alert_msgs = []
+    nk_src  = market.get("nikkei225", {}).get("source")
+    top_src = market.get("topix_etf",  {}).get("source")
+    if nk_src == "etf":
+        alert_msgs.append("日経平均株価の取得に失敗したため、日経平均連動ETF（1321）の値で代替表示しています")
+    elif nk_src == "stale":
+        alert_msgs.append("日経平均の最新値を取得できませんでした。前回取得値を表示しています")
+    if top_src == "etf":
+        alert_msgs.append("TOPIXの取得に失敗したため、TOPIX連動ETF（1306）の値で代替表示しています")
+    elif top_src == "stale":
+        alert_msgs.append("TOPIXの最新値を取得できませんでした。前回取得値を表示しています")
+    if alert_msgs:
+        alert_inner = "<br>".join(alert_msgs)
+        alert_html  = f'<div id="mkt-alert" class="mkt-alert">{alert_inner}</div>'
+    else:
+        alert_html  = '<div id="mkt-alert" class="mkt-alert" hidden></div>'
+
     groups = "\n        ".join([
         mk_group("🇯🇵 日本株", JP),
         mk_group("🇺🇸 米国株", US),
@@ -382,6 +508,7 @@ def _build_market_section_html(hub_data: dict) -> str:
     ])
 
     return f"""
+    {alert_html}
     <section class="mkt-band" id="mkt-band">
       <div class="mkt-hdr">
         <span class="mkt-label">市況</span>
@@ -771,6 +898,12 @@ def build_hub() -> None:
     print(f"▼ 市況9指標 取得  ({to_iso_jst(generated_at)})")
     market_out: dict[str, dict] = {}
 
+    # 日本株2指標：指数優先 → ETFフォールバック
+    for key, spec in JP_INDEX_FALLBACK:
+        prev_entry = prev_market.get(key, {})
+        market_out[key] = fetch_jp_index_with_fallback(key, spec, prev_entry, alerts)
+
+    # グロース250 + 海外6指標：単一ティッカー取得（既存ロジック）
     for key, spec in MARKET_SPECS:
         ticker     = spec["ticker"]
         prev_entry = prev_market.get(key, {})

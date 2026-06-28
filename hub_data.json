@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-06-28T05:40:45+09:00",
+    "generated_at": "2026-06-28T19:17:14+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -12,21 +12,23 @@
   "market": {
     "nikkei225": {
       "label": "日経平均",
-      "ticker": "1321.T",
-      "close": 72560.0,
-      "change_pct": -4.1859,
+      "ticker": "^N225",
+      "close": 69360.8828,
+      "change_pct": -4.1531,
       "date": "2026-06-26",
       "status": "ok",
-      "note": "ETF(1321.T)の値"
+      "note": "",
+      "source": "index"
     },
     "topix_etf": {
-      "label": "TOPIX連動",
+      "label": "TOPIX",
       "ticker": "1306.T",
       "close": 420.4,
       "change_pct": -1.2914,
       "date": "2026-06-26",
       "status": "ok",
-      "note": "ETF(1306.T)の値"
+      "note": "ETF(1306.T)の値",
+      "source": "etf"
     },
     "growth250": {
       "label": "グロース250(連動)",
@@ -74,15 +76,15 @@
       "ticker": "USDJPY=X",
       "close": 161.685,
       "change_pct": -0.0742,
-      "date": "2026-06-27",
+      "date": "2026-06-28",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 60181.1211,
-      "change_pct": 0.2744,
-      "date": "2026-06-27",
+      "close": 60178.0,
+      "change_pct": 0.3969,
+      "date": "2026-06-28",
       "status": "ok"
     }
   },
@@ -157,6 +159,8 @@
   },
   "alerts": {
     "_comment": "overall_status が partial のとき UI に表示できる。",
-    "messages": []
+    "messages": [
+      "[警告] TOPIX: 指数(^TOPX)取得失敗のためETF(1306.T)で代替表示。"
+    ]
   }
 }
