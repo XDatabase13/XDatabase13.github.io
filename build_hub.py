@@ -820,40 +820,40 @@ def _build_ai_manifold_card_html(ai: dict) -> str:
     </div>"""
 
 
-# ミニマップSVG(9島・上流→下流バリューチェーン配置)
-_AI_SUPPLY_DAG_MINIMAP = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="200 50 1200 930"
+# ミニマップSVG(9島・左＝上流 → 右＝下流バリューチェーン配置)
+_AI_SUPPLY_DAG_MINIMAP = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="50 120 1540 540"
         style="width:100%;display:block;border-radius:8px;background:#0b0e18;margin:6px 0 4px">
         <!-- edges -->
-        <line x1="380" y1="100" x2="560" y2="255" stroke="#1c2840" stroke-width="2.5"/>
-        <line x1="800" y1="400" x2="560" y2="255" stroke="#1c2840" stroke-width="2.5"/>
-        <line x1="1220" y1="100" x2="800" y2="400" stroke="#1c2840" stroke-width="2.5"/>
-        <line x1="1040" y1="255" x2="800" y2="400" stroke="#1c2840" stroke-width="2.5"/>
-        <line x1="560" y1="255" x2="800" y2="530" stroke="#1c2840" stroke-width="2.5"/>
-        <line x1="1040" y1="255" x2="800" y2="530" stroke="#1c2840" stroke-width="2.5"/>
-        <line x1="800" y1="530" x2="800" y2="660" stroke="#1c2840" stroke-width="2.5"/>
-        <line x1="800" y1="660" x2="800" y2="800" stroke="#1c2840" stroke-width="2.5"/>
-        <line x1="800" y1="800" x2="800" y2="930" stroke="#1c2840" stroke-width="2.5"/>
-        <line x1="1220" y1="100" x2="1040" y2="255" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="140" y1="200" x2="370" y2="200" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="140" y1="580" x2="370" y2="580" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="140" y1="580" x2="600" y2="390" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="370" y1="580" x2="600" y2="390" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="600" y1="390" x2="370" y2="200" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="370" y1="200" x2="830" y2="390" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="370" y1="580" x2="830" y2="390" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="830" y1="390" x2="1060" y2="390" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="1060" y1="390" x2="1290" y2="390" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="1290" y1="390" x2="1520" y2="390" stroke="#1c2840" stroke-width="2.5"/>
         <!-- islands -->
-        <circle cx="380"  cy="100" r="52" fill="rgba(112,96,216,.18)"  stroke="#7060d8" stroke-width="1.5"/>
-        <circle cx="1220" cy="100" r="62" fill="rgba(168,95,200,.18)"  stroke="#a85fc8" stroke-width="1.5"/>
-        <circle cx="560"  cy="255" r="56" fill="rgba(80,112,232,.18)"  stroke="#5070e8" stroke-width="1.5"/>
-        <circle cx="1040" cy="255" r="52" fill="rgba(200,95,160,.18)"  stroke="#c85fa0" stroke-width="1.5"/>
-        <circle cx="800"  cy="400" r="50" fill="rgba(200,120,80,.18)"  stroke="#c87850" stroke-width="1.5"/>
-        <circle cx="800"  cy="530" r="58" fill="rgba(95,184,127,.18)"  stroke="#5fb87f" stroke-width="1.5"/>
-        <circle cx="800"  cy="660" r="56" fill="rgba(95,200,190,.18)"  stroke="#5fc8be" stroke-width="1.5"/>
-        <circle cx="800"  cy="800" r="60" fill="rgba(200,160,78,.18)"  stroke="#c8a04e" stroke-width="1.5"/>
-        <circle cx="800"  cy="930" r="52" fill="rgba(111,168,255,.22)" stroke="#6fa8ff" stroke-width="2"/>
+        <circle cx="140"  cy="200" r="52" fill="rgba(112,96,216,.18)"  stroke="#7060d8" stroke-width="1.5"/>
+        <circle cx="140"  cy="580" r="62" fill="rgba(168,95,200,.18)"  stroke="#a85fc8" stroke-width="1.5"/>
+        <circle cx="370"  cy="200" r="56" fill="rgba(80,112,232,.18)"  stroke="#5070e8" stroke-width="1.5"/>
+        <circle cx="370"  cy="580" r="52" fill="rgba(200,95,160,.18)"  stroke="#c85fa0" stroke-width="1.5"/>
+        <circle cx="600"  cy="390" r="50" fill="rgba(200,120,80,.18)"  stroke="#c87850" stroke-width="1.5"/>
+        <circle cx="830"  cy="390" r="58" fill="rgba(95,184,127,.18)"  stroke="#5fb87f" stroke-width="1.5"/>
+        <circle cx="1060" cy="390" r="56" fill="rgba(95,200,190,.18)"  stroke="#5fc8be" stroke-width="1.5"/>
+        <circle cx="1290" cy="390" r="60" fill="rgba(200,160,78,.18)"  stroke="#c8a04e" stroke-width="1.5"/>
+        <circle cx="1520" cy="390" r="52" fill="rgba(111,168,255,.22)" stroke="#6fa8ff" stroke-width="2"/>
         <!-- labels -->
-        <text x="380"  y="100"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="600">EDA</text>
-        <text x="1220" y="100"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">装置</text>
-        <text x="560"  y="255"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">AIチップ</text>
-        <text x="1040" y="255"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">メモリ</text>
-        <text x="800"  y="400"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">製造</text>
-        <text x="800"  y="530"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">DCインフラ</text>
-        <text x="800"  y="660"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="600">クラウド</text>
-        <text x="800"  y="800"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="600">AIモデル</text>
-        <text x="800"  y="930"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="700">実装</text>
+        <text x="140"  y="200" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="600">EDA</text>
+        <text x="140"  y="580" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">装置</text>
+        <text x="370"  y="200" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">AIチップ</text>
+        <text x="370"  y="580" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">メモリ</text>
+        <text x="600"  y="390" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">製造</text>
+        <text x="830"  y="390" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">DCインフラ</text>
+        <text x="1060" y="390" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="600">クラウド</text>
+        <text x="1290" y="390" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="600">AIモデル</text>
+        <text x="1520" y="390" text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="700">実装</text>
       </svg>"""
 
 
