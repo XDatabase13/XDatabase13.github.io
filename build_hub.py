@@ -66,6 +66,7 @@ SITE_URLS = {
     "kioxia":    "https://raw.githubusercontent.com/XDatabase13/kioxia-sandisk/master/data.json",
     "momentum":  "https://raw.githubusercontent.com/XDatabase13/momentum-corr/master/data.json",
     "aiManifold": "https://raw.githubusercontent.com/XDatabase13/ai-manifold/master/data.json",
+    "aiSupplyDag": "https://raw.githubusercontent.com/XDatabase13/ai-supply-dag/master/data.json",
 }
 
 
@@ -365,12 +366,31 @@ def extract_ai_manifold(d: dict) -> dict:
     }
 
 
+def extract_ai_supply_dag(d: dict) -> dict:
+    """ai-supply-dag data.json からカード表示に必要な最小フィールドを抽出。
+    summary フィールドを直接参照する。"""
+    meta    = d.get("_meta") or {}
+    summary = d.get("summary") or {}
+    top_g   = summary.get("top_gainer") or {}
+    top_l   = summary.get("top_loser") or {}
+    return {
+        "status":       meta.get("status"),
+        "generated_at": meta.get("generated_at"),
+        "total":        summary.get("total_companies"),
+        "up":           summary.get("up_count"),
+        "down":         summary.get("down_count"),
+        "top_gainer":   {"name": top_g.get("name"), "ticker": top_g.get("ticker"), "change_pct": top_g.get("change_pct")} if top_g else None,
+        "top_loser":    {"name": top_l.get("name"), "ticker": top_l.get("ticker"), "change_pct": top_l.get("change_pct")} if top_l else None,
+    }
+
+
 SITE_EXTRACTORS = {
     "sbg":        extract_sbg,
     "crypto":     extract_crypto,
     "kioxia":     extract_kioxia,
     "momentum":   extract_momentum,
     "aiManifold": extract_ai_manifold,
+    "aiSupplyDag": extract_ai_supply_dag,
 }
 
 
@@ -800,6 +820,87 @@ def _build_ai_manifold_card_html(ai: dict) -> str:
     </div>"""
 
 
+# ミニマップSVG(9島・上流→下流バリューチェーン配置)
+_AI_SUPPLY_DAG_MINIMAP = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="200 50 1200 930"
+        style="width:100%;display:block;border-radius:8px;background:#0b0e18;margin:6px 0 4px">
+        <!-- edges -->
+        <line x1="380" y1="100" x2="560" y2="255" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="800" y1="400" x2="560" y2="255" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="1220" y1="100" x2="800" y2="400" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="1040" y1="255" x2="800" y2="400" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="560" y1="255" x2="800" y2="530" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="1040" y1="255" x2="800" y2="530" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="800" y1="530" x2="800" y2="660" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="800" y1="660" x2="800" y2="800" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="800" y1="800" x2="800" y2="930" stroke="#1c2840" stroke-width="2.5"/>
+        <line x1="1220" y1="100" x2="1040" y2="255" stroke="#1c2840" stroke-width="2.5"/>
+        <!-- islands -->
+        <circle cx="380"  cy="100" r="52" fill="rgba(112,96,216,.18)"  stroke="#7060d8" stroke-width="1.5"/>
+        <circle cx="1220" cy="100" r="62" fill="rgba(168,95,200,.18)"  stroke="#a85fc8" stroke-width="1.5"/>
+        <circle cx="560"  cy="255" r="56" fill="rgba(80,112,232,.18)"  stroke="#5070e8" stroke-width="1.5"/>
+        <circle cx="1040" cy="255" r="52" fill="rgba(200,95,160,.18)"  stroke="#c85fa0" stroke-width="1.5"/>
+        <circle cx="800"  cy="400" r="50" fill="rgba(200,120,80,.18)"  stroke="#c87850" stroke-width="1.5"/>
+        <circle cx="800"  cy="530" r="58" fill="rgba(95,184,127,.18)"  stroke="#5fb87f" stroke-width="1.5"/>
+        <circle cx="800"  cy="660" r="56" fill="rgba(95,200,190,.18)"  stroke="#5fc8be" stroke-width="1.5"/>
+        <circle cx="800"  cy="800" r="60" fill="rgba(200,160,78,.18)"  stroke="#c8a04e" stroke-width="1.5"/>
+        <circle cx="800"  cy="930" r="52" fill="rgba(111,168,255,.22)" stroke="#6fa8ff" stroke-width="2"/>
+        <!-- labels -->
+        <text x="380"  y="100"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="600">EDA</text>
+        <text x="1220" y="100"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">装置</text>
+        <text x="560"  y="255"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">AIチップ</text>
+        <text x="1040" y="255"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">メモリ</text>
+        <text x="800"  y="400"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">製造</text>
+        <text x="800"  y="530"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="32" font-family="sans-serif" font-weight="600">DCインフラ</text>
+        <text x="800"  y="660"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="600">クラウド</text>
+        <text x="800"  y="800"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="600">AIモデル</text>
+        <text x="800"  y="930"  text-anchor="middle" dy="0.35em" fill="#e8e9ec" font-size="36" font-family="sans-serif" font-weight="700">実装</text>
+      </svg>"""
+
+
+def _build_ai_supply_dag_card_html(dag: dict) -> str:
+    st    = _card_effective_status(dag)
+    gen   = dag.get("generated_at", "")
+    total = dag.get("total") or 0
+    up    = dag.get("up") or 0
+    down  = dag.get("down") or 0
+    top_g = dag.get("top_gainer")
+    top_l = dag.get("top_loser")
+
+    up_h   = f'<span class="chg pos">▲ {up}社</span>'  if up   > 0 else "—"
+    down_h = f'<span class="chg neg">▼ {down}社</span>' if down > 0 else "—"
+
+    def _mover_html(pair, cls: str, mark: str) -> str:
+        if not pair or pair.get("change_pct") is None:
+            return "—"
+        name   = pair.get("name") or pair.get("ticker") or "—"
+        ticker = pair.get("ticker") or ""
+        disp   = ticker if ticker else name
+        return f'{disp} <span class="chg {cls}">{mark}{abs(float(pair["change_pct"])):.2f}%</span>'
+
+    top_h      = _mover_html(top_g, "pos", "▲")
+    bot_h      = _mover_html(top_l, "neg", "▼")
+    total_disp = total if total else 56
+
+    return f"""<div class="dcard" onclick="location.href='https://xdbdb.com/ai-supply-dag/'">
+      <div class="dcard-head">
+        <span class="tag">AI / サプライチェーン</span>
+        <span class="status-badge {_status_cls(st)}"><span class="status-dot"></span>{_status_lbl(st)}</span>
+      </div>
+      <h2 class="dcard-title">生成AIサプライチェーンの有向グラフ</h2>
+      <p class="dcard-sub">グローバル{total_disp}社 9セクター DAG</p>
+      <p class="dcard-desc">生成AI三大プレイヤーを中核に、半導体・製造装置・材料・データセンター・フィジカルAIまで、グローバル56社のサプライチェーンを有向グラフで可視化。毎朝更新。</p>
+      {_AI_SUPPLY_DAG_MINIMAP}
+      <div class="metrics">
+        <div class="metric"><span class="mlabel">本日上昇</span><span class="mval">{up_h}</span></div>
+        <div class="metric"><span class="mlabel">本日下落</span><span class="mval">{down_h}</span></div>
+        <div class="metric"><span class="mlabel">最高上昇</span><span class="mval mval-hi">{top_h}</span></div>
+        <div class="metric"><span class="mlabel">最大下落</span><span class="mval">{bot_h}</span></div>
+      </div>
+      <a href="https://xdbdb.com/ai-supply-dag/" class="dcard-cta">サプライチェーンを詳しく見る →</a>
+      <p class="dcard-time">{_fmt_time_jst(gen)} 更新</p>
+    </div>"""
+
+
 def _build_meta_description(hub_data: dict) -> str:
     cards = hub_data.get("cards", {})
     sbg   = cards.get("sbg", {})
@@ -823,6 +924,9 @@ def _build_meta_description(hub_data: dict) -> str:
     if kp   is not None: parts.append(f"キオクシア予想PER {float(kp):.1f}倍")
     if m10  is not None: parts.append(f"AI半導体平均相関（10日）{float(m10):.2f}")
     if a_tot:            parts.append(f"AI関連{int(a_tot)}銘柄の業界地図（本日上昇{int(a_up or 0)}）")
+    dag  = cards.get("aiSupplyDag", {})
+    d_up = dag.get("up")
+    if d_up is not None: parts.append(f"AIサプライチェーン{int(dag.get('total') or 56)}社（本日上昇{int(d_up)}）")
 
     if parts:
         return " / ".join(parts) + "。理論株価・mNAV・予想PER・相関係数を毎日更新する投資家向けハブ。"
@@ -849,6 +953,7 @@ def bake_index_html(hub_data: dict, index_path: Path) -> None:
         _build_kioxia_card_html(cards.get("kioxia", {})),
         _build_momentum_card_html(cards.get("momentum", {})),
         _build_ai_manifold_card_html(cards.get("aiManifold", {})),
+        _build_ai_supply_dag_card_html(cards.get("aiSupplyDag", {})),
     ])
     content = _replace_between(content, "<!--CARDS_START-->", "<!--CARDS_END-->",
                                 "\n      " + cards_inner + "\n      ")

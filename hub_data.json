@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-07-02T05:40:53+09:00",
+    "generated_at": "2026-07-02T21:00:24+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -13,9 +13,9 @@
     "nikkei225": {
       "label": "日経平均",
       "ticker": "^N225",
-      "close": 70062.3203,
-      "change_pct": 0.8554,
-      "date": "2026-06-30",
+      "close": 68733.1484,
+      "change_pct": -2.4715,
+      "date": "2026-07-02",
       "status": "ok",
       "note": "",
       "source": "index"
@@ -23,17 +23,17 @@
     "topix_etf": {
       "label": "TOPIX（1306）",
       "ticker": "1306.T",
-      "close": 425.8,
-      "change_pct": 0.5194,
-      "date": "2026-07-01",
+      "close": 426.4,
+      "change_pct": 0.1409,
+      "date": "2026-07-02",
       "status": "ok"
     },
     "growth250": {
       "label": "グロース250（2516）",
       "ticker": "2516.T",
-      "close": 552.2,
-      "change_pct": -1.6563,
-      "date": "2026-07-01",
+      "close": 568.0,
+      "change_pct": 2.8613,
+      "date": "2026-07-02",
       "status": "ok"
     },
     "dow": {
@@ -55,7 +55,7 @@
     "nasdaq": {
       "label": "NASDAQ総合",
       "ticker": "^IXIC",
-      "close": 26040.0312,
+      "close": 26040.0293,
       "change_pct": -0.6626,
       "date": "2026-07-01",
       "status": "ok"
@@ -63,7 +63,7 @@
     "sox": {
       "label": "SOX",
       "ticker": "^SOX",
-      "close": 13353.2793,
+      "close": 13353.2803,
       "change_pct": -6.2728,
       "date": "2026-07-01",
       "status": "ok"
@@ -71,17 +71,17 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 162.628,
-      "change_pct": 0.4354,
-      "date": "2026-07-01",
+      "close": 161.485,
+      "change_pct": -0.7028,
+      "date": "2026-07-02",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 59983.6797,
-      "change_pct": 2.4331,
-      "date": "2026-07-01",
+      "close": 61240.4102,
+      "change_pct": 2.061,
+      "date": "2026-07-02",
       "status": "ok"
     }
   },
@@ -150,6 +150,24 @@
       "bot": {
         "code": "3110",
         "change_pct": -8.4589
+      },
+      "_fetch_status": "ok"
+    },
+    "aiSupplyDag": {
+      "status": "complete",
+      "generated_at": "2026-07-02T20:56:07+09:00",
+      "total": 56,
+      "up": 12,
+      "down": 42,
+      "top_gainer": {
+        "name": "Meta",
+        "ticker": "META",
+        "change_pct": 8.81
+      },
+      "top_loser": {
+        "name": "SK Hynix",
+        "ticker": "000660.KS",
+        "change_pct": -14.57
       },
       "_fetch_status": "ok"
     }
