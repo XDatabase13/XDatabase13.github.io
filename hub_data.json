@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-07-03T05:40:59+09:00",
+    "generated_at": "2026-07-03T10:51:12+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -12,28 +12,28 @@
   "market": {
     "nikkei225": {
       "label": "日経平均",
-      "ticker": "1321.T",
-      "close": 72000.0,
-      "change_pct": -2.3066,
-      "date": "2026-07-02",
+      "ticker": "^N225",
+      "close": 68955.7734,
+      "change_pct": 0.3239,
+      "date": "2026-07-03",
       "status": "ok",
-      "note": "ETF(1321.T)の値",
-      "source": "etf"
+      "note": "",
+      "source": "index"
     },
     "topix_etf": {
       "label": "TOPIX（1306）",
       "ticker": "1306.T",
-      "close": 426.4,
-      "change_pct": 0.1409,
-      "date": "2026-07-02",
+      "close": 429.1,
+      "change_pct": 0.6332,
+      "date": "2026-07-03",
       "status": "ok"
     },
     "growth250": {
       "label": "グロース250（2516）",
       "ticker": "2516.T",
-      "close": 568.0,
-      "change_pct": 2.8613,
-      "date": "2026-07-02",
+      "close": 571.6,
+      "change_pct": 0.6338,
+      "date": "2026-07-03",
       "status": "ok"
     },
     "dow": {
@@ -71,17 +71,17 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 161.101,
-      "change_pct": -0.939,
-      "date": "2026-07-02",
+      "close": 161.223,
+      "change_pct": -0.8097,
+      "date": "2026-07-03",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 61299.3398,
-      "change_pct": 2.1592,
-      "date": "2026-07-02",
+      "close": 61565.9609,
+      "change_pct": 2.6035,
+      "date": "2026-07-03",
       "status": "ok"
     }
   },
@@ -155,28 +155,25 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-07-02T21:09:44+09:00",
+      "generated_at": "2026-07-03T10:46:57+09:00",
       "total": 56,
       "up": 12,
       "down": 42,
       "top_gainer": {
-        "name": "Meta",
-        "ticker": "META",
-        "change_pct": 8.81
+        "name": "Apple",
+        "ticker": "AAPL",
+        "change_pct": 4.84
       },
       "top_loser": {
-        "name": "SK Hynix",
-        "ticker": "000660.KS",
-        "change_pct": -14.57
+        "name": "SanDisk",
+        "ticker": "SNDK",
+        "change_pct": -14.13
       },
       "_fetch_status": "ok"
     }
   },
   "alerts": {
     "_comment": "overall_status が partial のとき UI に表示できる。",
-    "messages": [
-      "[警告] 日経平均(^N225): yfinanceが古い日付(2026-07-01) を返した → 日付逆行のためフォールバック",
-      "[警告] 日経平均: 指数(^N225)取得失敗のためETF(1321.T)で代替表示。"
-    ]
+    "messages": []
   }
 }
