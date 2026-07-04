@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-07-04T05:40:59+09:00",
+    "generated_at": "2026-07-05T05:41:00+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -12,13 +12,13 @@
   "market": {
     "nikkei225": {
       "label": "日経平均",
-      "ticker": "1321.T",
-      "close": 73140.0,
-      "change_pct": 1.5833,
+      "ticker": "^N225",
+      "close": 69744.0703,
+      "change_pct": 1.4708,
       "date": "2026-07-03",
       "status": "ok",
-      "note": "ETF(1321.T)の値",
-      "source": "etf"
+      "note": "",
+      "source": "index"
     },
     "topix_etf": {
       "label": "TOPIX（1306）",
@@ -71,25 +71,25 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 161.364,
-      "change_pct": -0.7229,
+      "close": 161.337,
+      "change_pct": -0.7395,
       "date": "2026-07-03",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 62565.1914,
-      "change_pct": 1.7563,
-      "date": "2026-07-03",
+      "close": 63205.2695,
+      "change_pct": 1.057,
+      "date": "2026-07-04",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-07-04T05:30:46+09:00",
-      "nav_per_share": 10732,
+      "generated_at": "2026-07-05T05:30:53+09:00",
+      "nav_per_share": 10731,
       "discount_pct": 42.5,
       "close": 6169.0,
       "price_change_pct": -0.4197,
@@ -97,20 +97,20 @@
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-07-04T05:30:43+09:00",
+      "generated_at": "2026-07-05T05:30:57+09:00",
       "mstr": {
-        "mnav_premium": 1.123457,
+        "mnav_premium": 1.107283,
         "price_change_pct": 7.9023
       },
       "metaplanet": {
-        "mnav_premium": 0.762981,
+        "mnav_premium": 0.754723,
         "price_change_pct": 3.3816
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-07-04T05:31:07+09:00",
+      "generated_at": "2026-07-05T05:31:10+09:00",
       "kioxia": {
         "per": 13.07,
         "price_change_pct": 9.2316
@@ -123,7 +123,7 @@
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-07-04T05:30:57+09:00",
+      "generated_at": "2026-07-05T05:30:56+09:00",
       "mean_corr_10": 0.5727,
       "top_high_pair": {
         "a": "6981",
@@ -139,7 +139,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-07-04T05:31:05+09:00",
+      "generated_at": "2026-07-05T05:31:15+09:00",
       "total": 54,
       "up": 38,
       "down": 15,
@@ -155,7 +155,7 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-07-04T05:31:36+09:00",
+      "generated_at": "2026-07-05T05:31:11+09:00",
       "total": 56,
       "up": 15,
       "down": 38,
@@ -174,9 +174,6 @@
   },
   "alerts": {
     "_comment": "overall_status が partial のとき UI に表示できる。",
-    "messages": [
-      "[警告] 日経平均(^N225): yfinanceが古い日付(2026-07-02) を返した → 日付逆行のためフォールバック",
-      "[警告] 日経平均: 指数(^N225)取得失敗のためETF(1321.T)で代替表示。"
-    ]
+    "messages": []
   }
 }
