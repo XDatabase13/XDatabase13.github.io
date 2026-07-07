@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-07-07T05:41:13+09:00",
+    "generated_at": "2026-07-08T05:41:16+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -13,9 +13,9 @@
     "nikkei225": {
       "label": "日経平均",
       "ticker": "^N225",
-      "close": 69744.0703,
-      "change_pct": 1.4708,
-      "date": "2026-07-03",
+      "close": 69737.6875,
+      "change_pct": -0.0092,
+      "date": "2026-07-06",
       "status": "ok",
       "note": "",
       "source": "index"
@@ -23,151 +23,151 @@
     "topix_etf": {
       "label": "TOPIX（1306）",
       "ticker": "1306.T",
-      "close": 435.4,
-      "change_pct": 0.8571,
-      "date": "2026-07-06",
+      "close": 431.8,
+      "change_pct": -0.8268,
+      "date": "2026-07-07",
       "status": "ok"
     },
     "growth250": {
       "label": "グロース250（2516）",
       "ticker": "2516.T",
-      "close": 590.9,
-      "change_pct": 1.1988,
-      "date": "2026-07-06",
+      "close": 576.0,
+      "change_pct": -2.5216,
+      "date": "2026-07-07",
       "status": "ok"
     },
     "dow": {
       "label": "ダウ",
       "ticker": "^DJI",
-      "close": 53055.9102,
-      "change_pct": 0.2946,
-      "date": "2026-07-06",
+      "close": 52925.1484,
+      "change_pct": -0.2465,
+      "date": "2026-07-07",
       "status": "ok"
     },
     "sp500": {
       "label": "S&P500",
       "ticker": "^GSPC",
-      "close": 7537.4302,
-      "change_pct": 0.7242,
-      "date": "2026-07-06",
+      "close": 7503.8501,
+      "change_pct": -0.4455,
+      "date": "2026-07-07",
       "status": "ok"
     },
     "nasdaq": {
       "label": "NASDAQ総合",
       "ticker": "^IXIC",
-      "close": 26121.1602,
-      "change_pct": 1.1168,
-      "date": "2026-07-06",
+      "close": 25818.6895,
+      "change_pct": -1.158,
+      "date": "2026-07-07",
       "status": "ok"
     },
     "sox": {
       "label": "SOX",
       "ticker": "^SOX",
-      "close": 12900.1416,
-      "change_pct": 2.1695,
-      "date": "2026-07-06",
+      "close": 12300.5156,
+      "change_pct": -4.6482,
+      "date": "2026-07-07",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 161.452,
-      "change_pct": 0.0019,
-      "date": "2026-07-06",
+      "close": 162.099,
+      "change_pct": 0.4007,
+      "date": "2026-07-07",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 63814.0117,
-      "change_pct": 0.4188,
-      "date": "2026-07-06",
+      "close": 63667.9883,
+      "change_pct": -0.511,
+      "date": "2026-07-07",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-07-07T05:31:01+09:00",
-      "nav_per_share": 10920,
-      "discount_pct": 43.5,
-      "close": 6169.0,
-      "price_change_pct": -0.4197,
+      "generated_at": "2026-07-08T05:31:01+09:00",
+      "nav_per_share": 10433,
+      "discount_pct": 42.7,
+      "close": 5979.0,
+      "price_change_pct": -3.0799,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-07-07T05:30:55+09:00",
+      "generated_at": "2026-07-08T05:30:58+09:00",
       "mstr": {
-        "mnav_premium": 1.090083,
-        "price_change_pct": 0.0
+        "mnav_premium": 1.054565,
+        "price_change_pct": -3.3839
       },
       "metaplanet": {
-        "mnav_premium": 0.741712,
-        "price_change_pct": 3.3816
+        "mnav_premium": 0.787505,
+        "price_change_pct": 6.0748
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-07-07T05:31:15+09:00",
+      "generated_at": "2026-07-08T05:31:27+09:00",
       "kioxia": {
-        "per": 13.07,
-        "price_change_pct": 9.2316
+        "per": 12.8,
+        "price_change_pct": -2.0528
       },
       "sndk": {
-        "per": 13.84,
-        "price_change_pct": -0.0327
+        "per": 12.84,
+        "price_change_pct": -7.2648
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-07-07T05:31:14+09:00",
-      "mean_corr_10": 0.5727,
+      "generated_at": "2026-07-08T05:31:12+09:00",
+      "mean_corr_10": 0.5781,
       "top_high_pair": {
         "a": "6981",
-        "b": "6920",
-        "rho": 0.9502
+        "b": "7735",
+        "rho": 0.9615
       },
       "top_low_pair": {
-        "a": "3436",
+        "a": "4004",
         "b": "5803",
-        "rho": -0.2398
+        "rho": -0.3052
       },
       "_fetch_status": "ok"
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-07-07T05:31:15+09:00",
+      "generated_at": "2026-07-08T05:31:20+09:00",
       "total": 54,
-      "up": 38,
-      "down": 15,
+      "up": 17,
+      "down": 37,
       "top": {
-        "code": "6525",
-        "change_pct": 15.0527
+        "code": "4063",
+        "change_pct": 6.568
       },
       "bot": {
-        "code": "4004",
-        "change_pct": -2.2346
+        "code": "6976",
+        "change_pct": -10.5788
       },
       "_fetch_status": "ok"
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-07-07T05:31:32+09:00",
+      "generated_at": "2026-07-08T05:31:25+09:00",
       "total": 56,
-      "up": 38,
-      "down": 15,
+      "up": 13,
+      "down": 41,
       "top_gainer": {
-        "name": "SK Hynix",
-        "ticker": "000660.KS",
-        "change_pct": 10.88
+        "name": "信越化学",
+        "ticker": "4063.T",
+        "change_pct": 6.57
       },
       "top_loser": {
-        "name": "レゾナック",
-        "ticker": "4004.T",
-        "change_pct": -2.23
+        "name": "Astera Labs",
+        "ticker": "ALAB",
+        "change_pct": -11.52
       },
       "_fetch_status": "ok"
     }
