@@ -67,6 +67,24 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- 連載記事：暗黙知をシステムにする -->
+  <url>
+    <loc>https://xdbdb.com/articles/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url><loc>https://xdbdb.com/articles/00/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://xdbdb.com/articles/01/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://xdbdb.com/articles/02/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://xdbdb.com/articles/03/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://xdbdb.com/articles/04/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://xdbdb.com/articles/05/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://xdbdb.com/articles/06/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://xdbdb.com/articles/07/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://xdbdb.com/articles/08/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://xdbdb.com/articles/09/</loc><lastmod>2026-07-09</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+
   <!-- 筋トレメニュー検索 -->
   <url>
     <loc>https://xdbdb.com/kintore/</loc>

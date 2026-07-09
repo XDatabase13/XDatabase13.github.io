@@ -248,6 +248,39 @@
   }
   .health-card:hover .health-arrow { transform: translateX(4px); color: var(--accent2); }
 
+  /* ── Articles (連載記事) card ─────────────────────────── */
+  .articles-section { margin-top: 36px; }
+  .articles-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px 24px;
+    transition: border-color .25s, transform .2s;
+  }
+  .articles-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .articles-tag {
+    font-family: var(--mono);
+    font-size: .64rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .articles-card h2 { font-size: 1.15rem; font-weight: 900; margin-top: 8px; line-height: 1.5; }
+  .articles-card .articles-sub { display: block; font-size: .78em; font-weight: 700; color: var(--muted); }
+  .articles-card p { font-size: .84rem; color: var(--muted); margin-top: 8px; line-height: 1.7; }
+  .articles-card .articles-cta {
+    display: inline-block;
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--accent);
+    transition: transform .2s;
+  }
+  .articles-card:hover .articles-cta { transform: translateX(4px); }
+
   /* ── Footer ───────────────────────────────────────────── */
   footer {
     border-top: 1px solid var(--line);
@@ -635,6 +668,17 @@
     </div>
       <!--CARDS_END-->
     </div>
+
+    <!-- 連載記事（静的セクション：build_hub.pyのCARDS区間外に置くこと） -->
+    <section class="articles-section reveal" style="animation-delay:.4s">
+      <div class="section-divider">読み物 — 連載記事</div>
+      <a href="/articles/" class="articles-card">
+        <div class="articles-tag">Series — All 10 Episodes Free</div>
+        <h2>暗黙知をシステムにする<span class="articles-sub">——AI×ルールを守れない投資家のシステムトレード開発記</span></h2>
+        <p>プログラミングほぼ未経験の投資家が、生成AIだけを頼りにシステムトレードを完全自作した記録。AIに「あなたは運が良いだけです」と切られた日から、システムを自分の判断で止めた日まで。第0回〜第9回・全10話、全話無料。</p>
+        <span class="articles-cta">連載を読む →</span>
+      </a>
+    </section>
 
     <section class="health-section reveal" style="animation-delay:.45s">
       <div class="section-divider">体と心のメンテナンス</div>
