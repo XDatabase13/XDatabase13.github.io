@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-07-13T21:29:48+09:00",
+    "generated_at": "2026-07-13T21:48:25+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -10,18 +10,16 @@
     }
   },
   "market": {
-    "nikkei225": {
-      "label": "日経平均",
-      "ticker": "^N225",
-      "close": 67242.7266,
-      "change_pct": -1.9181,
+    "jp_large_etf": {
+      "label": "国内大型株ETF（1321）",
+      "ticker": "1321.T",
+      "close": 69510.0,
+      "change_pct": -2.2638,
       "date": "2026-07-13",
-      "status": "ok",
-      "note": "",
-      "source": "index"
+      "status": "ok"
     },
     "topix_etf": {
-      "label": "TOPIX（1306）",
+      "label": "国内市場ETF（1306）",
       "ticker": "1306.T",
       "close": 417.8,
       "change_pct": -1.0187,
@@ -29,58 +27,58 @@
       "status": "ok"
     },
     "growth250": {
-      "label": "グロース250（2516）",
+      "label": "国内新興株ETF（2516）",
       "ticker": "2516.T",
       "close": 564.6,
       "change_pct": -0.9126,
       "date": "2026-07-13",
       "status": "ok"
     },
-    "dow": {
-      "label": "ダウ",
-      "ticker": "^DJI",
-      "close": 52637.0117,
-      "change_pct": 0.285,
+    "dow_etf": {
+      "label": "米国主要30社ETF（DIA）",
+      "ticker": "DIA",
+      "close": 525.78,
+      "change_pct": 0.3033,
       "date": "2026-07-10",
       "status": "ok"
     },
-    "sp500": {
-      "label": "S&P500",
-      "ticker": "^GSPC",
-      "close": 7575.3901,
-      "change_pct": 0.4209,
+    "sp500_etf": {
+      "label": "米国大型株ETF（SPY）",
+      "ticker": "SPY",
+      "close": 754.95,
+      "change_pct": 0.431,
       "date": "2026-07-10",
       "status": "ok"
     },
-    "nasdaq": {
-      "label": "NASDAQ総合",
-      "ticker": "^IXIC",
-      "close": 26281.6094,
-      "change_pct": 0.2851,
+    "nasdaq_etf": {
+      "label": "NASDAQ市場ETF（ONEQ）",
+      "ticker": "ONEQ",
+      "close": 103.53,
+      "change_pct": 0.2906,
       "date": "2026-07-10",
       "status": "ok"
     },
-    "sox": {
-      "label": "SOX",
-      "ticker": "^SOX",
-      "close": 12967.1602,
-      "change_pct": 0.0552,
+    "sox_etf": {
+      "label": "米国半導体ETF（SOXX）",
+      "ticker": "SOXX",
+      "close": 581.34,
+      "change_pct": -0.0619,
       "date": "2026-07-10",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 162.18,
-      "change_pct": -0.1127,
+      "close": 162.143,
+      "change_pct": -0.1355,
       "date": "2026-07-13",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 62679.9883,
-      "change_pct": -1.6911,
+      "close": 62555.5781,
+      "change_pct": -1.8863,
       "date": "2026-07-13",
       "status": "ok"
     }

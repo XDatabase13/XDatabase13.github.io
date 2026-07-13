@@ -392,19 +392,15 @@
     margin-top: -2px;
   }
 
-  /* ── Market fallback alert banner ────────────────────── */
-  .mkt-alert {
-    background: rgba(245,158,11,.08);
-    border: 1px solid rgba(245,158,11,.30);
-    border-radius: 8px;
-    padding: 8px 14px;
-    margin-bottom: 10px;
+  /* ── Market band ETF note ────────────────────────────── */
+  .mkt-etf-note {
     font-family: var(--mono);
-    font-size: .68rem;
-    color: #f59e0b;
+    font-size: .64rem;
+    color: var(--muted);
     line-height: 1.7;
+    margin: 6px 2px 0;
+    opacity: .8;
   }
-  .mkt-alert[hidden] { display: none; }
 </style>
 <script type="application/ld+json">
 {
@@ -433,25 +429,25 @@
     </p>
     <div class="update-status reveal" style="animation-delay:.27s">
       <span class="update-badge"><span class="update-dot"></span>毎朝05:30自動更新</span>
-      <span class="update-time" id="hub-update-time">最終更新 07/13 21:29 JST</span>
+      <span class="update-time" id="hub-update-time">最終更新 07/13 21:48 JST</span>
     </div>
   </header>
 
   <main>
     <!--MARKET_SECTION_START-->
-    <div id="mkt-alert" class="mkt-alert" hidden></div>
     <section class="mkt-band" id="mkt-band">
       <div class="mkt-hdr">
         <span class="mkt-label">市況</span>
-        <span class="mkt-time" id="mkt-time">07/13 21:29 JST時点</span>
+        <span class="mkt-time" id="mkt-time">07/13 21:48 JST時点</span>
       </div>
       <div class="mkt-groups" id="mkt-groups">
-        <div class="mkt-group"><span class="mkt-grp-lbl">🇯🇵 日本株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">日経平均</span><span class="mkt-val">67,243</span><span class="chg neg">▼1.92%</span></div><div class="mkt-item"><span class="mkt-name">TOPIX（1306）</span><span class="mkt-val">417.80</span><span class="chg neg">▼1.02%</span></div><div class="mkt-item"><span class="mkt-name">グロース250（2516）</span><span class="mkt-val">564.60</span><span class="chg neg">▼0.91%</span></div></div></div>
-        <div class="mkt-group"><span class="mkt-grp-lbl">🇺🇸 米国株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">ダウ</span><span class="mkt-val">52,637</span><span class="chg pos">▲0.28%</span></div><div class="mkt-item"><span class="mkt-name">S&P500</span><span class="mkt-val">7,575</span><span class="chg pos">▲0.42%</span></div><div class="mkt-item"><span class="mkt-name">NASDAQ総合</span><span class="mkt-val">26,282</span><span class="chg pos">▲0.29%</span></div><div class="mkt-item"><span class="mkt-name">SOX</span><span class="mkt-val">12,967</span><span class="chg pos">▲0.06%</span></div></div></div>
-        <div class="mkt-group"><span class="mkt-grp-lbl">💱 為替/仮想通貨</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">USD/JPY</span><span class="mkt-val">162.18</span><span class="chg neg">▼0.11%</span></div><div class="mkt-item"><span class="mkt-name">BTC</span><span class="mkt-val">62,680</span><span class="chg neg">▼1.69%</span></div></div></div>
+        <div class="mkt-group"><span class="mkt-grp-lbl">🇯🇵 日本株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">国内大型株ETF（1321）</span><span class="mkt-val">69,510</span><span class="chg neg">▼2.26%</span></div><div class="mkt-item"><span class="mkt-name">国内市場ETF（1306）</span><span class="mkt-val">417.80</span><span class="chg neg">▼1.02%</span></div><div class="mkt-item"><span class="mkt-name">国内新興株ETF（2516）</span><span class="mkt-val">564.60</span><span class="chg neg">▼0.91%</span></div></div></div>
+        <div class="mkt-group"><span class="mkt-grp-lbl">🇺🇸 米国株</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">米国主要30社ETF（DIA）</span><span class="mkt-val">525.78</span><span class="chg pos">▲0.30%</span></div><div class="mkt-item"><span class="mkt-name">米国大型株ETF（SPY）</span><span class="mkt-val">754.95</span><span class="chg pos">▲0.43%</span></div><div class="mkt-item"><span class="mkt-name">NASDAQ市場ETF（ONEQ）</span><span class="mkt-val">103.53</span><span class="chg pos">▲0.29%</span></div><div class="mkt-item"><span class="mkt-name">米国半導体ETF（SOXX）</span><span class="mkt-val">581.34</span><span class="chg neg">▼0.06%</span></div></div></div>
+        <div class="mkt-group"><span class="mkt-grp-lbl">💱 為替/仮想通貨</span><div class="mkt-items"><div class="mkt-item"><span class="mkt-name">USD/JPY</span><span class="mkt-val">162.14</span><span class="chg neg">▼0.14%</span></div><div class="mkt-item"><span class="mkt-name">BTC</span><span class="mkt-val">62,556</span><span class="chg neg">▼1.89%</span></div></div></div>
       </div>
     </section>
     <!--MARKET_SECTION_END-->
+    <p class="mkt-etf-note">市況欄では公式指数値ではなく、各市場・分野に連動するETFの市場価格を表示しています。ETF価格は対象指数と完全には一致しません。</p>
 
     <div class="cards-grid reveal" id="cards-grid" style="animation-delay:.3s">
       <!--CARDS_START-->
@@ -1252,24 +1248,21 @@ function fmtMktVal(val) {
 
 function mkMktItem(entry) {
   if (!entry) return '';
-  const { label, close, change_pct, status, note, source } = entry;
-  let displayLabel = label;
-  if (source === 'etf')   displayLabel = label + '（ETF連動値）';
-  if (source === 'stale') displayLabel = label + '（前回値）';
+  const { label, close, change_pct, status } = entry;
+  const displayLabel = status === 'stale' ? label + '（前回値）' : label;
   const valStr = fmtMktVal(close);
-  const noteHtml = note ? `<span class="mkt-note">(${note.replace(/ETF\(|\)の値/g, '').trim()})</span>` : '';
   if (status === 'failed' || valStr == null) {
-    return `<div class="mkt-item"><span class="mkt-name">${displayLabel}</span>${noteHtml}<span class="mkt-fail">—</span></div>`;
+    return `<div class="mkt-item"><span class="mkt-name">${displayLabel}</span><span class="mkt-fail">—</span></div>`;
   }
-  return `<div class="mkt-item"><span class="mkt-name">${displayLabel}</span>${noteHtml}<span class="mkt-val">${valStr}</span>${fmtPct(change_pct)}</div>`;
+  return `<div class="mkt-item"><span class="mkt-name">${displayLabel}</span><span class="mkt-val">${valStr}</span>${fmtPct(change_pct)}</div>`;
 }
 
 function renderMarketBand(data) {
   const market = data?.market ?? {};
   const genAt  = data?._meta?.generated_at;
 
-  const JP = ['nikkei225', 'topix_etf', 'growth250'];
-  const US = ['dow', 'sp500', 'nasdaq', 'sox'];
+  const JP = ['jp_large_etf', 'topix_etf', 'growth250'];
+  const US = ['dow_etf', 'sp500_etf', 'nasdaq_etf', 'sox_etf'];
   const FX = ['usdjpy', 'btc'];
 
   const mkGroup = (lbl, keys) =>
@@ -1292,22 +1285,6 @@ function renderMarketBand(data) {
     mkGroup('🇺🇸 米国株', US),
     mkGroup('💱 為替/仮想通貨', FX),
   ].join('');
-
-  // 注意喚起バナー更新
-  const alertEl = document.getElementById('mkt-alert');
-  if (alertEl) {
-    const nkSrc = market.nikkei225?.source;
-    const msgs = [];
-    if (nkSrc === 'etf')   msgs.push('日経平均株価の取得に失敗したため、日経平均連動ETF（1321）の値で代替表示しています');
-    if (nkSrc === 'stale') msgs.push('日経平均の最新値を取得できませんでした。前回取得値を表示しています');
-    if (msgs.length > 0) {
-      alertEl.removeAttribute('hidden');
-      alertEl.innerHTML = msgs.join('<br>');
-    } else {
-      alertEl.setAttribute('hidden', '');
-      alertEl.textContent = '';
-    }
-  }
 
   const band = document.getElementById('mkt-band');
   if (getComputedStyle(band).display === 'none') {
