@@ -689,7 +689,7 @@ def _build_kioxia_card_html(kioxia: dict) -> str:
       </div>
       <h2 class="dcard-title">キオクシア vs サンディスク</h2>
       <p class="dcard-sub">NAND予想PER比較</p>
-      <p class="dcard-desc">キオクシア(285A.T)とウエスタンデジタル傘下サンディスク(SNDK)の予想PER(株価収益率)を毎日更新。NAND型フラッシュメモリ大手2社の割安性を定量比較。</p>
+      <p class="dcard-desc">キオクシア(285A.T)とウエスタンデジタルから分離独立したサンディスク(SNDK)の予想PER(株価収益率)を毎日更新。NAND型フラッシュメモリ大手2社の割安性を定量比較。</p>
       <div class="metrics">
         <div class="metric metric-main">
           <span class="mlabel">キオクシア 予想PER</span>

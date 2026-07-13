@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-07-13T05:41:07+09:00",
+    "generated_at": "2026-07-13T17:14:52+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -13,9 +13,9 @@
     "nikkei225": {
       "label": "日経平均",
       "ticker": "^N225",
-      "close": 68557.7266,
-      "change_pct": 1.2014,
-      "date": "2026-07-10",
+      "close": 67242.7266,
+      "change_pct": -1.9181,
+      "date": "2026-07-13",
       "status": "ok",
       "note": "",
       "source": "index"
@@ -23,17 +23,17 @@
     "topix_etf": {
       "label": "TOPIX（1306）",
       "ticker": "1306.T",
-      "close": 422.1,
-      "change_pct": 0.7158,
-      "date": "2026-07-10",
+      "close": 417.8,
+      "change_pct": -1.0187,
+      "date": "2026-07-13",
       "status": "ok"
     },
     "growth250": {
       "label": "グロース250（2516）",
       "ticker": "2516.T",
-      "close": 569.8,
-      "change_pct": 0.4938,
-      "date": "2026-07-10",
+      "close": 564.6,
+      "change_pct": -0.9126,
+      "date": "2026-07-13",
       "status": "ok"
     },
     "dow": {
@@ -71,17 +71,17 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 161.619,
-      "change_pct": -0.4582,
-      "date": "2026-07-12",
+      "close": 162.055,
+      "change_pct": -0.1897,
+      "date": "2026-07-13",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 64154.0117,
-      "change_pct": 0.5517,
-      "date": "2026-07-12",
+      "close": 62977.6211,
+      "change_pct": -1.2243,
+      "date": "2026-07-13",
       "status": "ok"
     }
   },
