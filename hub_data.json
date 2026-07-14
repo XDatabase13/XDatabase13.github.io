@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-07-14T05:41:13+09:00",
+    "generated_at": "2026-07-15T05:41:15+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -13,159 +13,159 @@
     "jp_large_etf": {
       "label": "国内大型株ETF（1321）",
       "ticker": "1321.T",
-      "close": 69510.0,
-      "change_pct": -2.2638,
-      "date": "2026-07-13",
+      "close": 70050.0,
+      "change_pct": 0.7769,
+      "date": "2026-07-14",
       "status": "ok"
     },
     "topix_etf": {
       "label": "国内市場ETF（1306）",
       "ticker": "1306.T",
-      "close": 417.8,
-      "change_pct": -1.0187,
-      "date": "2026-07-13",
+      "close": 421.3,
+      "change_pct": 0.8377,
+      "date": "2026-07-14",
       "status": "ok"
     },
     "growth250": {
       "label": "国内新興株ETF（2516）",
       "ticker": "2516.T",
-      "close": 564.6,
-      "change_pct": -0.9126,
-      "date": "2026-07-13",
+      "close": 569.5,
+      "change_pct": 0.8679,
+      "date": "2026-07-14",
       "status": "ok"
     },
     "dow_etf": {
       "label": "米国主要30社ETF（DIA）",
       "ticker": "DIA",
-      "close": 524.47,
-      "change_pct": -0.2492,
-      "date": "2026-07-13",
+      "close": 524.69,
+      "change_pct": 0.042,
+      "date": "2026-07-14",
       "status": "ok"
     },
     "sp500_etf": {
       "label": "米国大型株ETF（SPY）",
       "ticker": "SPY",
-      "close": 749.17,
-      "change_pct": -0.7656,
-      "date": "2026-07-13",
+      "close": 751.83,
+      "change_pct": 0.3551,
+      "date": "2026-07-14",
       "status": "ok"
     },
     "nasdaq_etf": {
       "label": "NASDAQ市場ETF（ONEQ）",
       "ticker": "ONEQ",
-      "close": 101.9,
-      "change_pct": -1.5744,
-      "date": "2026-07-13",
+      "close": 102.86,
+      "change_pct": 0.9421,
+      "date": "2026-07-14",
       "status": "ok"
     },
     "sox_etf": {
       "label": "米国半導体ETF（SOXX）",
       "ticker": "SOXX",
-      "close": 553.61,
-      "change_pct": -4.77,
-      "date": "2026-07-13",
+      "close": 567.92,
+      "change_pct": 2.5849,
+      "date": "2026-07-14",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 162.455,
-      "change_pct": 0.0567,
-      "date": "2026-07-13",
+      "close": 162.234,
+      "change_pct": 0.2199,
+      "date": "2026-07-14",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 64198.7188,
-      "change_pct": 0.6909,
-      "date": "2026-07-13",
+      "close": 64398.4609,
+      "change_pct": 3.4694,
+      "date": "2026-07-14",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-07-14T05:31:05+09:00",
-      "nav_per_share": 10426,
-      "discount_pct": 39.0,
-      "close": 6364.0,
-      "price_change_pct": -0.0942,
+      "generated_at": "2026-07-15T05:31:07+09:00",
+      "nav_per_share": 10025,
+      "discount_pct": 34.4,
+      "close": 6574.0,
+      "price_change_pct": 3.2998,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-07-14T05:31:09+09:00",
+      "generated_at": "2026-07-15T05:31:05+09:00",
       "mstr": {
-        "mnav_premium": 1.04439,
-        "price_change_pct": -2.6839
+        "mnav_premium": 1.045855,
+        "price_change_pct": 5.9501
       },
       "metaplanet": {
-        "mnav_premium": 0.834568,
-        "price_change_pct": -5.6452
+        "mnav_premium": 0.838411,
+        "price_change_pct": 4.7009
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-07-14T05:31:29+09:00",
+      "generated_at": "2026-07-15T05:31:22+09:00",
       "kioxia": {
-        "per": 10.53,
-        "price_change_pct": -12.8571
+        "per": 10.84,
+        "price_change_pct": 2.9806
       },
       "sndk": {
-        "per": 13.29,
-        "price_change_pct": -12.6284
+        "per": 13.95,
+        "price_change_pct": 5.009
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-07-14T05:31:13+09:00",
-      "mean_corr_10": 0.54,
+      "generated_at": "2026-07-15T05:31:09+09:00",
+      "mean_corr_10": 0.5203,
       "top_high_pair": {
-        "a": "5801",
-        "b": "5803",
-        "rho": 0.9627
+        "a": "8035",
+        "b": "5706",
+        "rho": 0.9572
       },
       "top_low_pair": {
         "a": "9984",
         "b": "6098",
-        "rho": -0.6244
+        "rho": -0.537
       },
       "_fetch_status": "ok"
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-07-14T05:31:29+09:00",
+      "generated_at": "2026-07-15T05:31:20+09:00",
       "total": 54,
-      "up": 10,
-      "down": 44,
+      "up": 29,
+      "down": 25,
       "top": {
-        "code": "7731",
-        "change_pct": 2.7324
+        "code": "3778",
+        "change_pct": 4.9047
       },
       "bot": {
-        "code": "6976",
-        "change_pct": -19.2125
+        "code": "6506",
+        "change_pct": -8.9752
       },
       "_fetch_status": "ok"
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-07-14T05:31:37+09:00",
+      "generated_at": "2026-07-15T05:31:38+09:00",
       "total": 56,
-      "up": 8,
-      "down": 46,
+      "up": 35,
+      "down": 19,
       "top_gainer": {
-        "name": "HOYA",
-        "ticker": "7741.T",
-        "change_pct": 2.02
+        "name": "Dell",
+        "ticker": "DELL",
+        "change_pct": 7.12
       },
       "top_loser": {
-        "name": "SK Hynix",
-        "ticker": "000660.KS",
-        "change_pct": -15.37
+        "name": "ARM",
+        "ticker": "ARM",
+        "change_pct": -5.96
       },
       "_fetch_status": "ok"
     }
