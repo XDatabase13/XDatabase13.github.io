@@ -2,8 +2,8 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-07-20T05:40:45+09:00",
-    "overall_status": "complete",
+    "generated_at": "2026-07-21T05:40:49+09:00",
+    "overall_status": "partial",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
       "item_status": "ok=正常取得 / stale=取得失敗し前回値保持 / failed=前回値なし"
@@ -37,71 +37,71 @@
     "dow_etf": {
       "label": "米国主要30社ETF（DIA）",
       "ticker": "DIA",
-      "close": 520.81,
-      "change_pct": -0.766,
-      "date": "2026-07-17",
+      "close": 517.94,
+      "change_pct": -0.5511,
+      "date": "2026-07-20",
       "status": "ok"
     },
     "sp500_etf": {
       "label": "米国大型株ETF（SPY）",
       "ticker": "SPY",
-      "close": 743.29,
-      "change_pct": -0.9897,
-      "date": "2026-07-17",
+      "close": 742.09,
+      "change_pct": -0.1614,
+      "date": "2026-07-20",
       "status": "ok"
     },
     "nasdaq_etf": {
       "label": "NASDAQ市場ETF（ONEQ）",
       "ticker": "ONEQ",
-      "close": 100.45,
-      "change_pct": -1.3261,
-      "date": "2026-07-17",
+      "close": 100.55,
+      "change_pct": 0.0996,
+      "date": "2026-07-20",
       "status": "ok"
     },
     "sox_etf": {
       "label": "米国半導体ETF（SOXX）",
       "ticker": "SOXX",
-      "close": 521.81,
-      "change_pct": -1.6381,
-      "date": "2026-07-17",
+      "close": 524.14,
+      "change_pct": 0.4465,
+      "date": "2026-07-20",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 162.348,
-      "change_pct": -0.0172,
-      "date": "2026-07-19",
+      "close": 162.509,
+      "change_pct": 0.0819,
+      "date": "2026-07-20",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 64433.0,
-      "change_pct": -0.5611,
-      "date": "2026-07-19",
+      "close": 65295.3086,
+      "change_pct": 0.9345,
+      "date": "2026-07-20",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-07-20T05:30:41+09:00",
-      "nav_per_share": 9723,
-      "discount_pct": 44.2,
+      "generated_at": "2026-07-21T05:30:44+09:00",
+      "nav_per_share": 9779,
+      "discount_pct": 44.5,
       "close": 5424.0,
       "price_change_pct": -9.0086,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-07-20T05:30:41+09:00",
+      "generated_at": "2026-07-21T05:30:39+09:00",
       "mstr": {
-        "mnav_premium": 1.015563,
-        "price_change_pct": 0.8721
+        "mnav_premium": 1.027567,
+        "price_change_pct": 3.1313
       },
       "metaplanet": {
-        "mnav_premium": 0.754476,
+        "mnav_premium": 0.743302,
         "price_change_pct": -5.1502
       },
       "_fetch_status": "ok"
@@ -117,11 +117,11 @@
         "per": 10.75,
         "price_change_pct": -3.987
       },
-      "_fetch_status": "ok"
+      "_fetch_status": "failed"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-07-20T05:30:44+09:00",
+      "generated_at": "2026-07-21T05:30:44+09:00",
       "mean_corr_10": 0.6012,
       "top_high_pair": {
         "a": "5801",
@@ -137,7 +137,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-07-20T05:30:52+09:00",
+      "generated_at": "2026-07-21T05:30:50+09:00",
       "total": 54,
       "up": 6,
       "down": 48,
@@ -153,14 +153,14 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-07-20T05:31:10+09:00",
+      "generated_at": "2026-07-21T05:31:01+09:00",
       "total": 56,
-      "up": 12,
-      "down": 42,
+      "up": 19,
+      "down": 35,
       "top_gainer": {
-        "name": "Western Digital",
-        "ticker": "WDC",
-        "change_pct": 2.23
+        "name": "Marvell",
+        "ticker": "MRVL",
+        "change_pct": 3.32
       },
       "top_loser": {
         "name": "キオクシア",
@@ -172,6 +172,8 @@
   },
   "alerts": {
     "_comment": "overall_status が partial のとき UI に表示できる。",
-    "messages": []
+    "messages": [
+      "[警告] kioxia: data.json 取得失敗。前回値を保持します。"
+    ]
   }
 }
