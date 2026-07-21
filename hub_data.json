@@ -2,8 +2,8 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-07-21T05:40:49+09:00",
-    "overall_status": "partial",
+    "generated_at": "2026-07-21T19:18:16+09:00",
+    "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
       "item_status": "ok=正常取得 / stale=取得失敗し前回値保持 / failed=前回値なし"
@@ -13,25 +13,25 @@
     "jp_large_etf": {
       "label": "国内大型株ETF（1321）",
       "ticker": "1321.T",
-      "close": 66960.0,
-      "change_pct": -3.2789,
-      "date": "2026-07-17",
+      "close": 68450.0,
+      "change_pct": 2.2252,
+      "date": "2026-07-21",
       "status": "ok"
     },
     "topix_etf": {
       "label": "国内市場ETF（1306）",
       "ticker": "1306.T",
-      "close": 407.9,
-      "change_pct": -2.8115,
-      "date": "2026-07-17",
+      "close": 418.3,
+      "change_pct": 2.5496,
+      "date": "2026-07-21",
       "status": "ok"
     },
     "growth250": {
       "label": "国内新興株ETF（2516）",
       "ticker": "2516.T",
-      "close": 555.0,
-      "change_pct": -2.6316,
-      "date": "2026-07-17",
+      "close": 560.4,
+      "change_pct": 0.973,
+      "date": "2026-07-21",
       "status": "ok"
     },
     "dow_etf": {
@@ -69,17 +69,17 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 162.509,
-      "change_pct": 0.0819,
-      "date": "2026-07-20",
+      "close": 162.671,
+      "change_pct": 0.0978,
+      "date": "2026-07-21",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 65295.3086,
-      "change_pct": 0.9345,
-      "date": "2026-07-20",
+      "close": 66328.5781,
+      "change_pct": 1.6841,
+      "date": "2026-07-21",
       "status": "ok"
     }
   },
@@ -108,16 +108,16 @@
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-07-20T05:30:54+09:00",
+      "generated_at": "2026-07-21T05:30:50+09:00",
       "kioxia": {
         "per": 8.18,
         "price_change_pct": -16.1005
       },
       "sndk": {
-        "per": 10.75,
-        "price_change_pct": -3.987
+        "per": 11.04,
+        "price_change_pct": 2.6668
       },
-      "_fetch_status": "failed"
+      "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
@@ -172,8 +172,6 @@
   },
   "alerts": {
     "_comment": "overall_status が partial のとき UI に表示できる。",
-    "messages": [
-      "[警告] kioxia: data.json 取得失敗。前回値を保持します。"
-    ]
+    "messages": []
   }
 }
