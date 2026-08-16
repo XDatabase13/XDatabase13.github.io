@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-08-16T05:40:35+09:00",
+    "generated_at": "2026-08-17T05:40:34+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -69,25 +69,25 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 159.305,
-      "change_pct": -0.0759,
-      "date": "2026-08-15",
+      "close": 159.276,
+      "change_pct": -0.0941,
+      "date": "2026-08-16",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 63005.9883,
-      "change_pct": 0.0483,
-      "date": "2026-08-15",
+      "close": 63025.8086,
+      "change_pct": 0.0024,
+      "date": "2026-08-16",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-08-16T05:30:38+09:00",
-      "nav_per_share": 10760,
+      "generated_at": "2026-08-17T05:30:37+09:00",
+      "nav_per_share": 10759,
       "discount_pct": 46.7,
       "close": 5739.0,
       "price_change_pct": 2.9417,
@@ -95,20 +95,20 @@
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-08-16T05:30:39+09:00",
+      "generated_at": "2026-08-17T05:30:41+09:00",
       "mstr": {
-        "mnav_premium": 1.022656,
+        "mnav_premium": 1.022395,
         "price_change_pct": -4.1813
       },
       "metaplanet": {
-        "mnav_premium": 0.793787,
+        "mnav_premium": 0.793818,
         "price_change_pct": -0.8969
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-08-16T05:30:43+09:00",
+      "generated_at": "2026-08-17T05:30:41+09:00",
       "kioxia": {
         "per": 5.75,
         "price_change_pct": 3.7452
@@ -121,7 +121,7 @@
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-08-16T05:30:36+09:00",
+      "generated_at": "2026-08-17T05:30:33+09:00",
       "mean_corr_10": 0.5385,
       "top_high_pair": {
         "a": "285A",
@@ -137,7 +137,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-08-16T05:30:42+09:00",
+      "generated_at": "2026-08-17T05:30:43+09:00",
       "total": 54,
       "up": 29,
       "down": 24,
@@ -153,7 +153,7 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-08-16T05:30:53+09:00",
+      "generated_at": "2026-08-17T05:30:59+09:00",
       "total": 56,
       "up": 26,
       "down": 28,
