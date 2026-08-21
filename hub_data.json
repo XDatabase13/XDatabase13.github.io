@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-08-22T07:40:40+09:00",
+    "generated_at": "2026-08-22T08:16:20+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -69,16 +69,16 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 158.862,
-      "change_pct": 0.3702,
+      "close": 158.94,
+      "change_pct": 0.4195,
       "date": "2026-08-21",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 78498.1562,
-      "change_pct": 7.4835,
+      "close": 78646.1484,
+      "change_pct": 7.6861,
       "date": "2026-08-21",
       "status": "ok"
     }
@@ -94,14 +94,14 @@
       "_fetch_status": "ok"
     },
     "crypto": {
-      "status": "partial",
-      "generated_at": "2026-08-22T07:30:42+09:00",
+      "status": "complete",
+      "generated_at": "2026-08-22T08:07:59+09:00",
       "mstr": {
-        "mnav_premium": 0.957725,
+        "mnav_premium": 0.954043,
         "price_change_pct": 6.1037
       },
       "metaplanet": {
-        "mnav_premium": 0.741289,
+        "mnav_premium": 0.892982,
         "price_change_pct": 20.9486
       },
       "_fetch_status": "ok"
