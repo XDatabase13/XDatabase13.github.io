@@ -2,8 +2,8 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-08-22T08:16:20+09:00",
-    "overall_status": "complete",
+    "generated_at": "2026-08-23T07:40:39+09:00",
+    "overall_status": "partial",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
       "item_status": "ok=正常取得 / stale=取得失敗し前回値保持 / failed=前回値なし"
@@ -77,38 +77,38 @@
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 78646.1484,
-      "change_pct": 7.6861,
-      "date": "2026-08-21",
+      "close": 76983.0078,
+      "change_pct": -1.7261,
+      "date": "2026-08-22",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-08-22T07:30:39+09:00",
-      "nav_per_share": 9866,
-      "discount_pct": 46.7,
+      "generated_at": "2026-08-23T07:30:48+09:00",
+      "nav_per_share": 9869,
+      "discount_pct": 46.8,
       "close": 5255.0,
       "price_change_pct": -2.4503,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-08-22T08:07:59+09:00",
+      "generated_at": "2026-08-23T07:30:37+09:00",
       "mstr": {
-        "mnav_premium": 0.954043,
+        "mnav_premium": 0.979543,
         "price_change_pct": 6.1037
       },
       "metaplanet": {
-        "mnav_premium": 0.892982,
+        "mnav_premium": 0.914107,
         "price_change_pct": 20.9486
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-08-22T07:30:41+09:00",
+      "generated_at": "2026-08-23T07:30:44+09:00",
       "kioxia": {
         "per": 5.81,
         "price_change_pct": 2.5873
@@ -133,11 +133,11 @@
         "b": "6098",
         "rho": -0.5475
       },
-      "_fetch_status": "ok"
+      "_fetch_status": "failed"
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-08-22T07:30:46+09:00",
+      "generated_at": "2026-08-23T07:30:44+09:00",
       "total": 54,
       "up": 22,
       "down": 31,
@@ -153,7 +153,7 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-08-22T07:30:56+09:00",
+      "generated_at": "2026-08-23T07:30:53+09:00",
       "total": 56,
       "up": 29,
       "down": 24,
@@ -172,6 +172,8 @@
   },
   "alerts": {
     "_comment": "overall_status が partial のとき UI に表示できる。",
-    "messages": []
+    "messages": [
+      "[警告] momentum: data.json 取得失敗。前回値を保持します。"
+    ]
   }
 }
