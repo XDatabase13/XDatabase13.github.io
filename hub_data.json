@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-08-29T07:40:38+09:00",
+    "generated_at": "2026-08-30T07:40:38+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -13,25 +13,25 @@
     "jp_large_etf": {
       "label": "国内大型株ETF（1321）",
       "ticker": "1321.T",
-      "close": 68410.0,
-      "change_pct": -0.2333,
-      "date": "2026-08-27",
+      "close": 68660.0,
+      "change_pct": 0.3654,
+      "date": "2026-08-28",
       "status": "ok"
     },
     "topix_etf": {
       "label": "国内市場ETF（1306）",
       "ticker": "1306.T",
-      "close": 429.4,
-      "change_pct": 0.2802,
-      "date": "2026-08-27",
+      "close": 432.0,
+      "change_pct": 0.6055,
+      "date": "2026-08-28",
       "status": "ok"
     },
     "growth250": {
       "label": "国内新興株ETF（2516）",
       "ticker": "2516.T",
-      "close": 635.0,
-      "change_pct": 2.4524,
-      "date": "2026-08-27",
+      "close": 654.0,
+      "change_pct": 2.9921,
+      "date": "2026-08-28",
       "status": "ok"
     },
     "dow_etf": {
@@ -77,41 +77,41 @@
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 77707.0312,
-      "change_pct": -3.1779,
-      "date": "2026-08-28",
+      "close": 78177.9375,
+      "change_pct": -2.5912,
+      "date": "2026-08-29",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-08-29T07:30:40+09:00",
-      "nav_per_share": 9814,
-      "discount_pct": 47.0,
-      "close": 5200.0,
-      "price_change_pct": 0.7166,
+      "generated_at": "2026-08-30T07:30:40+09:00",
+      "nav_per_share": 9815,
+      "discount_pct": 47.4,
+      "close": 5161.0,
+      "price_change_pct": -0.75,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-08-29T07:30:38+09:00",
+      "generated_at": "2026-08-30T07:30:37+09:00",
       "mstr": {
-        "mnav_premium": 1.035844,
+        "mnav_premium": 1.025531,
         "price_change_pct": -7.3435
       },
       "metaplanet": {
-        "mnav_premium": 0.89295,
-        "price_change_pct": -1.9355
+        "mnav_premium": 1.007356,
+        "price_change_pct": 13.8158
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-08-29T07:30:44+09:00",
+      "generated_at": "2026-08-30T07:30:45+09:00",
       "kioxia": {
-        "per": 5.62,
-        "price_change_pct": 5.0
+        "per": 5.13,
+        "price_change_pct": -8.7619
       },
       "sndk": {
         "per": 8.25,
@@ -121,46 +121,46 @@
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-08-29T07:30:34+09:00",
-      "mean_corr_10": 0.624,
+      "generated_at": "2026-08-30T07:30:38+09:00",
+      "mean_corr_10": 0.6279,
       "top_high_pair": {
-        "a": "4004",
-        "b": "5803",
-        "rho": 0.9376
+        "a": "6920",
+        "b": "6525",
+        "rho": 0.9676
       },
       "top_low_pair": {
         "a": "285A",
         "b": "6098",
-        "rho": -0.012
+        "rho": -0.1527
       },
       "_fetch_status": "ok"
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-08-29T07:30:42+09:00",
+      "generated_at": "2026-08-30T07:30:49+09:00",
       "total": 54,
-      "up": 40,
-      "down": 13,
+      "up": 26,
+      "down": 25,
       "top": {
-        "code": "6890",
-        "change_pct": 6.5095
+        "code": "3905",
+        "change_pct": 12.2157
       },
       "bot": {
-        "code": "6857",
-        "change_pct": -3.0532
+        "code": "285A",
+        "change_pct": -8.7619
       },
       "_fetch_status": "ok"
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-08-29T07:30:58+09:00",
+      "generated_at": "2026-08-30T07:30:54+09:00",
       "total": 56,
-      "up": 20,
-      "down": 33,
+      "up": 14,
+      "down": 39,
       "top_gainer": {
-        "name": "キオクシア",
-        "ticker": "285A.T",
-        "change_pct": 5.0
+        "name": "Amazon",
+        "ticker": "AMZN",
+        "change_pct": 3.97
       },
       "top_loser": {
         "name": "Marvell",
