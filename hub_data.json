@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-09-02T07:40:38+09:00",
+    "generated_at": "2026-09-03T07:40:38+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -37,135 +37,135 @@
     "dow_etf": {
       "label": "米国主要30社ETF（DIA）",
       "ticker": "DIA",
-      "close": 527.75,
-      "change_pct": -0.7186,
-      "date": "2026-09-01",
+      "close": 530.62,
+      "change_pct": 0.5438,
+      "date": "2026-09-02",
       "status": "ok"
     },
     "sp500_etf": {
       "label": "米国大型株ETF（SPY）",
       "ticker": "SPY",
-      "close": 761.78,
-      "change_pct": -0.687,
-      "date": "2026-09-01",
+      "close": 765.16,
+      "change_pct": 0.4437,
+      "date": "2026-09-02",
       "status": "ok"
     },
     "nasdaq_etf": {
       "label": "NASDAQ市場ETF（ONEQ）",
       "ticker": "ONEQ",
-      "close": 102.85,
-      "change_pct": -1.0011,
-      "date": "2026-09-01",
+      "close": 103.32,
+      "change_pct": 0.457,
+      "date": "2026-09-02",
       "status": "ok"
     },
     "sox_etf": {
       "label": "米国半導体ETF（SOXX）",
       "ticker": "SOXX",
-      "close": 500.31,
-      "change_pct": -2.0996,
-      "date": "2026-09-01",
+      "close": 501.44,
+      "change_pct": 0.2259,
+      "date": "2026-09-02",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 160.177,
-      "change_pct": 0.0344,
-      "date": "2026-09-01",
+      "close": 158.768,
+      "change_pct": -0.6128,
+      "date": "2026-09-02",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 77046.6562,
-      "change_pct": -1.9122,
-      "date": "2026-09-01",
+      "close": 77112.7031,
+      "change_pct": -0.3759,
+      "date": "2026-09-02",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-09-02T07:30:35+09:00",
-      "nav_per_share": 9725,
-      "discount_pct": 45.9,
-      "close": 5262.0,
-      "price_change_pct": 1.1923,
+      "generated_at": "2026-09-03T07:30:41+09:00",
+      "nav_per_share": 9676,
+      "discount_pct": 49.1,
+      "close": 4924.0,
+      "price_change_pct": -6.4234,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-09-02T07:30:44+09:00",
+      "generated_at": "2026-09-03T07:30:38+09:00",
       "mstr": {
-        "mnav_premium": 1.045477,
-        "price_change_pct": -6.0629
+        "mnav_premium": 1.0311,
+        "price_change_pct": -1.3533
       },
       "metaplanet": {
-        "mnav_premium": 0.965224,
-        "price_change_pct": 4.4872
+        "mnav_premium": 0.897702,
+        "price_change_pct": -7.9755
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-09-02T07:30:44+09:00",
+      "generated_at": "2026-09-03T07:30:43+09:00",
       "kioxia": {
         "per": 5.46,
-        "price_change_pct": 2.0204
+        "price_change_pct": 0.0
       },
       "sndk": {
-        "per": 8.54,
-        "price_change_pct": -1.904
+        "per": 8.63,
+        "price_change_pct": 1.0756
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-09-02T07:30:37+09:00",
-      "mean_corr_10": 0.5374,
+      "generated_at": "2026-09-03T07:30:50+09:00",
+      "mean_corr_10": 0.4031,
       "top_high_pair": {
         "a": "5801",
         "b": "5803",
-        "rho": 0.9669
+        "rho": 0.9326
       },
       "top_low_pair": {
         "a": "285A",
         "b": "6098",
-        "rho": -0.2154
+        "rho": -0.4223
       },
       "_fetch_status": "ok"
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-09-02T07:30:47+09:00",
+      "generated_at": "2026-09-03T07:30:45+09:00",
       "total": 54,
-      "up": 18,
-      "down": 35,
+      "up": 0,
+      "down": 53,
       "top": {
         "code": "285A",
-        "change_pct": 2.0204
+        "change_pct": 0.0
       },
       "bot": {
-        "code": "6787",
-        "change_pct": -6.5491
+        "code": "9984",
+        "change_pct": -6.4234
       },
       "_fetch_status": "ok"
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-09-02T07:31:01+09:00",
+      "generated_at": "2026-09-03T07:31:09+09:00",
       "total": 56,
-      "up": 13,
-      "down": 41,
+      "up": 19,
+      "down": 34,
       "top_gainer": {
-        "name": "トヨタ",
-        "ticker": "7203.T",
-        "change_pct": 2.76
+        "name": "Dell",
+        "ticker": "DELL",
+        "change_pct": 15.81
       },
       "top_loser": {
-        "name": "Cadence",
-        "ticker": "CDNS",
-        "change_pct": -7.6
+        "name": "ソフトバンクG",
+        "ticker": "9984.T",
+        "change_pct": -6.42
       },
       "_fetch_status": "ok"
     }
