@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-09-05T07:40:37+09:00",
+    "generated_at": "2026-09-06T07:40:37+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -77,16 +77,16 @@
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 79719.4375,
-      "change_pct": -1.91,
-      "date": "2026-09-04",
+      "close": 79807.1484,
+      "change_pct": 0.1697,
+      "date": "2026-09-05",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-09-05T07:30:37+09:00",
+      "generated_at": "2026-09-06T07:30:36+09:00",
       "nav_per_share": 9990,
       "discount_pct": 44.0,
       "close": 5590.0,
@@ -95,20 +95,20 @@
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-09-05T07:30:36+09:00",
+      "generated_at": "2026-09-06T07:30:38+09:00",
       "mstr": {
-        "mnav_premium": 1.143083,
+        "mnav_premium": 1.140646,
         "price_change_pct": -1.3948
       },
       "metaplanet": {
-        "mnav_premium": 0.857379,
+        "mnav_premium": 0.855645,
         "price_change_pct": 5.0179
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-09-05T07:30:43+09:00",
+      "generated_at": "2026-09-06T07:30:45+09:00",
       "kioxia": {
         "per": 5.83,
         "price_change_pct": 5.3997
@@ -121,7 +121,7 @@
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-09-05T07:30:45+09:00",
+      "generated_at": "2026-09-06T07:30:40+09:00",
       "mean_corr_10": 0.3853,
       "top_high_pair": {
         "a": "4062",
@@ -137,7 +137,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-09-05T07:30:45+09:00",
+      "generated_at": "2026-09-06T07:30:46+09:00",
       "total": 54,
       "up": 41,
       "down": 13,
@@ -153,7 +153,7 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-09-05T07:30:56+09:00",
+      "generated_at": "2026-09-06T07:31:00+09:00",
       "total": 56,
       "up": 41,
       "down": 13,
