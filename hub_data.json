@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-09-23T07:40:36+09:00",
+    "generated_at": "2026-09-24T07:40:38+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -37,91 +37,91 @@
     "dow_etf": {
       "label": "米国主要30社ETF（DIA）",
       "ticker": "DIA",
-      "close": 518.0,
-      "change_pct": -0.3425,
-      "date": "2026-09-22",
+      "close": 514.3,
+      "change_pct": -1.0543,
+      "date": "2026-09-23",
       "status": "ok"
     },
     "sp500_etf": {
       "label": "米国大型株ETF（SPY）",
       "ticker": "SPY",
-      "close": 773.38,
-      "change_pct": -0.0155,
-      "date": "2026-09-22",
+      "close": 767.81,
+      "change_pct": -0.7202,
+      "date": "2026-09-23",
       "status": "ok"
     },
     "nasdaq_etf": {
       "label": "NASDAQ市場ETF（ONEQ）",
       "ticker": "ONEQ",
-      "close": 107.32,
-      "change_pct": 0.4493,
-      "date": "2026-09-22",
+      "close": 106.14,
+      "change_pct": -0.6552,
+      "date": "2026-09-23",
       "status": "ok"
     },
     "sox_etf": {
       "label": "米国半導体ETF（SOXX）",
       "ticker": "SOXX",
-      "close": 572.78,
-      "change_pct": 2.4028,
-      "date": "2026-09-22",
+      "close": 565.72,
+      "change_pct": -1.2326,
+      "date": "2026-09-23",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 157.441,
-      "change_pct": 0.2515,
-      "date": "2026-09-22",
+      "close": 158.264,
+      "change_pct": 0.5687,
+      "date": "2026-09-23",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 86225.2266,
-      "change_pct": -0.4361,
-      "date": "2026-09-22",
+      "close": 84469.2891,
+      "change_pct": -1.9763,
+      "date": "2026-09-23",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-09-23T07:30:48+09:00",
-      "nav_per_share": 12000,
-      "discount_pct": 47.4,
+      "generated_at": "2026-09-24T07:30:44+09:00",
+      "nav_per_share": 12027,
+      "discount_pct": 47.5,
       "close": 6315.0,
       "price_change_pct": 1.0885,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-09-23T07:30:43+09:00",
+      "generated_at": "2026-09-24T07:30:37+09:00",
       "mstr": {
-        "mnav_premium": 1.212675,
-        "price_change_pct": -0.6944
+        "mnav_premium": 1.206803,
+        "price_change_pct": -3.0658
       },
       "metaplanet": {
-        "mnav_premium": 0.640832,
+        "mnav_premium": 0.652986,
         "price_change_pct": 2.1008
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-09-23T07:30:46+09:00",
+      "generated_at": "2026-09-24T07:30:47+09:00",
       "kioxia": {
         "per": 5.84,
         "price_change_pct": 9.4026
       },
       "sndk": {
-        "per": 10.48,
-        "price_change_pct": 6.8152
+        "per": 10.09,
+        "price_change_pct": -3.7344
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-09-23T07:30:44+09:00",
+      "generated_at": "2026-09-24T07:30:51+09:00",
       "mean_corr_10": 0.5603,
       "top_high_pair": {
         "a": "285A",
@@ -137,7 +137,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-09-23T07:30:50+09:00",
+      "generated_at": "2026-09-24T07:30:50+09:00",
       "total": 54,
       "up": 45,
       "down": 9,
@@ -153,19 +153,19 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-09-23T07:30:54+09:00",
+      "generated_at": "2026-09-24T07:31:05+09:00",
       "total": 56,
-      "up": 43,
-      "down": 11,
+      "up": 29,
+      "down": 24,
       "top_gainer": {
         "name": "キオクシア",
         "ticker": "285A.T",
         "change_pct": 9.4
       },
       "top_loser": {
-        "name": "Dell",
-        "ticker": "DELL",
-        "change_pct": -4.59
+        "name": "Google / Alphabet",
+        "ticker": "GOOGL",
+        "change_pct": -3.8
       },
       "_fetch_status": "ok"
     }
