@@ -946,7 +946,7 @@ function buildKioxia(d) {
   // kioxia は日本株なので timeseries diff で正確に算出
   const kDiff = tsDiff(ts, e => e?.kioxia?.per);
   // SNDK は米国休場日に timeseries diff が ±0 になるため、
-  // yfinance の price_change_pct (最終取引日の実変化率) から PER 変化を算出
+  // price_change_pct (最終取引日の実変化率) から PER 変化を算出
   // PER = 株価 / EPS (EPS固定) なので PER変化率 = 株価変化率
   const sDiff = (sPer != null && sChg != null)
     ? Math.round(sPer * sChg / 100 * 100) / 100
