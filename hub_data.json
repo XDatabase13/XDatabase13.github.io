@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-10-07T07:40:39+09:00",
+    "generated_at": "2026-10-08T07:40:41+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -13,159 +13,159 @@
     "jp_large_etf": {
       "label": "国内大型株ETF（1321）",
       "ticker": "1321.T",
-      "close": 735.1,
-      "change_pct": 0.9891,
-      "date": "2026-10-06",
+      "close": 729.7,
+      "change_pct": -0.7346,
+      "date": "2026-10-07",
       "status": "ok"
     },
     "topix_etf": {
       "label": "国内市場ETF（1306）",
       "ticker": "1306.T",
-      "close": 440.4,
-      "change_pct": 0.9397,
-      "date": "2026-10-06",
+      "close": 437.0,
+      "change_pct": -0.772,
+      "date": "2026-10-07",
       "status": "ok"
     },
     "growth250": {
       "label": "国内新興株ETF（2516）",
       "ticker": "2516.T",
-      "close": 653.3,
-      "change_pct": 1.2868,
-      "date": "2026-10-06",
+      "close": 640.1,
+      "change_pct": -2.0205,
+      "date": "2026-10-07",
       "status": "ok"
     },
     "dow_etf": {
       "label": "米国主要30社ETF（DIA）",
       "ticker": "DIA",
-      "close": 514.56,
-      "change_pct": 0.4784,
-      "date": "2026-10-06",
+      "close": 511.02,
+      "change_pct": -0.688,
+      "date": "2026-10-07",
       "status": "ok"
     },
     "sp500_etf": {
       "label": "米国大型株ETF（SPY）",
       "ticker": "SPY",
-      "close": 779.09,
-      "change_pct": 0.5498,
-      "date": "2026-10-06",
+      "close": 777.22,
+      "change_pct": -0.24,
+      "date": "2026-10-07",
       "status": "ok"
     },
     "nasdaq_etf": {
       "label": "NASDAQ市場ETF（ONEQ）",
       "ticker": "ONEQ",
-      "close": 108.77,
-      "change_pct": 0.3969,
-      "date": "2026-10-06",
+      "close": 108.45,
+      "change_pct": -0.2942,
+      "date": "2026-10-07",
       "status": "ok"
     },
     "sox_etf": {
       "label": "米国半導体ETF（SOXX）",
       "ticker": "SOXX",
-      "close": 589.45,
-      "change_pct": -0.0102,
-      "date": "2026-10-06",
+      "close": 582.82,
+      "change_pct": -1.1248,
+      "date": "2026-10-07",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 158.16,
-      "change_pct": 0.2701,
-      "date": "2026-10-06",
+      "close": 157.995,
+      "change_pct": 0.0203,
+      "date": "2026-10-07",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 85527.0312,
-      "change_pct": -0.3026,
-      "date": "2026-10-06",
+      "close": 83207.4766,
+      "change_pct": -2.7468,
+      "date": "2026-10-07",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-10-07T07:30:40+09:00",
-      "nav_per_share": 11279,
-      "discount_pct": 44.2,
-      "close": 6295.0,
-      "price_change_pct": -3.1091,
+      "generated_at": "2026-10-08T07:30:45+09:00",
+      "nav_per_share": 11076,
+      "discount_pct": 43.0,
+      "close": 6310.0,
+      "price_change_pct": 0.2383,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-10-07T07:30:36+09:00",
+      "generated_at": "2026-10-08T07:30:35+09:00",
       "mstr": {
-        "mnav_premium": 1.232151,
-        "price_change_pct": 0.073
+        "mnav_premium": 1.187576,
+        "price_change_pct": -6.7943
       },
       "metaplanet": {
-        "mnav_premium": 0.812168,
-        "price_change_pct": -3.0303
+        "mnav_premium": 0.830945,
+        "price_change_pct": -1.0417
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-10-07T07:30:54+09:00",
+      "generated_at": "2026-10-08T07:30:52+09:00",
       "kioxia": {
-        "per": 6.02,
-        "price_change_pct": -2.0136
+        "per": 5.75,
+        "price_change_pct": -4.4569
       },
       "sndk": {
-        "per": 9.22,
-        "price_change_pct": -2.5643
+        "per": 9.4,
+        "price_change_pct": 1.9248
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-10-07T07:30:46+09:00",
-      "mean_corr_10": 0.2757,
+      "generated_at": "2026-10-08T07:30:39+09:00",
+      "mean_corr_10": 0.3235,
       "top_high_pair": {
-        "a": "285A",
-        "b": "6920",
-        "rho": 0.8861
+        "a": "6723",
+        "b": "6762",
+        "rho": 0.909
       },
       "top_low_pair": {
         "a": "4062",
         "b": "6098",
-        "rho": -0.7604
+        "rho": -0.7546
       },
       "_fetch_status": "ok"
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-10-07T07:30:44+09:00",
+      "generated_at": "2026-10-08T07:30:49+09:00",
       "total": 54,
-      "up": 38,
-      "down": 15,
+      "up": 16,
+      "down": 37,
       "top": {
-        "code": "6787",
-        "change_pct": 9.4188
+        "code": "6976",
+        "change_pct": 2.9187
       },
       "bot": {
-        "code": "3905",
-        "change_pct": -5.5385
+        "code": "6146",
+        "change_pct": -6.2901
       },
       "_fetch_status": "ok"
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-10-07T07:31:03+09:00",
+      "generated_at": "2026-10-08T07:30:59+09:00",
       "total": 56,
-      "up": 34,
-      "down": 20,
+      "up": 16,
+      "down": 37,
       "top_gainer": {
-        "name": "Astera Labs",
-        "ticker": "ALAB",
-        "change_pct": 7.58
+        "name": "Micron",
+        "ticker": "MU",
+        "change_pct": 4.06
       },
       "top_loser": {
-        "name": "Western Digital",
-        "ticker": "WDC",
-        "change_pct": -6.93
+        "name": "ディスコ",
+        "ticker": "6146.T",
+        "change_pct": -6.29
       },
       "_fetch_status": "ok"
     }
