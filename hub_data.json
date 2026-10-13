@@ -2,8 +2,8 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-10-13T07:40:44+09:00",
-    "overall_status": "partial",
+    "generated_at": "2026-10-14T07:40:42+09:00",
+    "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
       "item_status": "ok=正常取得 / stale=取得失敗し前回値保持 / failed=前回値なし"
@@ -13,167 +13,165 @@
     "jp_large_etf": {
       "label": "国内大型株ETF（1321）",
       "ticker": "1321.T",
-      "close": 718.6,
-      "change_pct": -0.1251,
-      "date": "2026-10-09",
+      "close": 706.1,
+      "change_pct": -1.7395,
+      "date": "2026-10-13",
       "status": "ok"
     },
     "topix_etf": {
       "label": "国内市場ETF（1306）",
       "ticker": "1306.T",
       "close": 432.5,
-      "change_pct": 0.6985,
-      "date": "2026-10-09",
+      "change_pct": 0.0,
+      "date": "2026-10-13",
       "status": "ok"
     },
     "growth250": {
       "label": "国内新興株ETF（2516）",
       "ticker": "2516.T",
-      "close": 639.0,
-      "change_pct": 1.1236,
-      "date": "2026-10-09",
+      "close": 635.0,
+      "change_pct": -0.626,
+      "date": "2026-10-13",
       "status": "ok"
     },
     "dow_etf": {
       "label": "米国主要30社ETF（DIA）",
       "ticker": "DIA",
-      "close": 517.91,
-      "change_pct": 0.3488,
-      "date": "2026-10-12",
+      "close": 516.21,
+      "change_pct": -0.3282,
+      "date": "2026-10-13",
       "status": "ok"
     },
     "sp500_etf": {
       "label": "米国大型株ETF（SPY）",
       "ticker": "SPY",
-      "close": 778.1,
-      "change_pct": -0.0604,
-      "date": "2026-10-12",
+      "close": 778.01,
+      "change_pct": -0.0116,
+      "date": "2026-10-13",
       "status": "ok"
     },
     "nasdaq_etf": {
       "label": "NASDAQ市場ETF（ONEQ）",
       "ticker": "ONEQ",
-      "close": 107.36,
-      "change_pct": -0.4174,
-      "date": "2026-10-12",
+      "close": 107.2,
+      "change_pct": -0.149,
+      "date": "2026-10-13",
       "status": "ok"
     },
     "sox_etf": {
       "label": "米国半導体ETF（SOXX）",
       "ticker": "SOXX",
-      "close": 544.85,
-      "change_pct": -2.601,
-      "date": "2026-10-12",
+      "close": 543.9,
+      "change_pct": -0.1744,
+      "date": "2026-10-13",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 158.388,
-      "change_pct": 0.2056,
-      "date": "2026-10-11",
-      "status": "stale"
+      "close": 158.335,
+      "change_pct": 0.0834,
+      "date": "2026-10-13",
+      "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 82379.7188,
-      "change_pct": -1.5532,
-      "date": "2026-10-12",
+      "close": 83422.9375,
+      "change_pct": 2.0307,
+      "date": "2026-10-13",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-10-13T07:30:45+09:00",
-      "nav_per_share": 10163,
-      "discount_pct": 42.9,
-      "close": 5803.0,
-      "price_change_pct": -3.9238,
+      "generated_at": "2026-10-14T07:30:38+09:00",
+      "nav_per_share": 10160,
+      "discount_pct": 47.7,
+      "close": 5310.0,
+      "price_change_pct": -8.4956,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-10-13T07:30:40+09:00",
+      "generated_at": "2026-10-14T07:30:43+09:00",
       "mstr": {
-        "mnav_premium": 1.195685,
-        "price_change_pct": -1.0755
+        "mnav_premium": 1.175817,
+        "price_change_pct": -0.3275
       },
       "metaplanet": {
-        "mnav_premium": 0.777327,
-        "price_change_pct": 2.7132
+        "mnav_premium": 0.757294,
+        "price_change_pct": -1.5094
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-10-13T07:30:50+09:00",
+      "generated_at": "2026-10-14T07:30:49+09:00",
       "kioxia": {
-        "per": 5.62,
-        "price_change_pct": -2.2067
+        "per": 4.87,
+        "price_change_pct": -13.2819
       },
       "sndk": {
-        "per": 8.26,
-        "price_change_pct": -5.9735
+        "per": 8.24,
+        "price_change_pct": -0.3362
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-10-13T07:30:45+09:00",
-      "mean_corr_10": 0.4321,
+      "generated_at": "2026-10-14T07:30:47+09:00",
+      "mean_corr_10": 0.5408,
       "top_high_pair": {
         "a": "6723",
         "b": "6762",
-        "rho": 0.9533
+        "rho": 0.9559
       },
       "top_low_pair": {
         "a": "4004",
         "b": "6098",
-        "rho": -0.5701
+        "rho": -0.5856
       },
       "_fetch_status": "ok"
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-10-13T07:30:47+09:00",
+      "generated_at": "2026-10-14T07:30:52+09:00",
       "total": 54,
-      "up": 32,
-      "down": 22,
+      "up": 9,
+      "down": 44,
       "top": {
-        "code": "6323",
-        "change_pct": 15.7871
+        "code": "6501",
+        "change_pct": 1.6758
       },
       "bot": {
-        "code": "6594",
-        "change_pct": -6.0748
+        "code": "285A",
+        "change_pct": -13.2819
       },
       "_fetch_status": "ok"
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-10-13T07:31:15+09:00",
+      "generated_at": "2026-10-14T07:31:09+09:00",
       "total": 56,
-      "up": 17,
-      "down": 37,
+      "up": 19,
+      "down": 34,
       "top_gainer": {
-        "name": "TOWA",
-        "ticker": "6315.T",
-        "change_pct": 5.2
+        "name": "Oracle",
+        "ticker": "ORCL",
+        "change_pct": 4.23
       },
       "top_loser": {
-        "name": "ニデック",
-        "ticker": "6594.T",
-        "change_pct": -6.07
+        "name": "キオクシア",
+        "ticker": "285A.T",
+        "change_pct": -13.28
       },
       "_fetch_status": "ok"
     }
   },
   "alerts": {
     "_comment": "overall_status が partial のとき UI に表示できる。",
-    "messages": [
-      "[警告] USD/JPY(USDJPY=X): yfinanceが古い日付(2026-10-09) を返した → 前回値(2026-10-11)を保持"
-    ]
+    "messages": []
   }
 }
