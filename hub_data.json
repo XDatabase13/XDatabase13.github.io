@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-11-01T07:40:42+09:00",
+    "generated_at": "2026-11-02T07:40:43+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -69,25 +69,25 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 157.804,
-      "change_pct": -0.0184,
-      "date": "2026-10-30",
+      "close": 157.467,
+      "change_pct": -0.2136,
+      "date": "2026-11-01",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 77499.9922,
-      "change_pct": 0.3909,
-      "date": "2026-10-31",
+      "close": 77668.9766,
+      "change_pct": 0.3025,
+      "date": "2026-11-01",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-11-01T07:30:43+09:00",
-      "nav_per_share": 8931,
+      "generated_at": "2026-11-02T07:30:43+09:00",
+      "nav_per_share": 8921,
       "discount_pct": 49.8,
       "close": 4481.0,
       "price_change_pct": -5.9601,
@@ -95,33 +95,33 @@
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-11-01T07:30:45+09:00",
+      "generated_at": "2026-11-02T07:30:45+09:00",
       "mstr": {
-        "mnav_premium": 1.107113,
+        "mnav_premium": 1.106216,
         "price_change_pct": -7.8449
       },
       "metaplanet": {
-        "mnav_premium": 0.777042,
+        "mnav_premium": 0.778534,
         "price_change_pct": -7.5758
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-11-01T07:30:48+09:00",
+      "generated_at": "2026-11-02T07:30:44+09:00",
       "kioxia": {
-        "per": 4.33,
+        "per": 3.94,
         "price_change_pct": -7.1355
       },
       "sndk": {
-        "per": 6.39,
+        "per": 5.14,
         "price_change_pct": -13.4702
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-11-01T07:30:42+09:00",
+      "generated_at": "2026-11-02T07:30:39+09:00",
       "mean_corr_10": 0.6729,
       "top_high_pair": {
         "a": "8035",
@@ -137,7 +137,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-11-01T07:30:52+09:00",
+      "generated_at": "2026-11-02T07:30:53+09:00",
       "total": 54,
       "up": 6,
       "down": 48,
@@ -153,7 +153,7 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-11-01T07:31:05+09:00",
+      "generated_at": "2026-11-02T07:31:05+09:00",
       "total": 56,
       "up": 2,
       "down": 52,
