@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-11-03T07:40:37+09:00",
+    "generated_at": "2026-11-04T07:40:44+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -37,91 +37,91 @@
     "dow_etf": {
       "label": "米国主要30社ETF（DIA）",
       "ticker": "DIA",
-      "close": 519.34,
-      "change_pct": 0.4274,
-      "date": "2026-11-02",
+      "close": 517.06,
+      "change_pct": -0.439,
+      "date": "2026-11-03",
       "status": "ok"
     },
     "sp500_etf": {
       "label": "米国大型株ETF（SPY）",
       "ticker": "SPY",
-      "close": 752.1,
-      "change_pct": -0.479,
-      "date": "2026-11-02",
+      "close": 754.35,
+      "change_pct": 0.2992,
+      "date": "2026-11-03",
       "status": "ok"
     },
     "nasdaq_etf": {
       "label": "NASDAQ市場ETF（ONEQ）",
       "ticker": "ONEQ",
-      "close": 99.25,
-      "change_pct": -0.9975,
-      "date": "2026-11-02",
+      "close": 99.98,
+      "change_pct": 0.7355,
+      "date": "2026-11-03",
       "status": "ok"
     },
     "sox_etf": {
       "label": "米国半導体ETF（SOXX）",
       "ticker": "SOXX",
-      "close": 453.65,
-      "change_pct": -3.7878,
-      "date": "2026-11-02",
+      "close": 465.0,
+      "change_pct": 2.5019,
+      "date": "2026-11-03",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 157.874,
-      "change_pct": 0.0444,
-      "date": "2026-11-02",
+      "close": 158.663,
+      "change_pct": 0.6253,
+      "date": "2026-11-03",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 76683.2422,
-      "change_pct": -2.0003,
-      "date": "2026-11-02",
+      "close": 77672.1328,
+      "change_pct": 1.2974,
+      "date": "2026-11-03",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-11-03T07:30:46+09:00",
-      "nav_per_share": 8715,
-      "discount_pct": 49.4,
+      "generated_at": "2026-11-04T07:30:45+09:00",
+      "nav_per_share": 8876,
+      "discount_pct": 50.3,
       "close": 4410.0,
       "price_change_pct": -1.5845,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-11-03T07:30:42+09:00",
+      "generated_at": "2026-11-04T07:30:46+09:00",
       "mstr": {
-        "mnav_premium": 1.123948,
-        "price_change_pct": 0.1916
+        "mnav_premium": 1.147296,
+        "price_change_pct": 3.7244
       },
       "metaplanet": {
-        "mnav_premium": 0.805762,
+        "mnav_premium": 0.788591,
         "price_change_pct": 2.459
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-11-03T07:30:46+09:00",
+      "generated_at": "2026-11-04T07:30:50+09:00",
       "kioxia": {
         "per": 3.32,
         "price_change_pct": -15.7758
       },
       "sndk": {
-        "per": 4.8,
-        "price_change_pct": -6.5871
+        "per": 5.03,
+        "price_change_pct": 4.7848
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-11-03T07:30:48+09:00",
+      "generated_at": "2026-11-04T07:30:46+09:00",
       "mean_corr_10": 0.6144,
       "top_high_pair": {
         "a": "5706",
@@ -137,7 +137,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-11-03T07:30:51+09:00",
+      "generated_at": "2026-11-04T07:30:53+09:00",
       "total": 54,
       "up": 15,
       "down": 38,
@@ -153,10 +153,10 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-11-03T07:31:02+09:00",
+      "generated_at": "2026-11-04T07:31:12+09:00",
       "total": 56,
-      "up": 13,
-      "down": 41,
+      "up": 36,
+      "down": 18,
       "top_gainer": {
         "name": "レーザーテック",
         "ticker": "6920.T",
