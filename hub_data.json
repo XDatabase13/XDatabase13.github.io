@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-11-07T07:40:43+09:00",
+    "generated_at": "2026-11-08T07:40:39+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -70,23 +70,23 @@
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
       "close": 158.425,
-      "change_pct": 0.0429,
-      "date": "2026-11-06",
+      "change_pct": 0.5886,
+      "date": "2026-11-08",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 75916.0703,
-      "change_pct": -0.0343,
-      "date": "2026-11-06",
+      "close": 75665.5078,
+      "change_pct": -0.1075,
+      "date": "2026-11-07",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-11-07T07:30:38+09:00",
+      "generated_at": "2026-11-08T07:30:47+09:00",
       "nav_per_share": 8198,
       "discount_pct": 56.7,
       "close": 3549.0,
@@ -95,20 +95,20 @@
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-11-07T07:30:45+09:00",
+      "generated_at": "2026-11-08T07:30:38+09:00",
       "mstr": {
-        "mnav_premium": 1.099349,
+        "mnav_premium": 1.105912,
         "price_change_pct": -0.2862
       },
       "metaplanet": {
-        "mnav_premium": 0.772683,
+        "mnav_premium": 0.777507,
         "price_change_pct": -8.4942
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-11-07T07:30:48+09:00",
+      "generated_at": "2026-11-08T07:30:46+09:00",
       "kioxia": {
         "per": 2.49,
         "price_change_pct": -8.7194
@@ -121,7 +121,7 @@
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-11-07T07:30:45+09:00",
+      "generated_at": "2026-11-08T07:30:45+09:00",
       "mean_corr_10": 0.6615,
       "top_high_pair": {
         "a": "4062",
@@ -137,7 +137,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-11-07T07:30:50+09:00",
+      "generated_at": "2026-11-08T07:30:50+09:00",
       "total": 54,
       "up": 5,
       "down": 49,
@@ -153,7 +153,7 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-11-07T07:30:59+09:00",
+      "generated_at": "2026-11-08T07:30:57+09:00",
       "total": 56,
       "up": 30,
       "down": 24,
