@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-11-21T07:40:49+09:00",
+    "generated_at": "2026-11-22T07:40:43+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -69,59 +69,59 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 158.512,
-      "change_pct": -0.5452,
+      "close": 159.707,
+      "change_pct": 0.2045,
       "date": "2026-11-20",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 59052.8008,
-      "change_pct": -4.6025,
-      "date": "2026-11-20",
+      "close": 60063.25,
+      "change_pct": 2.1502,
+      "date": "2026-11-21",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-11-21T07:30:53+09:00",
-      "nav_per_share": 7034,
-      "discount_pct": 57.0,
+      "generated_at": "2026-11-22T07:30:51+09:00",
+      "nav_per_share": 7063,
+      "discount_pct": 57.2,
       "close": 3025.0,
       "price_change_pct": -14.4755,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-11-21T07:30:51+09:00",
+      "generated_at": "2026-11-22T07:30:46+09:00",
       "mstr": {
-        "mnav_premium": 0.935844,
+        "mnav_premium": 0.909047,
         "price_change_pct": -9.6714
       },
       "metaplanet": {
-        "mnav_premium": 0.828871,
+        "mnav_premium": 0.794636,
         "price_change_pct": -5.3476
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-11-21T07:30:51+09:00",
+      "generated_at": "2026-11-22T07:30:58+09:00",
       "kioxia": {
         "per": 2.14,
         "price_change_pct": -11.6552
       },
       "sndk": {
-        "per": 2.83,
-        "price_change_pct": -16.0549
+        "per": 3.37,
+        "price_change_pct": -2.7131
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-11-21T07:30:47+09:00",
+      "generated_at": "2026-11-22T07:30:49+09:00",
       "mean_corr_10": 0.7664,
       "top_high_pair": {
         "a": "6525",
@@ -137,7 +137,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-11-21T07:30:53+09:00",
+      "generated_at": "2026-11-22T07:30:54+09:00",
       "total": 54,
       "up": 0,
       "down": 54,
@@ -153,19 +153,19 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-11-21T07:31:08+09:00",
+      "generated_at": "2026-11-22T07:30:59+09:00",
       "total": 56,
-      "up": 1,
-      "down": 53,
+      "up": 0,
+      "down": 54,
       "top_gainer": {
-        "name": "Western Digital",
-        "ticker": "WDC",
-        "change_pct": 2.98
+        "name": "NTT",
+        "ticker": "9432.T",
+        "change_pct": -0.71
       },
       "top_loser": {
-        "name": "SanDisk",
-        "ticker": "SNDK",
-        "change_pct": -16.05
+        "name": "Astera Labs",
+        "ticker": "ALAB",
+        "change_pct": -14.77
       },
       "_fetch_status": "ok"
     }
