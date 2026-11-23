@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-11-23T07:40:43+09:00",
+    "generated_at": "2026-11-24T07:40:46+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -37,91 +37,91 @@
     "dow_etf": {
       "label": "米国主要30社ETF（DIA）",
       "ticker": "DIA",
-      "close": 481.08,
-      "change_pct": -1.9784,
-      "date": "2026-11-20",
+      "close": 495.8,
+      "change_pct": 3.0598,
+      "date": "2026-11-23",
       "status": "ok"
     },
     "sp500_etf": {
       "label": "米国大型株ETF（SPY）",
       "ticker": "SPY",
-      "close": 689.81,
-      "change_pct": -3.6403,
-      "date": "2026-11-20",
+      "close": 722.29,
+      "change_pct": 4.7085,
+      "date": "2026-11-23",
       "status": "ok"
     },
     "nasdaq_etf": {
       "label": "NASDAQ市場ETF（ONEQ）",
       "ticker": "ONEQ",
-      "close": 89.52,
-      "change_pct": -4.9379,
-      "date": "2026-11-20",
+      "close": 95.05,
+      "change_pct": 6.1774,
+      "date": "2026-11-23",
       "status": "ok"
     },
     "sox_etf": {
       "label": "米国半導体ETF（SOXX）",
       "ticker": "SOXX",
-      "close": 123.4,
-      "change_pct": -10.5473,
-      "date": "2026-11-20",
+      "close": 140.22,
+      "change_pct": 13.6305,
+      "date": "2026-11-23",
       "status": "ok"
     },
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 158.507,
-      "change_pct": -0.7514,
-      "date": "2026-11-22",
+      "close": 158.983,
+      "change_pct": -0.4533,
+      "date": "2026-11-23",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 60737.4492,
-      "change_pct": 1.0706,
-      "date": "2026-11-22",
+      "close": 61150.8984,
+      "change_pct": -0.018,
+      "date": "2026-11-23",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-11-23T07:30:45+09:00",
-      "nav_per_share": 7034,
-      "discount_pct": 57.0,
+      "generated_at": "2026-11-24T07:30:47+09:00",
+      "nav_per_share": 7675,
+      "discount_pct": 60.6,
       "close": 3025.0,
       "price_change_pct": -14.4755,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-11-23T07:30:42+09:00",
+      "generated_at": "2026-11-24T07:30:52+09:00",
       "mstr": {
-        "mnav_premium": 0.898484,
-        "price_change_pct": -9.6714
+        "mnav_premium": 0.964237,
+        "price_change_pct": 8.4833
       },
       "metaplanet": {
-        "mnav_premium": 0.793639,
+        "mnav_premium": 0.781364,
         "price_change_pct": -5.3476
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-11-23T07:30:50+09:00",
+      "generated_at": "2026-11-24T07:30:54+09:00",
       "kioxia": {
         "per": 2.14,
         "price_change_pct": -11.6552
       },
       "sndk": {
-        "per": 3.37,
-        "price_change_pct": -2.7131
+        "per": 3.13,
+        "price_change_pct": -7.0819
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-11-23T07:30:46+09:00",
+      "generated_at": "2026-11-24T07:30:46+09:00",
       "mean_corr_10": 0.7664,
       "top_high_pair": {
         "a": "6525",
@@ -137,7 +137,7 @@
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-11-23T07:30:46+09:00",
+      "generated_at": "2026-11-24T07:30:51+09:00",
       "total": 54,
       "up": 0,
       "down": 54,
@@ -153,19 +153,19 @@
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-11-23T07:31:04+09:00",
+      "generated_at": "2026-11-24T07:31:04+09:00",
       "total": 56,
-      "up": 0,
-      "down": 54,
+      "up": 31,
+      "down": 23,
       "top_gainer": {
-        "name": "NTT",
-        "ticker": "9432.T",
-        "change_pct": -0.71
+        "name": "NVIDIA",
+        "ticker": "NVDA",
+        "change_pct": 31.48
       },
       "top_loser": {
-        "name": "Astera Labs",
-        "ticker": "ALAB",
-        "change_pct": -14.77
+        "name": "ソフトバンクG",
+        "ticker": "9984.T",
+        "change_pct": -14.48
       },
       "_fetch_status": "ok"
     }
