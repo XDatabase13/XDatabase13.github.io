@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "数理投資情報部 ハブ集約データ。市況9指標 + 5サイトカード情報。",
-    "generated_at": "2026-11-26T07:40:39+09:00",
+    "generated_at": "2026-11-27T07:40:42+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=全指標正常 / partial=一部staleまたは取得失敗",
@@ -13,25 +13,25 @@
     "jp_large_etf": {
       "label": "国内大型株ETF（1321）",
       "ticker": "1321.T",
-      "close": 595.0,
-      "change_pct": -2.491,
-      "date": "2026-11-25",
+      "close": 598.9,
+      "change_pct": 0.6555,
+      "date": "2026-11-26",
       "status": "ok"
     },
     "topix_etf": {
       "label": "国内市場ETF（1306）",
       "ticker": "1306.T",
-      "close": 394.7,
-      "change_pct": -0.3031,
-      "date": "2026-11-25",
+      "close": 394.6,
+      "change_pct": -0.0253,
+      "date": "2026-11-26",
       "status": "ok"
     },
     "growth250": {
       "label": "国内新興株ETF（2516）",
       "ticker": "2516.T",
-      "close": 510.2,
-      "change_pct": -2.4101,
-      "date": "2026-11-25",
+      "close": 522.0,
+      "change_pct": 2.3128,
+      "date": "2026-11-26",
       "status": "ok"
     },
     "dow_etf": {
@@ -69,98 +69,98 @@
     "usdjpy": {
       "label": "USD/JPY",
       "ticker": "USDJPY=X",
-      "close": 159.119,
-      "change_pct": 0.0692,
-      "date": "2026-11-25",
+      "close": 159.212,
+      "change_pct": -0.0314,
+      "date": "2026-11-26",
       "status": "ok"
     },
     "btc": {
       "label": "BTC",
       "ticker": "BTC-USD",
-      "close": 60123.7188,
-      "change_pct": 0.6292,
-      "date": "2026-11-25",
+      "close": 60482.4492,
+      "change_pct": 0.1727,
+      "date": "2026-11-26",
       "status": "ok"
     }
   },
   "cards": {
     "sbg": {
       "status": "complete",
-      "generated_at": "2026-11-26T07:30:47+09:00",
-      "nav_per_share": 7269,
-      "discount_pct": 62.9,
-      "close": 2696.5,
-      "price_change_pct": -14.8294,
+      "generated_at": "2026-11-27T07:30:45+09:00",
+      "nav_per_share": 7260,
+      "discount_pct": 60.1,
+      "close": 2894.0,
+      "price_change_pct": 7.3243,
       "_fetch_status": "ok"
     },
     "crypto": {
       "status": "complete",
-      "generated_at": "2026-11-26T07:30:45+09:00",
+      "generated_at": "2026-11-27T07:30:45+09:00",
       "mstr": {
-        "mnav_premium": 0.937086,
+        "mnav_premium": 0.927246,
         "price_change_pct": 3.1077
       },
       "metaplanet": {
-        "mnav_premium": 0.756096,
-        "price_change_pct": -7.2222
+        "mnav_premium": 0.787431,
+        "price_change_pct": 5.3892
       },
       "_fetch_status": "ok"
     },
     "kioxia": {
       "status": "complete",
-      "generated_at": "2026-11-26T07:30:51+09:00",
+      "generated_at": "2026-11-27T07:30:51+09:00",
       "kioxia": {
-        "per": 2.02,
-        "price_change_pct": -14.1772
+        "per": 2.27,
+        "price_change_pct": 12.5743
       },
       "sndk": {
-        "per": 2.63,
-        "price_change_pct": -22.0192
+        "per": 3.37,
+        "price_change_pct": -2.7131
       },
       "_fetch_status": "ok"
     },
     "momentum": {
       "status": "complete",
-      "generated_at": "2026-11-26T07:30:48+09:00",
-      "mean_corr_10": 0.8377,
+      "generated_at": "2026-11-27T07:30:47+09:00",
+      "mean_corr_10": 0.849,
       "top_high_pair": {
         "a": "6981",
-        "b": "5803",
-        "rho": 0.9769
+        "b": "4062",
+        "rho": 0.9805
       },
       "top_low_pair": {
         "a": "4004",
         "b": "6098",
-        "rho": 0.0065
+        "rho": 0.0645
       },
       "_fetch_status": "ok"
     },
     "aiManifold": {
       "status": "complete",
-      "generated_at": "2026-11-26T07:30:48+09:00",
+      "generated_at": "2026-11-27T07:30:53+09:00",
       "total": 54,
-      "up": 8,
-      "down": 46,
+      "up": 41,
+      "down": 13,
       "top": {
-        "code": "6758",
-        "change_pct": 4.4193
+        "code": "6787",
+        "change_pct": 13.9535
       },
       "bot": {
-        "code": "6525",
-        "change_pct": -17.2771
+        "code": "6315",
+        "change_pct": -3.6801
       },
       "_fetch_status": "ok"
     },
     "aiSupplyDag": {
       "status": "complete",
-      "generated_at": "2026-11-26T07:31:06+09:00",
+      "generated_at": "2026-11-27T07:31:00+09:00",
       "total": 56,
-      "up": 13,
-      "down": 41,
+      "up": 23,
+      "down": 31,
       "top_gainer": {
-        "name": "ソニー",
-        "ticker": "6758.T",
-        "change_pct": 4.42
+        "name": "キオクシア",
+        "ticker": "285A.T",
+        "change_pct": 12.57
       },
       "top_loser": {
         "name": "SanDisk",
